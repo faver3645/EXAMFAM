@@ -1,28 +1,34 @@
+using Microsoft.EntityFrameworkCore;
 using ITPE3200FAM.DAL;
 using Serilog;
 using Serilog.Events;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddDbContext<QuizDbContext>(options =>
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("QuizDbContextConnection"));
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<QuizDbContext>(options => {
+    options.UseSqlite(builder.Configuration["ConnectionStrings:QuizDbContextConnection"]);});
+
+builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy",
+                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+        });
 
 builder.Services.AddScoped<IQuizRepository, QuizRepository>();
 
 var loggerConfiguration = new LoggerConfiguration()
     .MinimumLevel.Information() // levels: Trace< Information < Warning < Erorr < Fatal
-    .WriteTo.File($"Logs/app_{DateTime.Now:yyyyMMdd_HHmmss}.log");
- 
-loggerConfiguration.Filter.ByExcluding(e => e.Properties.TryGetValue("SourceContext", out var value) &&
+    .WriteTo.File($"APILogs/app_{DateTime.Now:yyyyMMdd_HHmmss}.log")
+    .Filter.ByExcluding(e => e.Properties.TryGetValue("SourceContext", out var value) &&
                             e.Level == LogEventLevel.Information &&
                             e.MessageTemplate.Text.Contains("Executed DbCommand"));
- 
 var logger = loggerConfiguration.CreateLogger();
 builder.Logging.AddSerilog(logger);
 
@@ -30,15 +36,13 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    
 }
-
 app.UseStaticFiles();
-
-app.MapDefaultControllerRoute();
-
-// app.MapControllerRoute(
-//     name: "default",
-//     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.UseRouting();
+app.UseCors("CorsPolicy");
+app.MapControllers();
+    
 app.Run();
