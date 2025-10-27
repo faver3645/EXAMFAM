@@ -1,6 +1,6 @@
-using ITPE3200FAM.Models;
+using api.Models;
 
-namespace ITPE3200FAM.DAL;
+namespace api.DAL;
 
 public interface IQuizRepository
 {

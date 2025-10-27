@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using ITPE3200FAM.Models;
-using ITPE3200FAM.DAL;
+using api.Models;
+using api.DAL;
 
-namespace ITPE3200FAM.Controllers
+namespace api.Controllers
 {
     public class TakeQuizController : Controller
     {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ITPE3200FAM.Controllers
+namespace api.Controllers
 {
     public class HomeController : Controller
     {
