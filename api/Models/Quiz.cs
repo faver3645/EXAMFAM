@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-namespace ITPE3200FAM.Models;
+namespace api.Models;
 
 
 public class Quiz

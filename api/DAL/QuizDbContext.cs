@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ITPE3200FAM.Models;
+using api.Models;
 
-namespace ITPE3200FAM.DAL;
+namespace api.DAL;
 
 public class QuizDbContext : DbContext
 {

@@ -1,4 +1,4 @@
-namespace ITPE3200FAM.Models;
+namespace api.Models;
 
 
 public class QuizResult

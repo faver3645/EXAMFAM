@@ -1,10 +1,77 @@
 using Microsoft.AspNetCore.Mvc;
-using ITPE3200FAM.Models;
-using ITPE3200FAM.DAL;
+using api.Models;
+using api.DAL;
+using api.DTOs;
 using Microsoft.Extensions.Logging;
+namespace api.Controllers;
 
-namespace ITPE3200FAM.Controllers
+[ApiController]
+[Route("api/[controller]")]
+public class QuizAPIController : ControllerBase  // ControllerBase is sufficient for API controllers, avoiding View-related features
 {
+    private readonly IQuizRepository _repo;
+    private readonly ILogger<QuizAPIController> _logger;
+
+    public QuizAPIController(IQuizRepository repo, ILogger<QuizAPIController> logger)
+    {
+        _repo = repo;
+        _logger = logger;
+    }
+
+    [HttpGet("quizlist")]
+    public async Task<IActionResult> QuizList()
+    {
+        var quizzes = await _repo.GetAll();
+        if (quizzes == null)
+        {
+            _logger.LogError("[QuizAPIController] quiz list not found while executing _repo.GetAll()");
+            return NotFound("quiz list not found");
+        }
+
+        var quizDtos = quizzes.Select(quizzes => new QuizDto
+        {
+            QuizId = quizzes.QuizId,
+            Title = quizzes.Title
+        });
+
+        return Ok(quizDtos);
+    }
+    
+    
+    [HttpPost("create")]
+    public async Task<IActionResult> Create([FromBody] QuizDto quizDto)
+    {
+        if (quizDto == null)
+            return BadRequest("Quiz cannot be null");
+
+        var newQuiz = new Quiz
+        {
+            Title = quizDto.Title,
+            Questions = quizDto.Questions.Select(q => new Question
+            {
+                Text = q.Text,
+                AnswerOptions = q.AnswerOptions.Select(a => new AnswerOption
+                {
+                    Text = a.Text,
+                    IsCorrect = a.IsCorrect
+                }).ToList()
+            }).ToList()
+        };
+
+        bool result = await _repo.Create(newQuiz);
+
+        if (result)
+        {
+            return CreatedAtAction(nameof(QuizList), new { id = newQuiz.QuizId }, newQuiz);
+        }
+
+        _logger.LogWarning("[QuizAPIController] Quiz creation failed {@Quiz}", newQuiz);
+        return StatusCode(500, "Internal server error");
+    }
+
+}
+
+
     public class QuizController : Controller
     {
         private readonly IQuizRepository _repo;
@@ -157,4 +224,3 @@ namespace ITPE3200FAM.Controllers
             return RedirectToAction(nameof(Index));
         }
     }
-}
