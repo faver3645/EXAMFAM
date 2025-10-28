@@ -2,22 +2,39 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Container from 'react-bootstrap/Container';
 import HomePage from './home/HomePage';
 import QuizListPage from './quiz/QuizListPage';
-import QuizCreatePage from './quiz/QuizCreatePage'; //
+import QuizCreatePage from './quiz/QuizCreatePage';
 import NavMenu from './shared/NavMenu';
+import Footer from './shared/Footer'; 
+import AboutPage from './shared/AboutPage';
+import ContactPage from './shared/ContactPage';
+import HelpPage from './shared/HelpPage';
 import './App.css';
 
 function App() {
   return (
-    <Router> 
-      <NavMenu />
-      <Container>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/quiz" element={<QuizListPage />} />
-          <Route path="/quizcreate" element={<QuizCreatePage />} /> 
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Container>
+    <Router>
+      <div className="d-flex flex-column min-vh-100">
+        {/* 🔹 Global navigation bar */}
+        <NavMenu />
+
+        {/* 🔹 Main content container */}
+        <Container className="flex-fill py-4">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/quiz" element={<QuizListPage />} />
+            <Route path="/quizcreate" element={<QuizCreatePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/help" element={<HelpPage />} /> 
+            <Route path="/contact" element={<ContactPage />} />
+
+            {/* Redirect unknown routes to home */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Container>
+
+        {/* 🔹 Shared footer shown on every page */}
+        <Footer />
+      </div>
     </Router>
   );
 }
