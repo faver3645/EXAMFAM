@@ -8,6 +8,8 @@ import Footer from './shared/Footer';
 import AboutPage from './shared/AboutPage';
 import ContactPage from './shared/ContactPage';
 import HelpPage from './shared/HelpPage';
+import QuizDetailPage from "./quiz/QuizDetailPage";
+import QuizUpdatePage from "./quiz/QuizUpdatePage";
 import './App.css';
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/quiz" element={<QuizListPage />} />
             <Route path="/quizcreate" element={<QuizCreatePage />} />
+            <Route path="/quizdetails/:quizId" element={<QuizDetailPage />} />
+            <Route path="/quizupdate/:quizId" element={<QuizUpdatePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/help" element={<HelpPage />} /> 
             <Route path="/contact" element={<ContactPage />} />

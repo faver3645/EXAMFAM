@@ -1,18 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 
-const QuizForm = ({ onSubmit }) => {
+const QuizForm = ({ onSubmit, initialData }) => {
   const [title, setTitle] = useState('');
-  const [questions, setQuestions] = useState([
-    {
-      text: '',
-      answerOptions: [
-        { text: '', isCorrect: false },
-        { text: '', isCorrect: false },
-      ],
-    },
-  ]);
+  const [questions, setQuestions] = useState([]);
   const [saving, setSaving] = useState(false);
+
+  // Sett initial state fra initialData når komponenten mountes eller initialData endres
+  useEffect(() => {
+    if (initialData) {
+      setTitle(initialData.title || '');
+      setQuestions(initialData.questions?.map(q => ({
+        text: q.text || '',
+        answerOptions: q.answerOptions?.map(a => ({
+          text: a.text || '',
+          isCorrect: a.isCorrect || false
+        })) || []
+      })) || []);
+    } else {
+      // Tomt skjema for ny quiz
+      setQuestions([
+        {
+          text: '',
+          answerOptions: [
+            { text: '', isCorrect: false },
+            { text: '', isCorrect: false },
+          ],
+        },
+      ]);
+    }
+  }, [initialData]);
 
   const handleAddQuestion = () => {
     setQuestions([
@@ -52,13 +69,10 @@ const QuizForm = ({ onSubmit }) => {
     e.preventDefault();
     setSaving(true);
 
-    const quizData = {
-      title,
-      questions,
-    };
+    const quizData = { title, questions };
 
     try {
-      await onSubmit(quizData); // Kaller parent-funksjonen (fra QuizCreatePage)
+      await onSubmit(quizData);
     } finally {
       setSaving(false);
     }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const API_URL = 'http://localhost:5082'
 
@@ -9,6 +9,9 @@ const QuizListPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const navigate = useNavigate();
+
 
   const fetchQuizzes = async () => {
     setLoading(true); // Set loading to true when starting the fetch

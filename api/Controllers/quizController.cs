@@ -36,8 +36,8 @@ public class QuizAPIController : ControllerBase  // ControllerBase is sufficient
 
         return Ok(quizDtos);
     }
-    
-    
+
+
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] QuizDto quizDto)
     {
@@ -67,6 +67,76 @@ public class QuizAPIController : ControllerBase  // ControllerBase is sufficient
 
         _logger.LogWarning("[QuizAPIController] Quiz creation failed {@Quiz}", newQuiz);
         return StatusCode(500, "Internal server error");
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetQuiz(int id)
+    {
+        var quiz = await _repo.GetQuizById(id); // Sørg for at du har denne metoden i IQuizRepository
+        if (quiz == null)
+        {
+            _logger.LogWarning("[QuizAPIController] Quiz with id {Id} not found", id);
+            return NotFound();
+        }
+
+        var quizDto = new QuizDto
+        {
+            QuizId = quiz.QuizId,
+            Title = quiz.Title,
+            Questions = quiz.Questions?.Select(q => new QuestionDto
+            {
+                QuestionId = q.QuestionId,
+                Text = q.Text,
+                AnswerOptions = q.AnswerOptions?.Select(a => new AnswerOptionDto
+                {
+                    AnswerOptionId = a.AnswerOptionId,
+                    Text = a.Text,
+                    IsCorrect = a.IsCorrect
+                }).ToList()
+            }).ToList()
+        };
+
+        return Ok(quizDto);
+    }
+    
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] QuizDto quizDto)
+    {
+        if (quizDto == null)
+            return BadRequest("Quiz data cannot be null");
+
+        // Hent eksisterende quiz
+        var existingQuiz = await _repo.GetQuizById(id);
+        if (existingQuiz == null)
+        {
+            _logger.LogWarning("[QuizAPIController] Quiz with id {Id} not found", id);
+            return NotFound($"Quiz with id {id} not found");
+        }
+
+        // Oppdater feltene
+        existingQuiz.Title = quizDto.Title;
+
+        // Hvis du vil gjøre full update av spørsmål og svar:
+        existingQuiz.Questions = quizDto.Questions?.Select(q => new Question
+        {
+            Text = q.Text,
+            AnswerOptions = q.AnswerOptions?.Select(a => new AnswerOption
+            {
+                Text = a.Text,
+                IsCorrect = a.IsCorrect
+            }).ToList() ?? new List<AnswerOption>()
+        }).ToList() ?? new List<Question>();
+
+        // Lagre endringer
+        bool result = await _repo.Update(existingQuiz); // Sørg for at repo har Update-metode
+
+        if (result)
+        {
+            return Ok(existingQuiz);
+        }
+
+        _logger.LogError("[QuizAPIController] Failed to update quiz {@Quiz}", existingQuiz);
+        return StatusCode(500, "Internal server error while updating quiz");
     }
 
 }
