@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import QuizForm from './QuizForm';
 
 const API_URL = 'http://localhost:5082';
@@ -43,24 +43,27 @@ const QuizUpdatePage = () => {
     fetchQuiz();
   }, [quizId]);
 
-  // Funksjon for å oppdatere quiz
+  // Oppdater quiz via API
   const handleQuizUpdated = async (updatedQuiz) => {
     try {
       const response = await fetch(`${API_URL}/api/quizapi/update/${quizId}`, {
-        method: 'PUT', // eller PATCH avhengig av backend
+        method: 'PUT', // bruk PUT for oppdatering
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedQuiz),
       });
 
-      if (!response.ok) throw new Error('Failed to update quiz');
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(text || 'Failed to update quiz');
+      }
 
       const data = await response.json();
       console.log('Quiz updated successfully:', data);
 
-      navigate('/quiz');
+      navigate('/quiz'); // tilbake til quiz-listen
     } catch (err) {
       console.error(err);
-      alert('Failed to update quiz. See console for details.');
+      alert(`Failed to update quiz: ${err.message}`);
     }
   };
 
