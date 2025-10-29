@@ -1,17 +1,35 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-function TakeQuizPage({ quiz }) {
+const API_URL = "http://localhost:5082";
+
+const TakeQuizPage = () => {
+  const { quizId } = useParams();
+  const [quiz, setQuiz] = useState(null);
+  const [answers, setAnswers] = useState({});
+  const [userName, setUserName] = useState("");
+  const [unanswered, setUnanswered] = useState([]);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Local state
-  const [userName, setUserName] = useState("");
-  const [answers, setAnswers] = useState({});
-  const [unanswered, setUnanswered] = useState([]);
+  // 🔹 Hent quiz-data fra API
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/takequizapi/${quizId}`);
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        const data = await response.json();
+        setQuiz(data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load quiz.");
+      }
+    };
 
-  if (!quiz) return <p>Loading quiz...</p>;
+    fetchQuiz();
+  }, [quizId]);
 
-  // Handle selection of an answer
+  // 🔹 Oppdater svar
   const handleAnswerChange = (questionId, answerOptionId) => {
     setAnswers((prev) => ({
       ...prev,
@@ -19,21 +37,20 @@ function TakeQuizPage({ quiz }) {
     }));
   };
 
-  // Handle form submission
+  // 🔹 Send inn quiz
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check for unanswered questions
-    const unansweredQs = quiz.questions
+    // Finn spørsmål som ikke er besvart
+    const missing = quiz.questions
       .filter((q) => !answers[q.questionId])
       .map((q) => q.questionId);
 
-    if (unansweredQs.length > 0) {
-      setUnanswered(unansweredQs);
+    if (missing.length > 0) {
+      setUnanswered(missing);
       return;
     }
 
-    // Build payload
     const payload = {
       quizId: quiz.quizId,
       userName,
@@ -41,53 +58,47 @@ function TakeQuizPage({ quiz }) {
     };
 
     try {
-      // Example API call (replace URL with your backend endpoint)
-      const response = await fetch("/api/quiz/submit", {
+      const response = await fetch(`${API_URL}/api/takequizapi/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) throw new Error("Failed to submit quiz");
+      if (!response.ok) throw new Error("Failed to submit quiz.");
 
-      const result = await response.json();
-      navigate(`/takequiz/result/${quiz.quizId}`, { state: { result } });
-    } catch (error) {
-      console.error("Error submitting quiz:", error);
-      alert("An error occurred while submitting your quiz.");
+      navigate(`/takequiz/result/${quizId}`);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to submit quiz.");
     }
   };
 
+  if (error)
+    return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
+
+  if (!quiz)
+    return <p style={{ textAlign: "center" }}>Loading quiz...</p>;
+
   return (
-    <div>
-      <h2 className="mb-4">{quiz.title}</h2>
+    <div className="container mt-4" style={{ maxWidth: "800px" }}>
+      <h2 className="mb-4 text-center">{quiz.title}</h2>
 
       <form onSubmit={handleSubmit}>
-        {/* Hidden quizId */}
-        <input type="hidden" name="quizId" value={quiz.quizId} />
-
         {/* USER NAME */}
-        <div className="mb-3">
-          <label htmlFor="userName" className="form-label">
-            Your Name:
-          </label>
+        <div className="mb-4">
+          <label className="form-label">Your Name:</label>
           <input
             type="text"
-            id="userName"
-            name="userName"
             className="form-control"
-            value={userName}
             placeholder="Enter your name"
+            value={userName}
             onChange={(e) => setUserName(e.target.value)}
             required
           />
-          {userName.trim() === "" && (
-            <span className="text-danger">Please enter your name.</span>
-          )}
         </div>
 
         {/* QUESTIONS */}
-        {quiz.questions.map((q, i) => (
+        {quiz.questions.map((q, index) => (
           <div
             key={q.questionId}
             className={`card mb-4 shadow-sm ${
@@ -96,16 +107,16 @@ function TakeQuizPage({ quiz }) {
           >
             <div className="card-body">
               <h5 className="card-title">
-                Question {i + 1}: {q.text}
+                Question {index + 1}: {q.text}
               </h5>
 
               {q.answerOptions.map((option) => (
                 <div className="form-check mb-2" key={option.answerOptionId}>
                   <input
-                    type="radio"
                     className="form-check-input"
-                    name={`answers[${q.questionId}]`}
-                    id={`q${q.questionId}-option${option.answerOptionId}`}
+                    type="radio"
+                    name={`answers_${q.questionId}`}
+                    id={`q${q.questionId}_a${option.answerOptionId}`}
                     value={option.answerOptionId}
                     checked={answers[q.questionId] === option.answerOptionId}
                     onChange={() =>
@@ -114,7 +125,7 @@ function TakeQuizPage({ quiz }) {
                   />
                   <label
                     className="form-check-label"
-                    htmlFor={`q${q.questionId}-option${option.answerOptionId}`}
+                    htmlFor={`q${q.questionId}_a${option.answerOptionId}`}
                   >
                     {option.text}
                   </label>
@@ -130,16 +141,19 @@ function TakeQuizPage({ quiz }) {
           </div>
         ))}
 
-        <button type="submit" className="btn btn-success btn-lg">
+        <button type="submit" className="btn btn-success btn-md">
           Submit Quiz
         </button>
-
-        <Link to="/takequiz" className="btn btn-secondary btn-lg ms-2">
+        <button
+          type="button"
+          className="btn btn-secondary btn-md ms-2"
+          onClick={() => navigate("/takequiz")}
+        >
           Cancel
-        </Link>
+        </button>
       </form>
     </div>
   );
-}
+};
 
 export default TakeQuizPage;

@@ -9,24 +9,65 @@ namespace api.Controllers;
 public class TakeQuizApiController : ControllerBase
 {
     private readonly IQuizRepository _repo;
-    private readonly ILogger<TakeQuizController> _logger;
+    private readonly ILogger<TakeQuizApiController> _logger;
 
-    public TakeQuizApiController(IQuizRepository repo, ILogger<TakeQuizController> logger)
+    public TakeQuizApiController(IQuizRepository repo, ILogger<TakeQuizApiController> logger)
     {
         _repo = repo;
         _logger = logger;
     }
 
+
+    [HttpGet("takequizlist")]
+    public async Task<IActionResult> GetAllQuizzes()
+    {
+        var quizzes = await _repo.GetAll();
+        if (quizzes == null || !quizzes.Any())
+        {
+            _logger.LogError("[TakeQuizController] No quizzes found when executing _repo.GetAll()");
+            return NotFound("Quiz list not found");
+        }
+
+        // Du kan velge å returnere bare de nødvendige feltene
+        var quizDtos = quizzes.Select(q => new
+        {
+            quizId = q.QuizId,
+            title = q.Title
+        });
+
+        return Ok(quizDtos);
+    }
+
+
     [HttpGet("{id}")]
-    public async Task<IActionResult> TakeQuiz(int id)
+    public async Task<IActionResult> GetQuiz(int id)
     {
         var quiz = await _repo.GetQuizById(id);
         if (quiz == null)
-            return NotFound($"Quiz with id {id} not found");
+        {
+            _logger.LogWarning("[TakeQuizApiController] Quiz {Id} not found", id);
+            return NotFound("Quiz not found");
+        }
 
-        // Returner quiz til frontend
-        return Ok(quiz);
+        return Ok(new
+        {
+            quizId = quiz.QuizId,
+            title = quiz.Title,
+            questions = quiz.Questions.Select(q => new
+            {
+                questionId = q.QuestionId,
+                text = q.Text,
+                answerOptions = q.AnswerOptions.Select(a => new
+                {
+                    answerOptionId = a.AnswerOptionId,
+                    text = a.Text
+                })
+            })
+        });
     }
+        
+
+    
     // POST: api/takequiz/submit
     [HttpPost("submit")]
     public async Task<IActionResult> SubmitResult([FromBody] QuizResultCreateDto dto)
@@ -62,34 +103,6 @@ public class TakeQuizApiController : ControllerBase
         };
 
         return Ok(response);
-    }
-    [HttpGet]
-    public async Task<IActionResult> Take(int id)
-    {
-        var quiz = await _repo.GetQuizById(id);
-        if (quiz == null)
-        {
-            _logger.LogError("[TakeQuizController] Quiz not found for QuizId {QuizId:0000}", id);
-            return NotFound("Quiz not found");
-        }
-
-        return Ok(quiz);
-
-    }
-
-  // GET: api/takequiz
-    [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        var quizzes = await _repo.GetAll();
-
-        if (quizzes == null || !quizzes.Any())
-        {
-            _logger.LogWarning("[TakeQuizController] No quizzes found when executing _repo.GetAll()");
-            return NotFound("No quizzes found");
-        }
-
-        return Ok(quizzes); // Return JSON to React frontend
     }
 
     // Flere API-endepunkter her...
