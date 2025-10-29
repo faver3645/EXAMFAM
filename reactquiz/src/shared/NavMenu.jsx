@@ -27,7 +27,7 @@ export default function NavMenu() {
               <Nav.Link>Manage Quizzes</Nav.Link>
             </LinkContainer>
 
-            <LinkContainer to="/take">
+            <LinkContainer to="/takequiz">
               <Nav.Link>Take Quiz</Nav.Link>
             </LinkContainer>
 
