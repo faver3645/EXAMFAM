@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "/Qo3WZO0KYI=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Muniira\\OneDrive - OsloMet\\Skrivebord\\EksamenFAM\\EXAMFAM\\EXAMFAM\\EXAMFAM.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Muniira\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.0\\microsoft.extensions.dependencyinjection.9.0.0.nupkg.sha512",
+    "C:\\Users\\Muniira\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.0\\microsoft.extensions.dependencyinjection.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\Muniira\\.nuget\\packages\\microsoft.extensions.logging\\9.0.0\\microsoft.extensions.logging.9.0.0.nupkg.sha512",
+    "C:\\Users\\Muniira\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.0\\microsoft.extensions.logging.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\Muniira\\.nuget\\packages\\microsoft.extensions.options\\9.0.0\\microsoft.extensions.options.9.0.0.nupkg.sha512",
+    "C:\\Users\\Muniira\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.0\\microsoft.extensions.primitives.9.0.0.nupkg.sha512",
+    "C:\\Users\\Muniira\\.nuget\\packages\\serilog\\4.2.0\\serilog.4.2.0.nupkg.sha512",
+    "C:\\Users\\Muniira\\.nuget\\packages\\serilog.extensions.logging\\9.0.2\\serilog.extensions.logging.9.0.2.nupkg.sha512",
+    "C:\\Users\\Muniira\\.nuget\\packages\\serilog.sinks.file\\7.0.0\\serilog.sinks.file.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
