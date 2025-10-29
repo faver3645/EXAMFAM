@@ -10,6 +10,9 @@ import ContactPage from './shared/ContactPage';
 import HelpPage from './shared/HelpPage';
 import QuizDetailPage from "./quiz/QuizDetailPage";
 import QuizUpdatePage from "./quiz/QuizUpdatePage";
+import ListQuizPage from './takequiz/ListQuizPage';
+import TakeQuizPage from './takequiz/TakeQuizPage';
+import ResultPage from './takequiz/ResultPage';
 import './App.css';
 
 function App() {
@@ -30,6 +33,12 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/help" element={<HelpPage />} /> 
             <Route path="/contact" element={<ContactPage />} />
+
+            {/* 🔹 Take Quiz system */}
+            <Route path="/takequiz" element={<ListQuizPage />} />
+            <Route path="/takequiz/take/:quizId" element={<TakeQuizPage />} />
+            <Route path="/takequiz/result/:quizId" element={<ResultPage />} />
+
 
             {/* Redirect unknown routes to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
