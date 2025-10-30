@@ -1,177 +1,289 @@
 using Microsoft.AspNetCore.Mvc;
-using api.Models;
 using api.DAL;
+using api.DTOs;
+using api.Models;
+namespace api.Controllers;
 
-namespace api.Controllers
+[ApiController]
+[Route("api/[controller]")]
+public class TakeQuizApiController : ControllerBase
 {
-    public class TakeQuizController : Controller
+    private readonly IQuizRepository _repo;
+    private readonly ILogger<TakeQuizApiController> _logger;
+
+    public TakeQuizApiController(IQuizRepository repo, ILogger<TakeQuizApiController> logger)
     {
-        private readonly IQuizRepository _repo;
-        private readonly ILogger<TakeQuizController> _logger;
+        _repo = repo;
+        _logger = logger;
+    }
 
-        public TakeQuizController(IQuizRepository repo, ILogger<TakeQuizController> logger)
+
+    [HttpGet("takequizlist")]
+    public async Task<IActionResult> GetAllQuizzes()
+    {
+        var quizzes = await _repo.GetAll();
+        if (quizzes == null || !quizzes.Any())
         {
-            _repo = repo;
-            _logger = logger;
+            _logger.LogError("[TakeQuizController] No quizzes found when executing _repo.GetAll()");
+            return NotFound("Quiz list not found");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        // Du kan velge å returnere bare de nødvendige feltene
+        var quizDtos = quizzes.Select(q => new
         {
-            var quizzes = await _repo.GetAll();
-            if (quizzes == null)
-            {
-                _logger.LogError("[TakeQuizController] No quizzes found when executing _repo.GetAll()");
-                return NotFound("Quiz list not found");
-            }
-            return View(quizzes);
+            quizId = q.QuizId,
+            title = q.Title
+        });
+
+        return Ok(quizDtos);
+    }
+
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetQuiz(int id)
+    {
+        var quiz = await _repo.GetQuizById(id);
+        if (quiz == null)
+        {
+            _logger.LogWarning("[TakeQuizApiController] Quiz {Id} not found", id);
+            return NotFound("Quiz not found");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Take(int id)
+        return Ok(new
         {
-            var quiz = await _repo.GetQuizById(id);
-            if (quiz == null)
+            quizId = quiz.QuizId,
+            title = quiz.Title,
+            questions = quiz.Questions.Select(q => new
             {
-                _logger.LogError("[TakeQuizController] Quiz not found for QuizId {QuizId:0000}", id);
-                return NotFound("Quiz not found");
-            }
-
-            return View(quiz);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Submit(int quizId, string userName, Dictionary<string, string> answers)
-        {
-            var quiz = await _repo.GetQuizById(quizId);
-            if (quiz == null)
-            {
-                _logger.LogError("[TakeQuizController] Quiz not found for QuizId {QuizId:0000} during submission", quizId);
-                return NotFound("Quiz not found");
-            }
-
-            // validation
-            bool hasErrors = false;
-
-            if (string.IsNullOrWhiteSpace(userName))
-            {
-                ModelState.AddModelError("userName", "User name is required.");
-                hasErrors = true;
-            }
-
-            var unansweredQuestions = new List<int>();
-            foreach (var question in quiz.Questions)
-            {
-                if (!answers.ContainsKey(question.QuestionId.ToString()))
-                    unansweredQuestions.Add(question.QuestionId);
-            }
-
-            if (unansweredQuestions.Any())
-            {
-               
-                ModelState.AddModelError("", "Please answer all questions before submitting.");
-                hasErrors = true;
-            }
-
-            
-            ViewData["UserName"] = userName;
-            ViewData["Answers"] = answers;
-            ViewData["Unanswered"] = unansweredQuestions;
-
-            if (hasErrors)
-                return View("Take", quiz);
-
-            // SCORE
-            int score = 0;
-            foreach (var question in quiz.Questions)
-            {
-                if (answers.TryGetValue(question.QuestionId.ToString(), out var selectedOptionIdStr))
+                questionId = q.QuestionId,
+                text = q.Text,
+                answerOptions = q.AnswerOptions.Select(a => new
                 {
-                    if (int.TryParse(selectedOptionIdStr, out int selectedOptionId))
-                    {
-                        var selectedOption = question.AnswerOptions.FirstOrDefault(o => o.AnswerOptionId == selectedOptionId);
-                        if (selectedOption != null && selectedOption.IsCorrect)
-                            score++;
-                    }
+                    answerOptionId = a.AnswerOptionId,
+                    text = a.Text
+                })
+            })
+        });
+    }
+        
+
+    
+    // POST: api/takequiz/submit
+    [HttpPost("submit")]
+    public async Task<IActionResult> SubmitResult([FromBody] QuizResultCreateDto dto)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        // Her må loggen ligge **inne i metoden**
+        _logger.LogInformation("[TakeQuizApi] Submitting result for QuizId {QuizId} by user {UserName}", dto.QuizId, dto.UserName);
+
+        var quiz = await _repo.GetQuizById(dto.QuizId);
+        if (quiz == null)
+            return NotFound($"Quiz with id {dto.QuizId} not found");
+
+        var result = new QuizResult
+        {
+            QuizId = dto.QuizId,
+            UserName = dto.UserName,
+            Score = dto.Score
+        };
+
+        await _repo.AddResultAsync(result);
+
+        var response = new QuizResultDto
+        {
+            QuizResultId = result.QuizResultId,
+            QuizId = quiz.QuizId,
+            QuizTitle = quiz.Title,
+            UserName = result.UserName,
+            Score = result.Score,
+            TotalQuestions = quiz.Questions.Count,
+            Percentage = quiz.Questions.Count > 0 ? (double)result.Score / quiz.Questions.Count * 100 : 0
+        };
+
+        return Ok(response);
+    }
+
+    // Flere API-endepunkter her...
+}
+
+
+
+
+
+
+
+
+
+public class TakeQuizController : Controller
+{
+    private readonly IQuizRepository _repo;
+    private readonly ILogger<TakeQuizController> _logger;
+
+    public TakeQuizController(IQuizRepository repo, ILogger<TakeQuizController> logger)
+    {
+        _repo = repo;
+        _logger = logger;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        var quizzes = await _repo.GetAll();
+        if (quizzes == null)
+        {
+            _logger.LogError("[TakeQuizController] No quizzes found when executing _repo.GetAll()");
+            return NotFound("Quiz list not found");
+        }
+        return View(quizzes);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Take(int id)
+    {
+        var quiz = await _repo.GetQuizById(id);
+        if (quiz == null)
+        {
+            _logger.LogError("[TakeQuizController] Quiz not found for QuizId {QuizId:0000}", id);
+            return NotFound("Quiz not found");
+        }
+
+        return View(quiz);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Submit(int quizId, string userName, Dictionary<string, string> answers)
+    {
+        var quiz = await _repo.GetQuizById(quizId);
+        if (quiz == null)
+        {
+            _logger.LogError("[TakeQuizController] Quiz not found for QuizId {QuizId:0000} during submission", quizId);
+            return NotFound("Quiz not found");
+        }
+
+        // validation
+        bool hasErrors = false;
+
+        if (string.IsNullOrWhiteSpace(userName))
+        {
+            ModelState.AddModelError("userName", "User name is required.");
+            hasErrors = true;
+        }
+
+        var unansweredQuestions = new List<int>();
+        foreach (var question in quiz.Questions)
+        {
+            if (!answers.ContainsKey(question.QuestionId.ToString()))
+                unansweredQuestions.Add(question.QuestionId);
+        }
+
+        if (unansweredQuestions.Any())
+        {
+
+            ModelState.AddModelError("", "Please answer all questions before submitting.");
+            hasErrors = true;
+        }
+
+
+        ViewData["UserName"] = userName;
+        ViewData["Answers"] = answers;
+        ViewData["Unanswered"] = unansweredQuestions;
+
+        if (hasErrors)
+            return View("Take", quiz);
+
+        // SCORE
+        int score = 0;
+        foreach (var question in quiz.Questions)
+        {
+            if (answers.TryGetValue(question.QuestionId.ToString(), out var selectedOptionIdStr))
+            {
+                if (int.TryParse(selectedOptionIdStr, out int selectedOptionId))
+                {
+                    var selectedOption = question.AnswerOptions.FirstOrDefault(o => o.AnswerOptionId == selectedOptionId);
+                    if (selectedOption != null && selectedOption.IsCorrect)
+                        score++;
                 }
             }
-
-            var result = new QuizResult
-            {
-                UserName = userName,
-                QuizId = quiz.QuizId,
-                Quiz = quiz,
-                Score = score
-            };
-
-            return View("Result", result);
         }
 
-        // POST: /TakeQuiz/SaveAttempt
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveAttempt(int quizId, string userName, int score)
+        var result = new QuizResult
         {
-            var quiz = await _repo.GetQuizById(quizId);
-            if (quiz == null)
-            {
-                _logger.LogError("[TakeQuizController] Quiz not found for QuizId {QuizId:0000} when saving attempt", quizId);
-                return NotFound("Quiz not found");
-            }
+            UserName = userName,
+            QuizId = quiz.QuizId,
+            Quiz = quiz,
+            Score = score
+        };
 
-            var result = new QuizResult
-            {
-                UserName = userName,
-                QuizId = quiz.QuizId,
-                Quiz = quiz,
-                Score = score
-            };
+        return View("Result", result);
+    }
 
-            try
-            {
-                await _repo.AddResultAsync(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("[TakeQuizController] Failed to save attempt {@Result}, error: {Error}", result, ex.Message);
-                return BadRequest("Failed to save attempt");
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        // GET: /TakeQuiz/Attempts
-        [HttpGet]
-        public async Task<IActionResult> Attempts(int id) // id = QuizId
+    // POST: /TakeQuiz/SaveAttempt
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SaveAttempt(int quizId, string userName, int score)
+    {
+        var quiz = await _repo.GetQuizById(quizId);
+        if (quiz == null)
         {
-            IEnumerable<QuizResult> results;
-            try
-            {
-                results = await _repo.GetResultsForQuizAsync(id);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("[TakeQuizController] Failed to get attempts for QuizId {QuizId:0000}, error: {Error}", id, ex.Message);
-                return BadRequest("Failed to load attempts");
-            }
-
-            if (results == null || !results.Any())
-                results = new List<QuizResult>();
-
-            return View(results);
+            _logger.LogError("[TakeQuizController] Quiz not found for QuizId {QuizId:0000} when saving attempt", quizId);
+            return NotFound("Quiz not found");
         }
 
-        // GET: /TakeQuiz/Result
-        [HttpGet]
-        public IActionResult Result(QuizResult result)
+        var result = new QuizResult
         {
-            if (result == null)
-            {
-                _logger.LogWarning("[TakeQuizController] Result is null when accessing Result view");
-                return BadRequest("Result not found");
-            }
-            return View(result);
+            UserName = userName,
+            QuizId = quiz.QuizId,
+            Quiz = quiz,
+            Score = score
+        };
+
+        try
+        {
+            await _repo.AddResultAsync(result);
         }
+        catch (Exception ex)
+        {
+            _logger.LogError("[TakeQuizController] Failed to save attempt {@Result}, error: {Error}", result, ex.Message);
+            return BadRequest("Failed to save attempt");
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    // GET: /TakeQuiz/Attempts
+    [HttpGet]
+    public async Task<IActionResult> Attempts(int id) // id = QuizId
+    {
+        IEnumerable<QuizResult> results;
+        try
+        {
+            results = await _repo.GetResultsForQuizAsync(id);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("[TakeQuizController] Failed to get attempts for QuizId {QuizId:0000}, error: {Error}", id, ex.Message);
+            return BadRequest("Failed to load attempts");
+        }
+
+        if (results == null || !results.Any())
+            results = new List<QuizResult>();
+
+        return View(results);
+    }
+
+    // GET: /TakeQuiz/Result
+    [HttpGet]
+    public IActionResult Result(QuizResult result)
+    {
+        if (result == null)
+        {
+            _logger.LogWarning("[TakeQuizController] Result is null when accessing Result view");
+            return BadRequest("Result not found");
+        }
+        return View(result);
     }
 }
+

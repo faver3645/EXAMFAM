@@ -98,7 +98,7 @@ public class QuizAPIController : ControllerBase  // ControllerBase is sufficient
 
         return Ok(quizDto);
     }
-    
+
     [HttpPut("update/{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] QuizDto quizDto)
     {
@@ -137,6 +137,19 @@ public class QuizAPIController : ControllerBase  // ControllerBase is sufficient
 
         _logger.LogError("[QuizAPIController] Failed to update quiz {@Quiz}", existingQuiz);
         return StatusCode(500, "Internal server error while updating quiz");
+    }
+    
+
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        bool deleted = await _repo.Delete(id);
+        if (!deleted)
+        {
+            _logger.LogError("[QuizAPIController] Quiz deletion failed for QuizId {QuizId:0000}", id);
+            return BadRequest("Quiz deletion failed");
+        }
+        return NoContent();
     }
 
 }

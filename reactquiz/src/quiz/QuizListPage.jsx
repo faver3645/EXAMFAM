@@ -40,6 +40,28 @@ const QuizListPage = () => {
     quiz.Title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleQuizDeleted = async (quizId) => {
+  const confirmDelete = window.confirm(`Are you sure you want to delete quiz ${quizId}?`);
+  if (!confirmDelete) return;
+
+  try {
+    const response = await fetch(`${API_URL}/api/quizapi/delete/${quizId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete quiz');
+    }
+
+    // Fjern quiz fra state
+    setQuizzes(prev => prev.filter(q => q.QuizId !== quizId));
+    console.log('Quiz deleted:', quizId);
+  } catch (error) {
+    console.error('Error deleting quiz:', error);
+    setError('Failed to delete quiz.');
+  }
+};
+
   return (
     <div>
       <h2>All Quizzes</h2>
@@ -93,7 +115,7 @@ const QuizListPage = () => {
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => onItemDeleted(quiz.QuizId)}
+                  onClick={() => handleQuizDeleted(quiz.QuizId)}
                 >
                   Delete
                 </Button>

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const QuizForm = ({ onSubmit, initialData }) => {
   const [title, setTitle] = useState('');
   const [questions, setQuestions] = useState([]);
   const [saving, setSaving] = useState(false);
+  const navigate = useNavigate(); 
 
-  // Sett initial state fra initialData når komponenten mountes eller initialData endres
+  // Sett initial state når initialData endres (for update)
   useEffect(() => {
     if (initialData) {
       setTitle(initialData.title || '');
@@ -31,6 +33,7 @@ const QuizForm = ({ onSubmit, initialData }) => {
     }
   }, [initialData]);
 
+  // --- Spørsmål ---
   const handleAddQuestion = () => {
     setQuestions([
       ...questions,
@@ -50,6 +53,13 @@ const QuizForm = ({ onSubmit, initialData }) => {
     setQuestions(newQuestions);
   };
 
+  const handleDeleteQuestion = (index) => {
+    const newQuestions = [...questions];
+    newQuestions.splice(index, 1);
+    setQuestions(newQuestions);
+  };
+
+  // --- Svaralternativer ---
   const handleAddAnswer = (questionIndex) => {
     const newQuestions = [...questions];
     newQuestions[questionIndex].answerOptions.push({
@@ -65,6 +75,13 @@ const QuizForm = ({ onSubmit, initialData }) => {
     setQuestions(newQuestions);
   };
 
+  const handleDeleteAnswer = (questionIndex, answerIndex) => {
+    const newQuestions = [...questions];
+    newQuestions[questionIndex].answerOptions.splice(answerIndex, 1);
+    setQuestions(newQuestions);
+  };
+
+  // --- Submit ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -95,18 +112,27 @@ const QuizForm = ({ onSubmit, initialData }) => {
         {questions.map((q, i) => (
           <Card key={i} className="mb-3">
             <Card.Body>
-              <Form.Group className="mb-2">
+              <div className="d-flex justify-content-between align-items-center mb-2">
                 <Form.Label>Question {i + 1}</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter question text"
-                  value={q.text}
-                  onChange={(e) => handleQuestionChange(i, e.target.value)}
-                  required
-                />
-              </Form.Group>
+                <Button
+                  variant="link"
+                  size="sm"
+                  className="text-danger"
+                  onClick={() => handleDeleteQuestion(i)}
+                  disabled={questions.length <= 1} // minst ett spørsmål
+                >
+                  Delete Question
+                </Button>
+              </div>
+              <Form.Control
+                type="text"
+                placeholder="Enter question text"
+                value={q.text}
+                onChange={(e) => handleQuestionChange(i, e.target.value)}
+                required
+              />
 
-              <div className="ms-3">
+              <div className="ms-3 mt-2">
                 {q.answerOptions.map((a, j) => (
                   <div key={j} className="d-flex align-items-center mb-2">
                     <Form.Check
@@ -127,6 +153,15 @@ const QuizForm = ({ onSubmit, initialData }) => {
                       }
                       required
                     />
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="text-danger ms-2"
+                      onClick={() => handleDeleteAnswer(i, j)}
+                      disabled={q.answerOptions.length <= 1} // minst ett svar
+                    >
+                      Delete
+                    </Button>
                   </div>
                 ))}
 
@@ -158,6 +193,16 @@ const QuizForm = ({ onSubmit, initialData }) => {
         >
           {saving ? 'Saving...' : 'Save Quiz'}
         </Button>
+
+        <div className="d-flex justify-content-center mt-4 gap-3">
+        <Button
+          variant="secondary"
+          size="md"
+          onClick={() => navigate('/quiz')}
+        >
+          Cancel
+        </Button>
+      </div>
       </Form>
     </div>
   );
