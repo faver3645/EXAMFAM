@@ -68,44 +68,35 @@ public class TakeQuizApiController : ControllerBase
         
 
     
-    // POST: api/takequiz/submit
     [HttpPost("submit")]
-    public async Task<IActionResult> SubmitResult([FromBody] QuizResultCreateDto dto)
+    public async Task<IActionResult> Submit([FromBody] QuizSubmissionDto submission)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+        var quiz = await _repo.GetQuizById(submission.QuizId);
+        if (quiz == null) return NotFound("Quiz not found");
 
-        // Her må loggen ligge **inne i metoden**
-        _logger.LogInformation("[TakeQuizApi] Submitting result for QuizId {QuizId} by user {UserName}", dto.QuizId, dto.UserName);
-
-        var quiz = await _repo.GetQuizById(dto.QuizId);
-        if (quiz == null)
-            return NotFound($"Quiz with id {dto.QuizId} not found");
+        int score = 0;
+        foreach (var question in quiz.Questions)
+        {
+            if (submission.Answers.TryGetValue(question.QuestionId, out var selectedId))
+            {
+                var correctOption = question.AnswerOptions.FirstOrDefault(a => a.IsCorrect);
+                if (correctOption != null && correctOption.AnswerOptionId == selectedId)
+                    score++;
+            }
+        }
 
         var result = new QuizResult
         {
-            QuizId = dto.QuizId,
-            UserName = dto.UserName,
-            Score = dto.Score
+            QuizId = quiz.QuizId,
+            UserName = submission.UserName,
+            Score = score
         };
 
         await _repo.AddResultAsync(result);
 
-        var response = new QuizResultDto
-        {
-            QuizResultId = result.QuizResultId,
-            QuizId = quiz.QuizId,
-            QuizTitle = quiz.Title,
-            UserName = result.UserName,
-            Score = result.Score,
-            TotalQuestions = quiz.Questions.Count,
-            Percentage = quiz.Questions.Count > 0 ? (double)result.Score / quiz.Questions.Count * 100 : 0
-        };
-
-        return Ok(response);
+        return Ok(new { score }); 
     }
-
-    // Flere API-endepunkter her...
+    
 }
 
 

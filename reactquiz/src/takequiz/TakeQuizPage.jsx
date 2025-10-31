@@ -37,13 +37,15 @@ const TakeQuizPage = () => {
     }));
   };
 
-  // 🔹 Send inn quiz
+  // 🔹 Submit quiz
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Finn spørsmål som ikke er besvart
+    if (!quiz) return;
+
+    // Finn ubesvarte spørsmål
     const missing = quiz.questions
-      .filter((q) => !answers[q.questionId])
+      .filter((q) => !(q.questionId in answers))
       .map((q) => q.questionId);
 
     if (missing.length > 0) {
@@ -66,7 +68,16 @@ const TakeQuizPage = () => {
 
       if (!response.ok) throw new Error("Failed to submit quiz.");
 
-      navigate(`/takequiz/result/${quizId}`);
+      const result = await response.json();
+
+      // Naviger til ResultPage med state
+      navigate(`/takequiz/result/${quizId}`, {
+        state: {
+          quiz,
+          userName,
+          score: result.score ?? 0,
+        },
+      });
     } catch (err) {
       console.error(err);
       setError("Failed to submit quiz.");

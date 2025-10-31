@@ -1,34 +1,55 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function ResultPage({ result }) {
-  if (!result || !result.quiz) return <p>Loading...</p>;
+const ResultPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const totalQuestions = result.quiz.questions.length;
-  const percentage = Math.round((result.score / totalQuestions) * 100);
+  // Data sendes fra TakeQuizPage med navigate("/takequiz/result", { state: {...} })
+  const { quiz, userName, score } = location.state || {};
+  
+  if (!quiz) {
+    return <p className="text-center text-danger">No result data available.</p>;
+  }
 
-  const progressColor =
-    percentage >= 80
-      ? "bg-success"
-      : percentage >= 50
-      ? "bg-warning"
-      : "bg-danger";
+  const totalQuestions = quiz.questions.length;
+  const percentage = Math.round((score / totalQuestions) * 100);
+
+  // Bestem farge på progressbar
+  let progressColor = "bg-danger";
+  if (percentage >= 80) progressColor = "bg-success";
+  else if (percentage >= 50) progressColor = "bg-warning";
+
+  const handleSaveAttempt = async () => {
+    try {
+      const response = await fetch(`http://localhost:5082/api/takequizapi/saveattempt`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quizId: quiz.quizId,
+          userName,
+          score,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save attempt");
+      }
+
+      alert("Attempt saved successfully!");
+    } catch (error) {
+      console.error("Error saving attempt:", error);
+      alert("Failed to save attempt.");
+    }
+  };
 
   return (
-    <div>
-      <h2 className="mb-4 text-center">Quiz Result: {result.quiz.title}</h2>
+    <div className="container mt-5">
+      <h2 className="mb-4 text-center">Quiz Result: {quiz.title}</h2>
 
-      <div
-        className="card shadow-sm p-4 mb-4 mx-auto"
-        style={{ maxWidth: "600px" }}
-      >
-        <p>
-          <strong>User:</strong> {result.userName}
-        </p>
-        <p>
-          <strong>Score:</strong> {result.score} / {totalQuestions} (
-          {percentage}%)
-        </p>
+      <div className="card shadow-sm p-4 mb-4 mx-auto" style={{ maxWidth: "600px" }}>
+        <p><strong>User:</strong> {userName}</p>
+        <p><strong>Score:</strong> {score} / {totalQuestions} ({percentage}%)</p>
 
         <div className="progress mb-3" style={{ height: "25px" }}>
           <div
@@ -50,36 +71,26 @@ function ResultPage({ result }) {
           )}
         </p>
 
-        {/* Buttons */}
         <div className="text-center mt-4">
-          {/* Save Attempt – du kan koble denne til en API-kall-funksjon */}
-          <button
-            className="btn btn-success me-2"
-            onClick={() =>
-              console.log("Saving attempt...", {
-                quizId: result.quizId,
-                userName: result.userName,
-                score: result.score,
-              })
-            }
-          >
+          <button onClick={handleSaveAttempt} className="btn btn-success me-2">
             Save Attempt
           </button>
-
-          <Link
-            to={`/takequiz/take/${result.quizId}`}
+          <button
+            onClick={() => navigate(`/takequiz/take/${quiz.quizId}`)}
             className="btn btn-warning me-2"
           >
             Try Again 🔁
-          </Link>
-
-          <Link to="/takequiz" className="btn btn-primary">
+          </button>
+          <button
+            onClick={() => navigate("/takequiz")}
+            className="btn btn-primary"
+          >
             Back to Quizzes
-          </Link>
+          </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default ResultPage;
