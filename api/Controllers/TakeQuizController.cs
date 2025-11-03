@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using api.DAL;
 using api.DTOs;
@@ -21,24 +22,20 @@ public class TakeQuizApiController : ControllerBase
     [HttpGet("takequizlist")]
     public async Task<IActionResult> GetAllQuizzes()
     {
-        var quizzes = await _repo.GetAll();
-        if (quizzes == null || !quizzes.Any())
-        {
-            _logger.LogError("[TakeQuizController] No quizzes found when executing _repo.GetAll()");
-            return NotFound("Quiz list not found");
-        }
+    var quizzes = await _repo.GetAll();
+    if (quizzes == null || !quizzes.Any())
+        return NotFound("Quiz list not found");
 
-        // Du kan velge å returnere bare de nødvendige feltene
-        var quizDtos = quizzes.Select(q => new
-        {
-            quizId = q.QuizId,
-            title = q.Title
-        });
+    var quizDtos = quizzes.Select(q => new QuizDto
+    {
+        QuizId = q.QuizId,
+        Title = q.Title
+    }).ToList();
 
-        return Ok(quizDtos);
-    }
+    return Ok(quizDtos);
+}
 
-
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetQuiz(int id)
     {
@@ -49,21 +46,25 @@ public class TakeQuizApiController : ControllerBase
             return NotFound("Quiz not found");
         }
 
-        return Ok(new
+        // Map til DTO
+        var quizDto = new QuizDto
         {
-            quizId = quiz.QuizId,
-            title = quiz.Title,
-            questions = quiz.Questions.Select(q => new
+            QuizId = quiz.QuizId,
+            Title = quiz.Title,
+            Questions = quiz.Questions.Select(q => new QuestionDto
             {
-                questionId = q.QuestionId,
-                text = q.Text,
-                answerOptions = q.AnswerOptions.Select(a => new
+                QuestionId = q.QuestionId,
+                Text = q.Text,
+                AnswerOptions = q.AnswerOptions.Select(a => new AnswerOptionDto
                 {
-                    answerOptionId = a.AnswerOptionId,
-                    text = a.Text
-                })
-            })
-        });
+                    AnswerOptionId = a.AnswerOptionId,
+                    Text = a.Text
+                    // Ikke ta med IsCorrect, slik at brukeren ikke ser riktig svar
+                }).ToList()
+            }).ToList()
+        };
+
+        return Ok(quizDto);
     }
         
 
