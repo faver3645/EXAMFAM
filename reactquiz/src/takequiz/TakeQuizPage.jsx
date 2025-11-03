@@ -12,7 +12,7 @@ const TakeQuizPage = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // 🔹 Hent quiz-data fra API
+  // Hent quiz-data fra API
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
@@ -29,7 +29,6 @@ const TakeQuizPage = () => {
     fetchQuiz();
   }, [quizId]);
 
-  // 🔹 Oppdater svar
   const handleAnswerChange = (questionId, answerOptionId) => {
     setAnswers((prev) => ({
       ...prev,
@@ -37,16 +36,13 @@ const TakeQuizPage = () => {
     }));
   };
 
-  // 🔹 Submit quiz
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!quiz) return;
 
-    // Finn ubesvarte spørsmål
-    const missing = quiz.questions
-      .filter((q) => !(q.questionId in answers))
-      .map((q) => q.questionId);
+    const missing = quiz.Questions
+      .filter((q) => !(q.QuestionId in answers))
+      .map((q) => q.QuestionId);
 
     if (missing.length > 0) {
       setUnanswered(missing);
@@ -54,9 +50,9 @@ const TakeQuizPage = () => {
     }
 
     const payload = {
-      quizId: quiz.quizId,
-      userName,
-      answers,
+      QuizId: quiz.QuizId,
+      UserName: userName,
+      Answers: answers,
     };
 
     try {
@@ -70,8 +66,7 @@ const TakeQuizPage = () => {
 
       const result = await response.json();
 
-      // Naviger til ResultPage med state
-      navigate(`/takequiz/result/${quizId}`, {
+      navigate(`/takequiz/result/${quiz.QuizId}`, {
         state: {
           quiz,
           userName,
@@ -84,15 +79,12 @@ const TakeQuizPage = () => {
     }
   };
 
-  if (error)
-    return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
-
-  if (!quiz)
-    return <p style={{ textAlign: "center" }}>Loading quiz...</p>;
+  if (error) return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
+  if (!quiz) return <p style={{ textAlign: "center" }}>Loading quiz...</p>;
 
   return (
     <div className="container mt-4" style={{ maxWidth: "800px" }}>
-      <h2 className="mb-4 text-center">{quiz.title}</h2>
+      <h2 className="mb-4 text-center">{quiz.Title}</h2>
 
       <form onSubmit={handleSubmit}>
         {/* USER NAME */}
@@ -109,41 +101,34 @@ const TakeQuizPage = () => {
         </div>
 
         {/* QUESTIONS */}
-        {quiz.questions.map((q, index) => (
+        {quiz.Questions.map((q, index) => (
           <div
-            key={q.questionId}
-            className={`card mb-4 shadow-sm ${
-              unanswered.includes(q.questionId) ? "border-danger" : ""
-            }`}
+            key={q.QuestionId}
+            className={`card mb-4 shadow-sm ${unanswered.includes(q.QuestionId) ? "border-danger" : ""}`}
           >
             <div className="card-body">
               <h5 className="card-title">
-                Question {index + 1}: {q.text}
+                Question {index + 1}: {q.Text}
               </h5>
 
-              {q.answerOptions.map((option) => (
-                <div className="form-check mb-2" key={option.answerOptionId}>
+              {q.AnswerOptions.map((option) => (
+                <div className="form-check mb-2" key={option.AnswerOptionId}>
                   <input
                     className="form-check-input"
                     type="radio"
-                    name={`answers_${q.questionId}`}
-                    id={`q${q.questionId}_a${option.answerOptionId}`}
-                    value={option.answerOptionId}
-                    checked={answers[q.questionId] === option.answerOptionId}
-                    onChange={() =>
-                      handleAnswerChange(q.questionId, option.answerOptionId)
-                    }
+                    name={`answers_${q.QuestionId}`}
+                    id={`q${q.QuestionId}_a${option.AnswerOptionId}`}
+                    value={option.AnswerOptionId}
+                    checked={answers[q.QuestionId] === option.AnswerOptionId}
+                    onChange={() => handleAnswerChange(q.QuestionId, option.AnswerOptionId)}
                   />
-                  <label
-                    className="form-check-label"
-                    htmlFor={`q${q.questionId}_a${option.answerOptionId}`}
-                  >
-                    {option.text}
+                  <label className="form-check-label" htmlFor={`q${q.QuestionId}_a${option.AnswerOptionId}`}>
+                    {option.Text}
                   </label>
                 </div>
               ))}
 
-              {unanswered.includes(q.questionId) && (
+              {unanswered.includes(q.QuestionId) && (
                 <span className="text-danger d-block mt-2">
                   Please select an answer for this question.
                 </span>
@@ -152,14 +137,8 @@ const TakeQuizPage = () => {
           </div>
         ))}
 
-        <button type="submit" className="btn btn-success btn-md">
-          Submit Quiz
-        </button>
-        <button
-          type="button"
-          className="btn btn-secondary btn-md ms-2"
-          onClick={() => navigate("/takequiz")}
-        >
+        <button type="submit" className="btn btn-success btn-md">Submit Quiz</button>
+        <button type="button" className="btn btn-secondary btn-md ms-2" onClick={() => navigate("/takequiz")}>
           Cancel
         </button>
       </form>

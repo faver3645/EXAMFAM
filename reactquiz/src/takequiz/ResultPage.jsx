@@ -12,7 +12,7 @@ const ResultPage = () => {
     return <p className="text-center text-danger">No result data available.</p>;
   }
 
-  const totalQuestions = quiz.questions.length;
+  const totalQuestions = quiz.Questions.length;
   const percentage = Math.round((score / totalQuestions) * 100);
 
   // Bestem farge på progressbar
@@ -26,9 +26,9 @@ const ResultPage = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          quizId: quiz.quizId,
-          userName,
-          score,
+          QuizId: quiz.QuizId,
+          UserName: userName,
+          Score: score,
         }),
       });
 
@@ -45,7 +45,7 @@ const ResultPage = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4 text-center">Quiz Result: {quiz.title}</h2>
+      <h2 className="mb-4 text-center">Quiz Result: {quiz.Title}</h2>
 
       <div className="card shadow-sm p-4 mb-4 mx-auto" style={{ maxWidth: "600px" }}>
         <p><strong>User:</strong> {userName}</p>
@@ -76,7 +76,7 @@ const ResultPage = () => {
             Save Attempt
           </button>
           <button
-            onClick={() => navigate(`/takequiz/take/${quiz.quizId}`)}
+            onClick={() => navigate(`/takequiz/take/${quiz.QuizId}`)}
             className="btn btn-warning me-2"
           >
             Try Again 🔁

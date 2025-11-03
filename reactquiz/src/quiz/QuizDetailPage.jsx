@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5082";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const QuizDetailPage = () => {
   const { quizId } = useParams();
