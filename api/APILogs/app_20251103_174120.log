@@ -1,0 +1,5 @@
+2025-11-03 17:41:22.215 +01:00 [INF] User profile is available. Using 'C:\Users\Aliza Mudassar\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-03 17:41:22.690 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-03 17:41:22.699 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-03 17:41:22.700 +01:00 [INF] Hosting environment: Development
+2025-11-03 17:41:22.701 +01:00 [INF] Content root path: C:\Users\Aliza Mudassar\OneDrive - OsloMet\webapplikasjoner\EXAMFAM\api

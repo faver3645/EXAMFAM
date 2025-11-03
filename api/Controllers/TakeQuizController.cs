@@ -18,7 +18,6 @@ namespace api.Controllers
             _logger = logger;
         }
 
-        // 🔹 Hent liste av alle quizer
         [HttpGet("takequizlist")]
         public async Task<IActionResult> GetAllQuizzes()
         {
@@ -35,7 +34,6 @@ namespace api.Controllers
             return Ok(quizDtos);
         }
 
-        // 🔹 Hent en quiz med spørsmål og svaralternativer
         [HttpGet("{id}")]
         public async Task<IActionResult> GetQuiz(int id)
         {
@@ -65,7 +63,6 @@ namespace api.Controllers
             return Ok(quizDto);
         }
 
-        // 🔹 Submit quiz-svar (uten å lagre forsøk)
         [HttpPost("submit")]
         public async Task<IActionResult> Submit([FromBody] QuizSubmissionDto submission)
         {
@@ -86,7 +83,6 @@ namespace api.Controllers
             return Ok(new { score });
         }
 
-        // 🔹 Save attempt når brukeren trykker "Save Attempt"
         [HttpPost("saveattempt")]
         public async Task<IActionResult> SaveAttempt([FromBody] QuizResultDto dto)
         {
@@ -112,7 +108,6 @@ namespace api.Controllers
             }
         }
 
-        // 🔹 Hent alle forsøk for en quiz (API for React)
         [HttpGet("attempts/{quizId}")]
         public async Task<IActionResult> GetAttempts(int quizId)
         {
@@ -139,6 +134,22 @@ namespace api.Controllers
             {
                 _logger.LogError("[TakeQuizApiController] GetAttempts({QuizId}) failed: {Message}", quizId, ex.Message);
                 return StatusCode(500, "Failed to load attempts");
+            }
+        }
+
+        // 🔹 Ny DELETE-endpoint for å slette et forsøk
+        [HttpDelete("attempt/{attemptId}")]
+        public async Task<IActionResult> DeleteAttempt(int attemptId)
+        {
+            try
+            {
+                await _repo.DeleteAttemptAsync(attemptId);
+                return Ok(new { message = "Attempt deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("[TakeQuizApiController] DeleteAttempt({AttemptId}) failed: {Message}", attemptId, ex.Message);
+                return StatusCode(500, "Failed to delete attempt");
             }
         }
     }
