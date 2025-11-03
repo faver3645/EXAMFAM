@@ -72,31 +72,14 @@ public class QuizAPIController : ControllerBase  // ControllerBase is sufficient
     [HttpGet("{id}")]
     public async Task<IActionResult> GetQuiz(int id)
     {
-        var quiz = await _repo.GetQuizById(id); // Sørg for at du har denne metoden i IQuizRepository
-        if (quiz == null)
-        {
-            _logger.LogWarning("[QuizAPIController] Quiz with id {Id} not found", id);
-            return NotFound();
-        }
-
-        var quizDto = new QuizDto
-        {
-            QuizId = quiz.QuizId,
-            Title = quiz.Title,
-            Questions = quiz.Questions?.Select(q => new QuestionDto
+            var quiz = await _repo.GetQuizById(id);
+            if (quiz == null)
             {
-                QuestionId = q.QuestionId,
-                Text = q.Text,
-                AnswerOptions = q.AnswerOptions?.Select(a => new AnswerOptionDto
-                {
-                    AnswerOptionId = a.AnswerOptionId,
-                    Text = a.Text,
-                    IsCorrect = a.IsCorrect
-                }).ToList()
-            }).ToList()
-        };
+                _logger.LogError("[QuizController] Quiz not found for QuizId {QuizId:0000}", id);
+                return NotFound("Quiz not found");
+            }
 
-        return Ok(quizDto);
+            return Ok(quiz);
     }
 
     [HttpPut("update/{id}")]

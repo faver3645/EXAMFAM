@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
-const API_URL = 'http://localhost:5082'
+const API_URL = import.meta.env.VITE_API_URL;
 
 const QuizListPage = () => {
   const [quizzes, setQuizzes] = useState([]);

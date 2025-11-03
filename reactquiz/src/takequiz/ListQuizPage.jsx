@@ -12,9 +12,7 @@ const ListQuizPage = () => {
     const fetchQuizzes = async () => {
       try {
         const response = await fetch(`${API_URL}/api/takequizapi/takequizlist`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         setQuizzes(data);
       } catch (err) {
@@ -26,9 +24,7 @@ const ListQuizPage = () => {
     fetchQuizzes();
   }, []);
 
-  if (error) {
-    return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
-  }
+  if (error) return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
 
   return (
     <div className="container mt-4">
@@ -37,20 +33,20 @@ const ListQuizPage = () => {
       <div className="row">
         {quizzes.length > 0 ? (
           quizzes.map((quiz) => (
-            <div className="col-md-4 mb-3" key={quiz.quizId}>
+            <div className="col-md-4 mb-3" key={quiz.QuizId}>
               <div className="card shadow-sm h-100">
                 <div className="card-body d-flex flex-column">
-                  <h5 className="card-title">{quiz.title}</h5>
+                  <h5 className="card-title">{quiz.Title}</h5>
                   <div className="mt-auto">
                     <button
                       className="btn btn-primary me-2"
-                      onClick={() => navigate(`/takequiz/take/${quiz.quizId}`)}
+                      onClick={() => navigate(`/takequiz/take/${quiz.QuizId}`)}
                     >
                       Start Quiz
                     </button>
                     <button
                       className="btn btn-success"
-                      onClick={() => navigate(`/takequiz/${quiz.quizId}/attempts`)}
+                      onClick={() => navigate(`/takequiz/${quiz.QuizId}/attempts`)}
                     >
                       View Attempts
                     </button>

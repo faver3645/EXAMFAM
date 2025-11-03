@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import QuizForm from './QuizForm'; // Importer skjema-komponenten vi lagde tidligere
 
-const API_URL = 'http://localhost:5082'; // Hardkodet URL til API-et
+const API_URL = import.meta.env.VITE_API_URL;
 
 const QuizCreatePage = () => {
   const navigate = useNavigate();
