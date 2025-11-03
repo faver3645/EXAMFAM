@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using api.Models;
 using api.DAL;
@@ -37,7 +38,7 @@ public class QuizAPIController : ControllerBase  // ControllerBase is sufficient
         return Ok(quizDtos);
     }
 
-
+    [Authorize]
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] QuizDto quizDto)
     {
@@ -82,6 +83,7 @@ public class QuizAPIController : ControllerBase  // ControllerBase is sufficient
             return Ok(quiz);
     }
 
+    [Authorize]
     [HttpPut("update/{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] QuizDto quizDto)
     {
@@ -121,8 +123,9 @@ public class QuizAPIController : ControllerBase  // ControllerBase is sufficient
         _logger.LogError("[QuizAPIController] Failed to update quiz {@Quiz}", existingQuiz);
         return StatusCode(500, "Internal server error while updating quiz");
     }
-    
 
+
+    [Authorize]
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> Delete(int id)
     {
