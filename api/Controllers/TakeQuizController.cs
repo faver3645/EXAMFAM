@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using api.DAL;
 using api.DTOs;
@@ -34,7 +35,7 @@ public class TakeQuizApiController : ControllerBase
     return Ok(quizDtos);
 }
 
-
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetQuiz(int id)
     {
