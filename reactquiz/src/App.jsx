@@ -13,42 +13,50 @@ import QuizUpdatePage from "./quiz/QuizUpdatePage";
 import ListQuizPage from './takequiz/ListQuizPage';
 import TakeQuizPage from './takequiz/TakeQuizPage';
 import ResultPage from './takequiz/ResultPage';
+import { AuthProvider } from './auth/AuthContext';
+import ProtectedRoute from './auth/ProtectedRoute';
+import LoginPage from './auth/LoginPage';
+import RegisterPage from './auth/RegisterPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <div className="d-flex flex-column min-vh-100">
-        {/* 🔹 Global navigation bar */}
-        <NavMenu />
+    <AuthProvider>
+      <Router>
+        <div className="d-flex flex-column min-vh-100">
+          <NavMenu />
 
-        {/* 🔹 Main content container */}
-        <Container className="flex-fill py-4">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/quiz" element={<QuizListPage />} />
-            <Route path="/quizcreate" element={<QuizCreatePage />} />
-            <Route path="/quizdetails/:quizId" element={<QuizDetailPage />} />
-            <Route path="/quizupdate/:quizId" element={<QuizUpdatePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/help" element={<HelpPage />} /> 
-            <Route path="/contact" element={<ContactPage />} />
+          <Container className="flex-fill py-4">
+            <Routes>
+              {/* Offentlige ruter */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/help" element={<HelpPage />} />
+              <Route path="/contact" element={<ContactPage />} />
 
-            {/* 🔹 Take Quiz system */}
-            <Route path="/takequiz" element={<ListQuizPage />} />
-            <Route path="/takequiz/take/:quizId" element={<TakeQuizPage />} />
-            <Route path="/takequiz/result/:quizId" element={<ResultPage />} />
+              {/* Beskyttede ruter */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/quiz" element={<QuizListPage />} />
+                <Route path="/quizcreate" element={<QuizCreatePage />} />
+                <Route path="/quizdetails/:quizId" element={<QuizDetailPage />} />
+                <Route path="/quizupdate/:quizId" element={<QuizUpdatePage />} />
+                <Route path="/takequiz" element={<ListQuizPage />} />
+                <Route path="/takequiz/take/:quizId" element={<TakeQuizPage />} />
+                <Route path="/takequiz/result/:quizId" element={<ResultPage />} />
+              </Route>
 
+              {/* Ukjente ruter */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Container>
 
-            {/* Redirect unknown routes to home */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Container>
-
-        {/* 🔹 Shared footer shown on every page */}
-        <Footer />
-      </div>
-    </Router>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
