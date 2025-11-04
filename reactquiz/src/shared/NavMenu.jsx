@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap'; // For React Router-kompatible lenker
+import { LinkContainer } from 'react-router-bootstrap';
+import AuthSection from '../auth/AuthSection'; // Legg til AuthSection
 
 export default function NavMenu() {
   return (
@@ -13,7 +14,7 @@ export default function NavMenu() {
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {/* Left-side nav links */}
+          {/* Venstre-side lenker */}
           <Nav className="me-auto">
             <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
@@ -31,7 +32,7 @@ export default function NavMenu() {
               <Nav.Link>Take Quiz</Nav.Link>
             </LinkContainer>
 
-            {/* Optional dropdown */}
+            {/* Dropdown */}
             <NavDropdown title="More" id="nav-dropdown">
               <LinkContainer to="/about">
                 <NavDropdown.Item>About</NavDropdown.Item>
@@ -46,14 +47,11 @@ export default function NavMenu() {
             </NavDropdown>
           </Nav>
 
-          {/* Right-side nav (optional login/profile buttons) */}
-          <Nav>
-            <LinkContainer to="/login">
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
-          </Nav>
+          {/* Høyre-side: AuthSection */}
+          <AuthSection />
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
+ 

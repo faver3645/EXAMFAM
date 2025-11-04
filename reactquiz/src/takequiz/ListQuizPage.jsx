@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const API_URL = "http://localhost:5082";
+import { fetchQuizzes } from "./TakeQuizService"; // <-- bruk tjenesten
 
 const ListQuizPage = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -9,11 +8,9 @@ const ListQuizPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchQuizzes = async () => {
+    const loadQuizzes = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/takequizapi/takequizlist`);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const data = await response.json();
+        const data = await fetchQuizzes();
         setQuizzes(data);
       } catch (err) {
         console.error(err);
@@ -21,7 +18,7 @@ const ListQuizPage = () => {
       }
     };
 
-    fetchQuizzes();
+    loadQuizzes();
   }, []);
 
   if (error) return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
