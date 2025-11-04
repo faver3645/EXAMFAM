@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchQuizzes } from "./TakeQuizService"; // <-- bruk tjenesten
+import { fetchAvailableQuizzes } from "./TakeQuizService";
 
 const ListQuizPage = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -8,18 +8,18 @@ const ListQuizPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadQuizzes = async () => {
-      try {
-        const data = await fetchQuizzes();
-        setQuizzes(data);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to load quizzes.");
-      }
-    };
+  const loadQuizzes = async () => {
+    try {
+      const data = await fetchAvailableQuizzes(); // <-- riktig funksjon
+      setQuizzes(data);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load quizzes.");
+    }
+  };
 
-    loadQuizzes();
-  }, []);
+  loadQuizzes();
+}, []);
 
   if (error) return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
 

@@ -1,25 +1,30 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import HomePage from './home/HomePage';
-import QuizListPage from './quiz/QuizListPage';
-import QuizCreatePage from './quiz/QuizCreatePage';
-import NavMenu from './shared/NavMenu';
-import Footer from './shared/Footer'; 
-import AboutPage from './shared/AboutPage';
-import ContactPage from './shared/ContactPage';
-import HelpPage from './shared/HelpPage';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+
+// Behold dine originale stier (ikke endret)
+import HomePage from "./home/HomePage";
+import QuizListPage from "./quiz/QuizListPage";
+import QuizCreatePage from "./quiz/QuizCreatePage";
+import NavMenu from "./shared/NavMenu";
+import Footer from "./shared/Footer";
+import AboutPage from "./shared/AboutPage";
+import ContactPage from "./shared/ContactPage";
+import HelpPage from "./shared/HelpPage";
 import QuizDetailPage from "./quiz/QuizDetailPage";
 import QuizUpdatePage from "./quiz/QuizUpdatePage";
-import ListQuizPage from './takequiz/ListQuizPage';
-import TakeQuizPage from './takequiz/TakeQuizPage';
-import ResultPage from './takequiz/ResultPage';
-import { AuthProvider } from './auth/AuthContext';
-import ProtectedRoute from './auth/ProtectedRoute';
-import LoginPage from './auth/LoginPage';
-import RegisterPage from './auth/RegisterPage';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import AttemptsPage from './takequiz/AttemptsPage';
-import './App.css';
+import ListQuizPage from "./takequiz/ListQuizPage";
+import TakeQuizPage from "./takequiz/TakeQuizPage";
+import ResultPage from "./takequiz/ResultPage";
+
+// Auth (hvis du bruker disse)
+import { AuthProvider } from "./auth/AuthContext";
+import ProtectedRoute from "./auth/ProtectedRoute";
+import LoginPage from "./auth/LoginPage";
+import RegisterPage from "./auth/RegisterPage";
+import AttemptsPage from "./takequiz/AttemptsPage";
 
 function App() {
   return (
@@ -30,29 +35,36 @@ function App() {
 
           <Container className="flex-fill py-4">
             <Routes>
-              {/* Offentlige ruter */}
+              {/* Public routes */}
               <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/quiz" element={<QuizListPage />} />
+              <Route path="/quizcreate" element={<QuizCreatePage />} />
+              <Route path="/quizdetails/:quizId" element={<QuizDetailPage />} />
+              <Route path="/quizupdate/:quizId" element={<QuizUpdatePage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/help" element={<HelpPage />} />
               <Route path="/contact" element={<ContactPage />} />
 
-              {/* Beskyttede ruter */}
+              {/* Auth routes */}
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+
+              {/* Protected quiz-management routes */}
               <Route element={<ProtectedRoute />}>
+                {/* keep management routes protected if desired */}
                 <Route path="/quiz" element={<QuizListPage />} />
                 <Route path="/quizcreate" element={<QuizCreatePage />} />
                 <Route path="/quizdetails/:quizId" element={<QuizDetailPage />} />
                 <Route path="/quizupdate/:quizId" element={<QuizUpdatePage />} />
               </Route>
-            {/* 🔹 Take Quiz system */}
-            <Route path="/takequiz" element={<ListQuizPage />} />
-            <Route path="/takequiz/take/:quizId" element={<TakeQuizPage />} />
-            <Route path="/takequiz/result/:quizId" element={<ResultPage />} />
-            <Route path="/takequiz/:quizId/attempts" element={<AttemptsPage />} />
 
+              {/* Take Quiz system (public) */}
+              <Route path="/takequiz" element={<ListQuizPage />} />
+              <Route path="/takequiz/take/:quizId" element={<TakeQuizPage />} />
+              <Route path="/takequiz/result/:quizId" element={<ResultPage />} />
+              <Route path="/takequiz/:quizId/attempts" element={<AttemptsPage />} />
 
-              {/* Ukjente ruter */}
+              {/* Fallback */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Container>
