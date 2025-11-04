@@ -13,6 +13,7 @@
           "Microsoft.AspNetCore.Identity.UI": "8.0.8",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "8.0.21",
           "Microsoft.AspNetCore.OpenApi": "8.0.7",
+          "Microsoft.EntityFrameworkCore": "8.0.8",
           "Microsoft.EntityFrameworkCore.Design": "8.0.8",
           "Microsoft.EntityFrameworkCore.Proxies": "8.0.7",
           "Microsoft.EntityFrameworkCore.Sqlite": "8.0.7",

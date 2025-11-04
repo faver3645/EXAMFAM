@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\api.csproj": {}
+    "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\api.csproj": {
+    "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\api.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\obj\\",
+        "projectPath": "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\Aliza Mudassar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Aliza Mudassar\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -62,6 +62,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -123,7 +127,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.415/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

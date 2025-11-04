@@ -580,3 +580,4 @@
 2025-11-03 18:03:09.034 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 7.8334ms
 2025-11-03 18:03:09.034 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
 2025-11-03 18:03:09.035 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 200 284 application/json; charset=utf-8 8.8816ms
+2025-11-04 08:33:06.917 +01:00 [INF] Application is shutting down...

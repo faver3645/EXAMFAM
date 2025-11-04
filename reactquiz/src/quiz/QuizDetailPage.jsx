@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { fetchQuizById } from "./QuizService"; 
 
 const QuizDetailPage = () => {
   const { quizId } = useParams();
@@ -10,13 +9,9 @@ const QuizDetailPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchQuiz = async () => {
+    const loadQuiz = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/quizapi/${quizId}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        const data = await fetchQuizById(quizId); 
         setQuiz(data);
       } catch (err) {
         console.error(err);
@@ -24,7 +19,7 @@ const QuizDetailPage = () => {
       }
     };
 
-    fetchQuiz();
+    loadQuiz();
   }, [quizId]);
 
   if (error) return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
@@ -69,7 +64,6 @@ const QuizDetailPage = () => {
         <p>No questions available.</p>
       )}
 
-      {/* Wrapper for knappen slik at den havner under listen */}
       <div style={{ marginTop: "30px" }}>
         <button
           className="btn btn-secondary"

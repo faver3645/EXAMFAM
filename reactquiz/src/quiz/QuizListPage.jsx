@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { fetchQuizzes, deleteQuiz } from './QuizService'; // <-- bruk QuizService
 
 const QuizListPage = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -12,71 +11,61 @@ const QuizListPage = () => {
 
   const navigate = useNavigate();
 
-
-  const fetchQuizzes = async () => {
-    setLoading(true); // Set loading to true when starting the fetch
-    setError(null);   // Clear any previous errors
+  // Hent alle quizzes
+  const fetchAllQuizzes = async () => {
+    setLoading(true);
+    setError(null);
 
     try {
-      const response = await fetch(`${API_URL}/api/quizapi/quizlist`); 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
+      const data = await fetchQuizzes();
       setQuizzes(data);
-      console.log(data);
-    } catch (error) {
-      console.error(`There was a problem with the fetch operation: ${error.message}`);
+    } catch (err) {
+      console.error('Failed to fetch quizzes:', err);
       setError('Failed to fetch quizzes.');
     } finally {
-      setLoading(false); // Set loading to false once the fetch is complete
+      setLoading(false);
     }
-  };  
+  };
+
   useEffect(() => {
-    fetchQuizzes();
+    fetchAllQuizzes();
   }, []);
 
-   const filteredQuizzes = quizzes.filter(quiz =>
+  const filteredQuizzes = quizzes.filter(quiz =>
     quiz.Title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleQuizDeleted = async (quizId) => {
-  const confirmDelete = window.confirm(`Are you sure you want to delete quiz ${quizId}?`);
-  if (!confirmDelete) return;
+    const confirmDelete = window.confirm(`Are you sure you want to delete quiz ${quizId}?`);
+    if (!confirmDelete) return;
 
-  try {
-    const response = await fetch(`${API_URL}/api/quizapi/delete/${quizId}`, {
-      method: 'DELETE',
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete quiz');
+    try {
+      await deleteQuiz(quizId);
+      setQuizzes(prev => prev.filter(q => q.QuizId !== quizId));
+    } catch (err) {
+      console.error('Failed to delete quiz:', err);
+      setError('Failed to delete quiz.');
     }
-
-    // Fjern quiz fra state
-    setQuizzes(prev => prev.filter(q => q.QuizId !== quizId));
-    console.log('Quiz deleted:', quizId);
-  } catch (error) {
-    console.error('Error deleting quiz:', error);
-    setError('Failed to delete quiz.');
-  }
-};
+  };
 
   return (
     <div>
       <h2>All Quizzes</h2>
-      <Button onClick={fetchQuizzes} className="btn btn-primary mb-3" disabled={loading}>
+      <Button onClick={fetchAllQuizzes} className="btn btn-primary mb-3" disabled={loading}>
         {loading ? 'Loading...' : 'Refresh Quizzes'}
       </Button>
+
       <Form.Group className="mb-3">        
-      <Form.Control
-        type="text"
-        placeholder="Search by title"
-        value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
-      />  
+        <Form.Control
+          type="text"
+          placeholder="Search by title"
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+        />  
       </Form.Group>       
+
       {error && <p style={{ color: 'red' }}>{error}</p>}
+
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -91,7 +80,6 @@ const QuizListPage = () => {
               <td>{quiz.QuizId}</td>
               <td>{quiz.Title}</td>
               <td className="text-center">
-                {/* Details-knapp */}
                 <Button
                   variant="primary"
                   size="sm"
@@ -101,7 +89,6 @@ const QuizListPage = () => {
                   Details
                 </Button>
 
-                {/* Update-knapp */}
                 <Button
                   variant="success"
                   size="sm"
@@ -111,7 +98,6 @@ const QuizListPage = () => {
                   Update
                 </Button>
 
-                {/* Delete-knapp */}
                 <Button
                   variant="danger"
                   size="sm"
@@ -124,7 +110,8 @@ const QuizListPage = () => {
           ))}
         </tbody>
       </Table>
-       <Button href='/quizcreate' className="btn btn-secondary mt-3">Create quiz</Button>  
+
+      <Button href='/quizcreate' className="btn btn-secondary mt-3">Create quiz</Button>  
     </div>
   );
 };
