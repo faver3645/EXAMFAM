@@ -9,11 +9,19 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = api
 build_property.RootNamespace = api
+<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\Muniira\OneDrive - OsloMet\Skrivebord\EksamenFAM\EXAMFAM\api\
+=======
+build_property.ProjectDir = C:\Users\Aliza Mudassar\OneDrive - OsloMet\webapplikasjoner\EXAMFAM\api\
+>>>>>>> 0058567d865f7a36dbed058cefee12203374503c
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+<<<<<<< HEAD
 build_property.MSBuildProjectDirectory = C:\Users\Muniira\OneDrive - OsloMet\Skrivebord\EksamenFAM\EXAMFAM\api
+=======
+build_property.MSBuildProjectDirectory = C:\Users\Aliza Mudassar\OneDrive - OsloMet\webapplikasjoner\EXAMFAM\api
+>>>>>>> 0058567d865f7a36dbed058cefee12203374503c
 build_property._RazorSourceGeneratorDebug = 

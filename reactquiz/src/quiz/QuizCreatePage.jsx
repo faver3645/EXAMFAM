@@ -1,30 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import QuizForm from './QuizForm'; // Importer skjema-komponenten vi lagde tidligere
-
-const API_URL = import.meta.env.VITE_API_URL;
+import QuizForm from './QuizForm'; 
+import { createQuiz } from "./QuizService";
 
 const QuizCreatePage = () => {
   const navigate = useNavigate();
 
   const handleQuizCreated = async (quiz) => {
     try {
-      const response = await fetch(`${API_URL}/api/QuizAPI/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(quiz),
-      });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      const data = await createQuiz(quiz);
 
-      const data = await response.json();
       console.log('Quiz created successfully:', data);
 
-      // Naviger tilbake til quiz-listen
+    
       navigate('/quiz');
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);

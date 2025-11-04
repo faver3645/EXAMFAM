@@ -109,7 +109,7 @@ namespace api.DAL
             catch (Exception e)
             {
                 _logger.LogError("[QuizRepository] AddResultAsync failed for result {@Result}: {Message}", result, e.Message);
-                throw; // evt. kast videre for at controller kan hÃ¥ndtere
+                throw;
             }
         }
 
@@ -129,6 +129,29 @@ namespace api.DAL
             {
                 _logger.LogError("[QuizRepository] GetResultsForQuizAsync({QuizId}) failed: {Message}", quizId, e.Message);
                 return new List<QuizResult>();
+            }
+        }
+
+        
+        public async Task DeleteAttemptAsync(int attemptId)
+        {
+            try
+            {
+                var attempt = await _db.UserQuizResults.FindAsync(attemptId);
+                if (attempt == null)
+                {
+                    _logger.LogWarning("[QuizRepository] DeleteAttemptAsync failed, attempt not found: {AttemptId}", attemptId);
+                    return;
+                }
+
+                _db.UserQuizResults.Remove(attempt);
+                await _db.SaveChangesAsync();
+                _logger.LogInformation("[QuizRepository] Attempt {AttemptId} deleted successfully", attemptId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[QuizRepository] DeleteAttemptAsync({AttemptId}) failed: {Message}", attemptId, e.Message);
+                throw;
             }
         }
     }

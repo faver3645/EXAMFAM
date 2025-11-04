@@ -18,6 +18,7 @@ import ProtectedRoute from './auth/ProtectedRoute';
 import LoginPage from './auth/LoginPage';
 import RegisterPage from './auth/RegisterPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AttemptsPage from './takequiz/AttemptsPage';
 import './App.css';
 
 function App() {
@@ -43,10 +44,13 @@ function App() {
                 <Route path="/quizcreate" element={<QuizCreatePage />} />
                 <Route path="/quizdetails/:quizId" element={<QuizDetailPage />} />
                 <Route path="/quizupdate/:quizId" element={<QuizUpdatePage />} />
-                <Route path="/takequiz" element={<ListQuizPage />} />
-                <Route path="/takequiz/take/:quizId" element={<TakeQuizPage />} />
-                <Route path="/takequiz/result/:quizId" element={<ResultPage />} />
               </Route>
+            {/* 🔹 Take Quiz system */}
+            <Route path="/takequiz" element={<ListQuizPage />} />
+            <Route path="/takequiz/take/:quizId" element={<TakeQuizPage />} />
+            <Route path="/takequiz/result/:quizId" element={<ResultPage />} />
+            <Route path="/takequiz/:quizId/attempts" element={<AttemptsPage />} />
+
 
               {/* Ukjente ruter */}
               <Route path="*" element={<Navigate to="/" replace />} />
