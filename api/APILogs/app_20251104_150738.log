@@ -1,0 +1,41 @@
+2025-11-04 15:07:39.458 +01:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-04 15:07:39.835 +01:00 [INF] Now listening on: https://localhost:7262
+2025-11-04 15:07:39.838 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-04 15:07:39.845 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-04 15:07:39.850 +01:00 [INF] Hosting environment: Development
+2025-11-04 15:07:39.854 +01:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
+2025-11-04 15:07:42.448 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/swagger/index.html - null null
+2025-11-04 15:07:42.617 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/swagger/index.html - 200 null text/html;charset=utf-8 169.9125ms
+2025-11-04 15:07:43.353 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/swagger/v1/swagger.json - null null
+2025-11-04 15:07:43.583 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 229.559ms
+2025-11-04 15:08:25.290 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/api/Auth/login - application/json-patch+json 55
+2025-11-04 15:08:25.479 +01:00 [INF] CORS policy execution failed.
+2025-11-04 15:08:25.481 +01:00 [INF] Request origin http://localhost:5082 does not have permission to access the resource.
+2025-11-04 15:08:25.693 +01:00 [INF] Executing endpoint 'api.Controllers.AuthController.Login (api)'
+2025-11-04 15:08:25.790 +01:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(api.DTOs.LoginDto) on controller api.Controllers.AuthController (api).
+2025-11-04 15:08:27.773 +01:00 [WRN] [AuthAPIController] user not authorised for admin123
+2025-11-04 15:08:27.786 +01:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2025-11-04 15:08:27.858 +01:00 [INF] Executed action api.Controllers.AuthController.Login (api) in 2063.2533ms
+2025-11-04 15:08:27.859 +01:00 [INF] Executed endpoint 'api.Controllers.AuthController.Login (api)'
+2025-11-04 15:08:27.865 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/api/Auth/login - 401 165 application/problem+json; charset=utf-8 2580.8129ms
+2025-11-04 15:08:58.448 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/api/Auth/register - application/json-patch+json 86
+2025-11-04 15:08:58.509 +01:00 [INF] CORS policy execution failed.
+2025-11-04 15:08:58.510 +01:00 [INF] Request origin http://localhost:5082 does not have permission to access the resource.
+2025-11-04 15:08:58.539 +01:00 [INF] Executing endpoint 'api.Controllers.AuthController.Register (api)'
+2025-11-04 15:08:58.621 +01:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(api.DTOs.RegisterDto) on controller api.Controllers.AuthController (api).
+2025-11-04 15:08:59.670 +01:00 [INF] [AuthAPIController] user registered for admin123
+2025-11-04 15:08:59.677 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-04 15:08:59.695 +01:00 [INF] Executed action api.Controllers.AuthController.Register (api) in 1073.5738ms
+2025-11-04 15:08:59.695 +01:00 [INF] Executed endpoint 'api.Controllers.AuthController.Register (api)'
+2025-11-04 15:08:59.698 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/api/Auth/register - 200 42 application/json; charset=utf-8 1254.1227ms
+2025-11-04 15:09:10.604 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/api/Auth/login - application/json-patch+json 55
+2025-11-04 15:09:10.605 +01:00 [INF] CORS policy execution failed.
+2025-11-04 15:09:10.606 +01:00 [INF] Request origin http://localhost:5082 does not have permission to access the resource.
+2025-11-04 15:09:10.611 +01:00 [INF] Executing endpoint 'api.Controllers.AuthController.Login (api)'
+2025-11-04 15:09:10.612 +01:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(api.DTOs.LoginDto) on controller api.Controllers.AuthController (api).
+2025-11-04 15:09:10.735 +01:00 [INF] [AuthAPIController] user authorised for admin123
+2025-11-04 15:09:10.763 +01:00 [INF] [AuthAPIController] JWT token created for admin123
+2025-11-04 15:09:10.831 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-04 15:09:10.835 +01:00 [INF] Executed action api.Controllers.AuthController.Login (api) in 222.4865ms
+2025-11-04 15:09:10.836 +01:00 [INF] Executed endpoint 'api.Controllers.AuthController.Login (api)'
+2025-11-04 15:09:10.836 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/api/Auth/login - 200 488 application/json; charset=utf-8 232.7106ms

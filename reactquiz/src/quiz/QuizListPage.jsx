@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Form, Table } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Button, Form, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { fetchQuizzes, deleteQuiz } from './QuizService'; // <-- bruk QuizService
+import { fetchQuizzes, deleteQuiz } from "./QuizService";
+import { useAuth } from "../auth/AuthContext"; // <-- legg til useAuth
 
 const QuizListPage = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const { user } = useAuth(); // <-- hent user
 
   const navigate = useNavigate();
 
@@ -15,13 +17,12 @@ const QuizListPage = () => {
   const fetchAllQuizzes = async () => {
     setLoading(true);
     setError(null);
-
     try {
       const data = await fetchQuizzes();
       setQuizzes(data);
     } catch (err) {
-      console.error('Failed to fetch quizzes:', err);
-      setError('Failed to fetch quizzes.');
+      console.error("Failed to fetch quizzes:", err);
+      setError("Failed to fetch quizzes.");
     } finally {
       setLoading(false);
     }
@@ -31,40 +32,46 @@ const QuizListPage = () => {
     fetchAllQuizzes();
   }, []);
 
-  const filteredQuizzes = quizzes.filter(quiz =>
+  const filteredQuizzes = quizzes.filter((quiz) =>
     quiz.Title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleQuizDeleted = async (quizId) => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete quiz ${quizId}?`);
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete quiz ${quizId}?`
+    );
     if (!confirmDelete) return;
 
     try {
       await deleteQuiz(quizId);
-      setQuizzes(prev => prev.filter(q => q.QuizId !== quizId));
+      setQuizzes((prev) => prev.filter((q) => q.QuizId !== quizId));
     } catch (err) {
-      console.error('Failed to delete quiz:', err);
-      setError('Failed to delete quiz.');
+      console.error("Failed to delete quiz:", err);
+      setError("Failed to delete quiz.");
     }
   };
 
   return (
     <div>
       <h2>All Quizzes</h2>
-      <Button onClick={fetchAllQuizzes} className="btn btn-primary mb-3" disabled={loading}>
-        {loading ? 'Loading...' : 'Refresh Quizzes'}
+      <Button
+        onClick={fetchAllQuizzes}
+        className="btn btn-primary mb-3"
+        disabled={loading}
+      >
+        {loading ? "Loading..." : "Refresh Quizzes"}
       </Button>
 
-      <Form.Group className="mb-3">        
+      <Form.Group className="mb-3">
         <Form.Control
           type="text"
           placeholder="Search by title"
           value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-        />  
-      </Form.Group>       
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </Form.Group>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <Table striped bordered hover>
         <thead>
@@ -89,29 +96,39 @@ const QuizListPage = () => {
                   Details
                 </Button>
 
-                <Button
-                  variant="success"
-                  size="sm"
-                  className="me-2"
-                  onClick={() => navigate(`/quizupdate/${quiz.QuizId}`)}
-                >
-                  Update
-                </Button>
+                {/* Skjul Update og Delete hvis ikke logget inn */}
+                {user && (
+                  <>
+                    <Button
+                      variant="success"
+                      size="sm"
+                      className="me-2"
+                      onClick={() => navigate(`/quizupdate/${quiz.QuizId}`)}
+                    >
+                      Update
+                    </Button>
 
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleQuizDeleted(quiz.QuizId)}
-                >
-                  Delete
-                </Button>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => handleQuizDeleted(quiz.QuizId)}
+                    >
+                      Delete
+                    </Button>
+                  </>
+                )}
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
 
-      <Button href='/quizcreate' className="btn btn-secondary mt-3">Create quiz</Button>  
+      {/* Skjul Create-knappen hvis ikke logget inn */}
+      {user && (
+        <Button href="/quizcreate" className="btn btn-secondary mt-3">
+          Create quiz
+        </Button>
+      )}
     </div>
   );
 };

@@ -1,0 +1,36 @@
+2025-11-04 14:58:18.637 +01:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-04 14:58:18.784 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-04 14:58:18.787 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-04 14:58:18.788 +01:00 [INF] Hosting environment: Development
+2025-11-04 14:58:18.788 +01:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
+2025-11-04 14:58:32.793 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/Auth/login - null null
+2025-11-04 14:58:32.889 +01:00 [INF] CORS policy execution successful.
+2025-11-04 14:58:32.901 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/Auth/login - 204 null null 117.438ms
+2025-11-04 14:58:32.908 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/api/Auth/login - application/json 46
+2025-11-04 14:58:32.913 +01:00 [INF] CORS policy execution successful.
+2025-11-04 14:58:33.184 +01:00 [INF] Executing endpoint 'api.Controllers.AuthController.Login (api)'
+2025-11-04 14:58:33.235 +01:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(api.DTOs.LoginDto) on controller api.Controllers.AuthController (api).
+2025-11-04 14:58:35.723 +01:00 [INF] [AuthAPIController] user authorised for Fanny432
+2025-11-04 14:58:35.734 +01:00 [INF] [AuthAPIController] JWT token created for Fanny432
+2025-11-04 14:58:35.811 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-04 14:58:35.874 +01:00 [INF] Executed action api.Controllers.AuthController.Login (api) in 2627.8317ms
+2025-11-04 14:58:35.874 +01:00 [INF] Executed endpoint 'api.Controllers.AuthController.Login (api)'
+2025-11-04 14:58:35.887 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/api/Auth/login - 200 491 application/json; charset=utf-8 2978.2962ms
+2025-11-04 14:58:35.953 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - null null
+2025-11-04 14:58:35.980 +01:00 [INF] CORS policy execution successful.
+2025-11-04 14:58:35.986 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-04 14:58:36.004 +01:00 [INF] Route matched with {action = "QuizList", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] QuizList() on controller api.Controllers.QuizAPIController (api).
+2025-11-04 14:58:36.509 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-11-04 14:58:36.630 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[api.Models.Quiz, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-04 14:58:36.651 +01:00 [INF] Executed action api.Controllers.QuizAPIController.QuizList (api) in 646.9885ms
+2025-11-04 14:58:36.652 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-04 14:58:36.652 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - 200 284 application/json; charset=utf-8 699.4767ms
+2025-11-04 14:58:36.655 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - null null
+2025-11-04 14:58:36.657 +01:00 [INF] CORS policy execution successful.
+2025-11-04 14:58:36.662 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-04 14:58:36.663 +01:00 [INF] Route matched with {action = "QuizList", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] QuizList() on controller api.Controllers.QuizAPIController (api).
+2025-11-04 14:58:36.701 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[api.Models.Quiz, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-04 14:58:36.701 +01:00 [INF] Executed action api.Controllers.QuizAPIController.QuizList (api) in 37.9549ms
+2025-11-04 14:58:36.702 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-04 14:58:36.702 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - 200 284 application/json; charset=utf-8 47.3915ms
+2025-11-04 14:59:52.102 +01:00 [INF] Application is shutting down...
