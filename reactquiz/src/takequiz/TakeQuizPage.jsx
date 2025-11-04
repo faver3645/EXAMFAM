@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
-const API_URL = "http://localhost:5082";
+import { fetchQuizById, submitQuiz } from "./TakeQuizService"; // <-- bruk tjenesten
 
 const TakeQuizPage = () => {
   const { quizId } = useParams();
@@ -12,13 +11,10 @@ const TakeQuizPage = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Hent quiz-data fra API
   useEffect(() => {
-    const fetchQuiz = async () => {
+    const getQuiz = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/takequizapi/${quizId}`);
-        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-        const data = await response.json();
+        const data = await fetchQuizById(quizId);
         setQuiz(data);
       } catch (err) {
         console.error(err);
@@ -26,7 +22,7 @@ const TakeQuizPage = () => {
       }
     };
 
-    fetchQuiz();
+    getQuiz();
   }, [quizId]);
 
   const handleAnswerChange = (questionId, answerOptionId) => {
@@ -56,15 +52,7 @@ const TakeQuizPage = () => {
     };
 
     try {
-      const response = await fetch(`${API_URL}/api/takequizapi/submit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error("Failed to submit quiz.");
-
-      const result = await response.json();
+      const result = await submitQuiz(payload);
 
       navigate(`/takequiz/result/${quiz.QuizId}`, {
         state: {
@@ -87,7 +75,6 @@ const TakeQuizPage = () => {
       <h2 className="mb-4 text-center">{quiz.Title}</h2>
 
       <form onSubmit={handleSubmit}>
-        {/* USER NAME */}
         <div className="mb-4">
           <label className="form-label">Your Name:</label>
           <input
@@ -100,7 +87,6 @@ const TakeQuizPage = () => {
           />
         </div>
 
-        {/* QUESTIONS */}
         {quiz.Questions.map((q, index) => (
           <div
             key={q.QuestionId}

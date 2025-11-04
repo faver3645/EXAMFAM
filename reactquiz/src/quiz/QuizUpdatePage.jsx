@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import QuizForm from './QuizForm';
-
-const API_URL = import.meta.env.VITE_API_URL;
-
+import { fetchQuizById, updateQuiz } from './QuizService'; 
 const QuizUpdatePage = () => {
   const { quizId } = useParams();
   const navigate = useNavigate();
@@ -11,13 +9,11 @@ const QuizUpdatePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Hent eksisterende quiz
+  // Hent eksisterende quiz via QuizService
   useEffect(() => {
-    const fetchQuiz = async () => {
+    const loadQuiz = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/quizapi/${quizId}`);
-        if (!response.ok) throw new Error('Failed to fetch quiz');
-        const data = await response.json();
+        const data = await fetchQuizById(quizId);
 
         // Tilpass data for QuizForm
         const formattedQuiz = {
@@ -40,26 +36,14 @@ const QuizUpdatePage = () => {
       }
     };
 
-    fetchQuiz();
+    loadQuiz();
   }, [quizId]);
 
-  // Oppdater quiz via API
+  // Oppdater quiz via QuizService
   const handleQuizUpdated = async (updatedQuiz) => {
     try {
-      const response = await fetch(`${API_URL}/api/quizapi/update/${quizId}`, {
-        method: 'PUT', // bruk PUT for oppdatering
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedQuiz),
-      });
-
-      if (!response.ok) {
-        const text = await response.text();
-        throw new Error(text || 'Failed to update quiz');
-      }
-
-      const data = await response.json();
-      console.log('Quiz updated successfully:', data);
-
+      await updateQuiz(quizId, updatedQuiz);
+      console.log('Quiz updated successfully');
       navigate('/quiz'); // tilbake til quiz-listen
     } catch (err) {
       console.error(err);

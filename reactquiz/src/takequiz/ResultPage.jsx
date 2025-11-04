@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { saveAttempt } from "./TakeQuizService"; // <-- bruk tjenesten
 
 const ResultPage = () => {
   const navigate = useNavigate();
@@ -14,30 +15,20 @@ const ResultPage = () => {
   const totalQuestions = quiz.Questions.length;
   const percentage = Math.round((score / totalQuestions) * 100);
 
-  // Bestem farge på progressbar
   let progressColor = "bg-danger";
   if (percentage >= 80) progressColor = "bg-success";
   else if (percentage >= 50) progressColor = "bg-warning";
 
   const handleSaveAttempt = async () => {
     try {
-      const response = await fetch(`http://localhost:5082/api/takequizapi/saveattempt`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          QuizId: quiz.QuizId,
-          UserName: userName,
-          Score: score,
-        }),
+      await saveAttempt({
+        QuizId: quiz.QuizId,
+        UserName: userName,
+        Score: score,
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to save attempt");
-      }
 
       setStatus({ message: "✅ Attempt saved successfully!", type: "success" });
 
-      // Fjern statusmelding etter 3 sekunder
       setTimeout(() => setStatus({ message: "", type: "" }), 3000);
     } catch (error) {
       console.error("Error saving attempt:", error);
