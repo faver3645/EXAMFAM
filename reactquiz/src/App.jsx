@@ -13,6 +13,7 @@ import QuizUpdatePage from "./quiz/QuizUpdatePage";
 import ListQuizPage from './takequiz/ListQuizPage';
 import TakeQuizPage from './takequiz/TakeQuizPage';
 import ResultPage from './takequiz/ResultPage';
+import AttemptsPage from './takequiz/AttemptsPage';
 import './App.css';
 
 function App() {
@@ -38,6 +39,8 @@ function App() {
             <Route path="/takequiz" element={<ListQuizPage />} />
             <Route path="/takequiz/take/:quizId" element={<TakeQuizPage />} />
             <Route path="/takequiz/result/:quizId" element={<ResultPage />} />
+            <Route path="/takequiz/:quizId/attempts" element={<AttemptsPage />} />
+
 
 
             {/* Redirect unknown routes to home */}

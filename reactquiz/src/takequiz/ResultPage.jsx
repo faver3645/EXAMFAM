@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Data sendes fra TakeQuizPage med navigate("/takequiz/result", { state: {...} })
   const { quiz, userName, score } = location.state || {};
-  
+  const [status, setStatus] = useState({ message: "", type: "" });
+
   if (!quiz) {
     return <p className="text-center text-danger">No result data available.</p>;
   }
@@ -36,10 +35,14 @@ const ResultPage = () => {
         throw new Error("Failed to save attempt");
       }
 
-      alert("Attempt saved successfully!");
+      setStatus({ message: "✅ Attempt saved successfully!", type: "success" });
+
+      // Fjern statusmelding etter 3 sekunder
+      setTimeout(() => setStatus({ message: "", type: "" }), 3000);
     } catch (error) {
       console.error("Error saving attempt:", error);
-      alert("Failed to save attempt.");
+      setStatus({ message: "❌ Failed to save attempt.", type: "danger" });
+      setTimeout(() => setStatus({ message: "", type: "" }), 3000);
     }
   };
 
@@ -48,6 +51,12 @@ const ResultPage = () => {
       <h2 className="mb-4 text-center">Quiz Result: {quiz.Title}</h2>
 
       <div className="card shadow-sm p-4 mb-4 mx-auto" style={{ maxWidth: "600px" }}>
+        {status.message && (
+          <div className={`alert alert-${status.type} text-center`} role="alert">
+            {status.message}
+          </div>
+        )}
+
         <p><strong>User:</strong> {userName}</p>
         <p><strong>Score:</strong> {score} / {totalQuestions} ({percentage}%)</p>
 
