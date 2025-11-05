@@ -20,8 +20,18 @@ const register = async (data) => {
   });
 
   if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.message || "Registration failed");
+    let message = "Registration failed";
+    try {
+      const err = await response.json();
+      if (Array.isArray(err)) {
+        message = err.map(e => e.Description).join(", ");
+      } else if (err.message) {
+        message = err.message;
+      }
+    } catch {
+      // Ikke JSON, behold generic message
+    }
+    throw new Error(message);
   }
 };
 
