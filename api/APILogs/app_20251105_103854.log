@@ -1,0 +1,27 @@
+2025-11-05 10:38:55.154 +01:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-05 10:38:55.270 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-05 10:38:55.279 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-05 10:38:55.280 +01:00 [INF] Hosting environment: Development
+2025-11-05 10:38:55.280 +01:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
+2025-11-05 10:39:14.648 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/Auth/register - null null
+2025-11-05 10:39:14.701 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:39:14.712 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/Auth/register - 204 null null 66.4417ms
+2025-11-05 10:39:14.718 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/api/Auth/register - application/json 80
+2025-11-05 10:39:14.723 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:39:14.769 +01:00 [INF] Executing endpoint 'api.Controllers.AuthController.Register (api)'
+2025-11-05 10:39:14.811 +01:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(api.DTOs.RegisterDto) on controller api.Controllers.AuthController (api).
+2025-11-05 10:39:15.168 +01:00 [WRN] [AuthAPIController] user registration failed for eksempel123
+2025-11-05 10:39:15.175 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.Collections.Generic.List`1[[Microsoft.AspNetCore.Identity.IdentityError, Microsoft.Extensions.Identity.Core, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]'.
+2025-11-05 10:39:15.226 +01:00 [INF] Executed action api.Controllers.AuthController.Register (api) in 411.0279ms
+2025-11-05 10:39:15.226 +01:00 [INF] Executed endpoint 'api.Controllers.AuthController.Register (api)'
+2025-11-05 10:39:15.228 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/api/Auth/register - 400 224 application/json; charset=utf-8 509.8114ms
+2025-11-05 10:39:16.715 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/api/Auth/register - application/json 80
+2025-11-05 10:39:16.716 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:39:16.718 +01:00 [INF] Executing endpoint 'api.Controllers.AuthController.Register (api)'
+2025-11-05 10:39:16.718 +01:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(api.DTOs.RegisterDto) on controller api.Controllers.AuthController (api).
+2025-11-05 10:39:16.730 +01:00 [WRN] [AuthAPIController] user registration failed for eksempel123
+2025-11-05 10:39:16.731 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.Collections.Generic.List`1[[Microsoft.AspNetCore.Identity.IdentityError, Microsoft.Extensions.Identity.Core, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]'.
+2025-11-05 10:39:16.732 +01:00 [INF] Executed action api.Controllers.AuthController.Register (api) in 13.7315ms
+2025-11-05 10:39:16.732 +01:00 [INF] Executed endpoint 'api.Controllers.AuthController.Register (api)'
+2025-11-05 10:39:16.732 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/api/Auth/register - 400 224 application/json; charset=utf-8 17.58ms
+2025-11-05 10:43:25.224 +01:00 [INF] Application is shutting down...

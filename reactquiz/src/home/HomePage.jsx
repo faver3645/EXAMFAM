@@ -1,37 +1,9 @@
-import React, { useState } from "react";
-import { Button, Modal, Form, InputGroup } from "react-bootstrap";
+import React from "react";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
-  const [showLogin, setShowLogin] = useState(false);
-  const [role, setRole] = useState("teacher"); // default role
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  // Hardcoded credentials for demo
-  const credentials = {
-    teacher: { email: "teacher@example.com", password: "teacher123" },
-    student: { email: "student@example.com", password: "student123" },
-  };
-
-  const handleLoginOpen = () => {
-    setShowLogin(true);
-    setError("");
-    setEmail("");
-    setPassword("");
-  };
-
-  const handleLoginClose = () => setShowLogin(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email === credentials[role].email && password === credentials[role].password) {
-      alert(`Logged in successfully as ${role}!`);
-      handleLoginClose();
-    } else {
-      setError("Invalid email or password.");
-    }
-  };
+  const navigate = useNavigate();
 
   return (
     <div className="bg-light min-vh-100 d-flex flex-column justify-content-center text-center">
@@ -43,8 +15,19 @@ export default function HomePage() {
         </p>
 
         <div className="d-flex justify-content-center gap-3 flex-wrap">
-          <Button variant="primary" size="lg" onClick={handleLoginOpen}>
-            Login
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() => navigate("/quizcreate")}
+          >
+            Create Quiz
+          </Button>
+          <Button
+            variant="success"
+            size="lg"
+            onClick={() => navigate("/takequiz")}
+          >
+            Take Quiz
           </Button>
         </div>
       </div>
@@ -89,64 +72,24 @@ export default function HomePage() {
           <p className="mb-4">
             Whether you’re a student, teacher, or trivia lover — MyQuiz makes quiz creation fun and easy.
           </p>
-          <Button variant="light" size="lg" onClick={handleLoginOpen}>
-            Start Now
-          </Button>
+          <div className="d-flex justify-content-center gap-3 flex-wrap">
+            <Button
+              variant="light"
+              size="lg"
+              onClick={() => navigate("/quizcreate")}
+            >
+              Create Quiz
+            </Button>
+            <Button
+              variant="light"
+              size="lg"
+              onClick={() => navigate("/takequiz")}
+            >
+              Take Quiz
+            </Button>
+          </div>
         </div>
       </section>
-
-      {/* Login Modal */}
-      <Modal show={showLogin} onHide={handleLoginClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Role</Form.Label>
-              <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
-                <option value="teacher">Teacher</option>
-                <option value="student">Student</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formEmail">
-              <Form.Label>Email address</Form.Label>
-              <InputGroup>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </InputGroup>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            {error && <p className="text-danger mb-3">{error}</p>}
-
-            <Button variant="primary" type="submit" className="w-100 mb-2">
-              Login
-            </Button>
-          </Form>
-
-          <p className="small mt-2 text-muted">
-            Teacher: teacher@example.com / teacher123 <br />
-            Student: student@example.com / student123
-          </p>
-        </Modal.Body>
-      </Modal>
     </div>
   );
 }

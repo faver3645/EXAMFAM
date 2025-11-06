@@ -1,50 +1,88 @@
-import { useState } from "react";
-import authService from "./AuthService";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Form, Button, Container, Alert } from 'react-bootstrap';
+import authService from './AuthService';
 
-export default function RegisterPage() {
-  const [form, setForm] = useState({ username: "", email: "", password: "" });
-  const [msg, setMsg] = useState("");
+const RegisterPage = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
     try {
-      await authService.register(form);
-      setMsg("Registration successful!");
-      navigate("/login");
+      await authService.register(formData);
+      setSuccess('Registration successful! You can now log in.');
+      setTimeout(() => navigate('/login'), 2000); // Redirect after 2 seconds
     } catch (err) {
-      setMsg(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
+      console.error(err);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Container className="mt-5">
       <h2>Register</h2>
-      <input
-        name="username"
-        value={form.username}
-        onChange={handleChange}
-        placeholder="Username"
-      />
-      <input
-        name="email"
-        value={form.email}
-        onChange={handleChange}
-        placeholder="Email"
-      />
-      <input
-        name="password"
-        type="password"
-        value={form.password}
-        onChange={handleChange}
-        placeholder="Password"
-      />
-      <button type="submit">Register</button>
-      {msg && <p>{msg}</p>}
-    </form>
+
+      {error && <Alert variant="danger">{error}</Alert>}
+      {success && <Alert variant="success">{success}</Alert>}
+
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Register
+        </Button>
+      </Form>
+    </Container>
   );
-}
+};
+
+export default RegisterPage;

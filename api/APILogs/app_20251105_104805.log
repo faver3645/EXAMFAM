@@ -1,0 +1,41 @@
+2025-11-05 10:48:06.328 +01:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-05 10:48:06.491 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-05 10:48:06.496 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-05 10:48:06.497 +01:00 [INF] Hosting environment: Development
+2025-11-05 10:48:06.497 +01:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
+2025-11-05 10:48:43.103 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/register - null null
+2025-11-05 10:48:43.159 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:48:43.171 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/register - 204 null null 70.9532ms
+2025-11-05 10:48:43.176 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/register - application/json 77
+2025-11-05 10:48:43.179 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:48:43.355 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/register - 404 0 null 176.728ms
+2025-11-05 10:48:43.359 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost:5082/register, Response status code: 404
+2025-11-05 10:49:34.207 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/register - null null
+2025-11-05 10:49:34.209 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:49:34.209 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/register - 204 null null 2.3142ms
+2025-11-05 10:49:34.212 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/register - application/json 80
+2025-11-05 10:49:34.212 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:49:34.215 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/register - 404 0 null 2.7641ms
+2025-11-05 10:49:34.215 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost:5082/register, Response status code: 404
+2025-11-05 10:50:25.287 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/register - null null
+2025-11-05 10:50:25.288 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:50:25.288 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/register - 204 null null 0.7168ms
+2025-11-05 10:50:25.290 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/register - application/json 77
+2025-11-05 10:50:25.291 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:50:25.294 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/register - 404 0 null 3.17ms
+2025-11-05 10:50:25.294 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost:5082/register, Response status code: 404
+2025-11-05 10:51:58.771 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/Auth//register - null null
+2025-11-05 10:51:58.774 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:51:58.775 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/Auth//register - 204 null null 3.7585ms
+2025-11-05 10:51:58.777 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/api/Auth//register - application/json 77
+2025-11-05 10:51:58.777 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:51:58.777 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/api/Auth//register - 404 0 null 0.4523ms
+2025-11-05 10:51:58.778 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost:5082/api/Auth//register, Response status code: 404
+2025-11-05 10:52:59.531 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/register - null null
+2025-11-05 10:52:59.531 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:52:59.532 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/register - 204 null null 1.3185ms
+2025-11-05 10:52:59.534 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/register - application/json 80
+2025-11-05 10:52:59.535 +01:00 [INF] CORS policy execution successful.
+2025-11-05 10:52:59.535 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/register - 404 0 null 1.0505ms
+2025-11-05 10:52:59.535 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost:5082/register, Response status code: 404
+2025-11-05 10:56:28.307 +01:00 [INF] Application is shutting down...

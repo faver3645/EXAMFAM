@@ -1,40 +1,62 @@
-import { useState } from "react";
-import { useAuth } from "./AuthContext";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useAuth } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { Form, Button, Container, Alert } from 'react-bootstrap';
 
-export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+const LoginPage = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
     try {
       await login({ username, password });
-      navigate("/quiz");
-    } catch {
-      setError("Invalid credentials");
+      navigate('/items'); // Redirect to a protected page or dashboard on success
+    } catch (err) {
+      setError('Invalid username or password.');
+      console.error(err);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Container className="mt-5">
       <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <input 
-        value={username} 
-        onChange={e => setUsername(e.target.value)} 
-        placeholder="Username" 
-      />
-      <input 
-        type="password" 
-        value={password} 
-        onChange={e => setPassword(e.target.value)} 
-        placeholder="Password" 
-      />
-      <button type="submit">Login</button>
-    </form>
+
+      {error && <Alert variant="danger">{error}</Alert>}
+
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formBasicUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Login
+        </Button>
+      </Form>
+    </Container>
   );
-}
+};
+
+export default LoginPage;
