@@ -10,10 +10,7 @@ const QuizCreatePage = () => {
     try {
 
       const data = await createQuiz(quiz);
-
       console.log('Quiz created successfully:', data);
-
-    
       navigate('/quiz');
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);

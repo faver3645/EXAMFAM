@@ -16,6 +16,7 @@ const TakeQuizPage = () => {
       try {
         const data = await fetchQuizById(quizId);
         setQuiz(data);
+        console.log(data);
       } catch (err) {
         console.error(err);
         setError("Failed to load quiz.");
@@ -84,6 +85,8 @@ const TakeQuizPage = () => {
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             required
+            pattern="[0-9a-zA-ZæøåÆØÅ. \-]{2,20}" // Regular expression pattern
+            title="The title must be numbers or letters and between 2 to 20 characters."
           />
         </div>
 

@@ -4,31 +4,41 @@ import { fetchAvailableQuizzes } from "./TakeQuizService";
 
 const ListQuizPage = () => {
   const [quizzes, setQuizzes] = useState([]);
+  const [loading, setLoading] = useState(true); // loading state
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-  const loadQuizzes = async () => {
-    try {
-      const data = await fetchAvailableQuizzes(); // <-- riktig funksjon
-      setQuizzes(data);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to load quizzes.");
-    }
-  };
+    const loadQuizzes = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await fetchAvailableQuizzes();
+        console.log("Fetched quizzes:", data); // log data
+        setQuizzes(data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load quizzes.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  loadQuizzes();
-}, []);
-
-  if (error) return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
+    loadQuizzes();
+  }, []);
 
   return (
     <div className="container mt-4">
       <h2 className="text-center mb-4">Available Quizzes</h2>
 
+      {/* Error */}
+      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+
       <div className="row">
-        {quizzes.length > 0 ? (
+        {/* Loading */}
+        {loading ? (
+          <p className="text-center">Loading quizzes...</p>
+        ) : quizzes.length > 0 ? (
           quizzes.map((quiz) => (
             <div className="col-md-4 mb-3" key={quiz.QuizId}>
               <div className="card shadow-sm h-100">
@@ -43,7 +53,9 @@ const ListQuizPage = () => {
                     </button>
                     <button
                       className="btn btn-success"
-                      onClick={() => navigate(`/takequiz/${quiz.QuizId}/attempts`)}
+                      onClick={() =>
+                        navigate(`/takequiz/${quiz.QuizId}/attempts`)
+                      }
                     >
                       View Attempts
                     </button>

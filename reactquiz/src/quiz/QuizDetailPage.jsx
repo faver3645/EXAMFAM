@@ -13,6 +13,7 @@ const QuizDetailPage = () => {
       try {
         const data = await fetchQuizById(quizId); 
         setQuiz(data);
+        console.log(data);
       } catch (err) {
         console.error(err);
         setError("Failed to fetch quiz.");

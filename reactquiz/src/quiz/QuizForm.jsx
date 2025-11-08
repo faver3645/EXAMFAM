@@ -83,17 +83,20 @@ const QuizForm = ({ onSubmit, initialData }) => {
 
   // --- Submit ---
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSaving(true);
+  e.preventDefault();
+  setSaving(true);
 
-    const quizData = { title, questions };
+  const quizData = { title, questions };
 
-    try {
-      await onSubmit(quizData);
-    } finally {
-      setSaving(false);
-    }
-  };
+  try {
+    console.log("Submitting quiz data:", quizData); 
+    await onSubmit(quizData);
+  } catch (err) {
+    console.error("Error submitting quiz:", err);
+  } finally {
+    setSaving(false);
+  }
+};
 
   return (
     <div className="container mt-4">
@@ -106,6 +109,8 @@ const QuizForm = ({ onSubmit, initialData }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+            pattern="[0-9a-zA-ZæøåÆØÅ. \-]{2,20}" // Regular expression pattern
+            title="The title must be numbers or letters and between 2 to 20 characters."
           />
         </Form.Group>
 
@@ -130,6 +135,8 @@ const QuizForm = ({ onSubmit, initialData }) => {
                 value={q.text}
                 onChange={(e) => handleQuestionChange(i, e.target.value)}
                 required
+                pattern="[0-9a-zA-ZæøåÆØÅ. \-]{2,20}" // Regular expression pattern
+                title="The field must be numbers or letters and between 2 to 20 characters."
               />
 
               <div className="ms-3 mt-2">
@@ -152,6 +159,8 @@ const QuizForm = ({ onSubmit, initialData }) => {
                         handleAnswerChange(i, j, 'text', e.target.value)
                       }
                       required
+                      pattern="[0-9a-zA-ZæøåÆØÅ. \-]{2,20}" // Regular expression pattern
+                      title="The field must be numbers or letters and between 2 to 20 characters."
                     />
                     <Button
                       variant="link"

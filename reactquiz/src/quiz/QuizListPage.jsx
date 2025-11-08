@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { fetchQuizzes, deleteQuiz } from "./QuizService";
-import { useAuth } from "../auth/AuthContext"; // <-- legg til useAuth
+import { useAuth } from "../auth/AuthContext";
 
 const QuizListPage = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const { user } = useAuth(); // <-- hent user
-
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   // Hent alle quizzes
@@ -20,8 +19,9 @@ const QuizListPage = () => {
     try {
       const data = await fetchQuizzes();
       setQuizzes(data);
+      console.log(data);
     } catch (err) {
-      console.error("Failed to fetch quizzes:", err);
+      console.error(err instanceof Error ? err.message : err);
       setError("Failed to fetch quizzes.");
     } finally {
       setLoading(false);
@@ -45,8 +45,9 @@ const QuizListPage = () => {
     try {
       await deleteQuiz(quizId);
       setQuizzes((prev) => prev.filter((q) => q.QuizId !== quizId));
+      console.log('Quiz deleted:', quizId);
     } catch (err) {
-      console.error("Failed to delete quiz:", err);
+      console.error(err instanceof Error ? err.message : err);
       setError("Failed to delete quiz.");
     }
   };

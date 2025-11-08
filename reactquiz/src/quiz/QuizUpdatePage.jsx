@@ -29,8 +29,8 @@ const QuizUpdatePage = () => {
 
         setQuizData(formattedQuiz);
       } catch (err) {
-        console.error(err);
         setError('Failed to load quiz');
+        console.error('There was a problem with the fetch operation:', err);
       } finally {
         setLoading(false);
       }
@@ -42,11 +42,11 @@ const QuizUpdatePage = () => {
   // Oppdater quiz via QuizService
   const handleQuizUpdated = async (updatedQuiz) => {
     try {
-      await updateQuiz(quizId, updatedQuiz);
-      console.log('Quiz updated successfully');
+      const data = await updateQuiz(quizId, updatedQuiz);
+      console.log('Quiz updated successfully;', data);
       navigate('/quiz'); // tilbake til quiz-listen
     } catch (err) {
-      console.error(err);
+      console.error('Failed to update quiz:', err);
       alert(`Failed to update quiz: ${err.message}`);
     }
   };
