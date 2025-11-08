@@ -7,9 +7,18 @@ const TakeQuizPage = () => {
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
   const [userName, setUserName] = useState("");
+  const [userNameError, setUserNameError] = useState("");
   const [unanswered, setUnanswered] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  // Funksjon for å validere brukernavn
+  const validateUserName = (name) => {
+    if (!/^[0-9a-zA-ZæøåÆØÅ. \-]{2,20}$/.test(name)) {
+      return "Name must be 2–20 characters, letters or numbers.";
+    }
+    return "";
+  };
 
   useEffect(() => {
     const getQuiz = async () => {
@@ -34,39 +43,42 @@ const TakeQuizPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!quiz) return;
+  e.preventDefault();
+  if (!quiz) return;
 
-    const missing = quiz.Questions
-      .filter((q) => !(q.QuestionId in answers))
-      .map((q) => q.QuestionId);
+  const nameError = validateUserName(userName);
+  setUserNameError(nameError);
 
-    if (missing.length > 0) {
-      setUnanswered(missing);
-      return;
-    }
+  const missing = quiz.Questions
+    .filter((q) => !(q.QuestionId in answers))
+    .map((q) => q.QuestionId);
+  setUnanswered(missing);
 
-    const payload = {
-      QuizId: quiz.QuizId,
-      UserName: userName,
-      Answers: answers,
-    };
+  if (nameError || missing.length > 0) {
+    return;
+  }
 
-    try {
-      const result = await submitQuiz(payload);
-
-      navigate(`/takequiz/result/${quiz.QuizId}`, {
-        state: {
-          quiz,
-          userName,
-          score: result.score ?? 0,
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      setError("Failed to submit quiz.");
-    }
+  const payload = {
+    QuizId: quiz.QuizId,
+    UserName: userName,
+    Answers: answers,
   };
+
+  try {
+    const result = await submitQuiz(payload);
+
+    navigate(`/takequiz/result/${quiz.QuizId}`, {
+      state: {
+        quiz,
+        userName,
+        score: result.score ?? 0,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    setError("Failed to submit quiz.");
+  }
+};
 
   if (error) return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
   if (!quiz) return <p style={{ textAlign: "center" }}>Loading quiz...</p>;
@@ -80,20 +92,23 @@ const TakeQuizPage = () => {
           <label className="form-label">Your Name:</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${userNameError ? "is-invalid" : ""}`}
             placeholder="Enter your name"
             value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-            pattern="[0-9a-zA-ZæøåÆØÅ. \-]{2,20}" // Regular expression pattern
-            title="The title must be numbers or letters and between 2 to 20 characters."
+            onChange={(e) => {
+              setUserName(e.target.value);
+              setUserNameError(validateUserName(e.target.value));
+            }}
           />
+          {userNameError && <div className="invalid-feedback">{userNameError}</div>}
         </div>
 
         {quiz.Questions.map((q, index) => (
           <div
             key={q.QuestionId}
-            className={`card mb-4 shadow-sm ${unanswered.includes(q.QuestionId) ? "border-danger" : ""}`}
+            className={`card mb-4 shadow-sm ${
+              unanswered.includes(q.QuestionId) ? "border-danger" : ""
+            }`}
           >
             <div className="card-body">
               <h5 className="card-title">
@@ -111,7 +126,10 @@ const TakeQuizPage = () => {
                     checked={answers[q.QuestionId] === option.AnswerOptionId}
                     onChange={() => handleAnswerChange(q.QuestionId, option.AnswerOptionId)}
                   />
-                  <label className="form-check-label" htmlFor={`q${q.QuestionId}_a${option.AnswerOptionId}`}>
+                  <label
+                    className="form-check-label"
+                    htmlFor={`q${q.QuestionId}_a${option.AnswerOptionId}`}
+                  >
                     {option.Text}
                   </label>
                 </div>
@@ -126,8 +144,14 @@ const TakeQuizPage = () => {
           </div>
         ))}
 
-        <button type="submit" className="btn btn-success btn-md">Submit Quiz</button>
-        <button type="button" className="btn btn-secondary btn-md ms-2" onClick={() => navigate("/takequiz")}>
+        <button type="submit" className="btn btn-success btn-md">
+          Submit Quiz
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary btn-md ms-2"
+          onClick={() => navigate("/takequiz")}
+        >
           Cancel
         </button>
       </form>
