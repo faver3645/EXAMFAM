@@ -80,7 +80,8 @@ namespace api.Controllers
                 }
             }
 
-            return Ok(new { score });
+            // Endret til Dictionary
+            return Ok(new Dictionary<string, int> { { "score", score } });
         }
 
         [HttpPost("saveattempt")]
