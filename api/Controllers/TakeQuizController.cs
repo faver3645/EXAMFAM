@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using api.DAL;
 using api.DTOs;
 using api.Models;
+using System.Security.Claims;
 
 namespace api.Controllers
 {
@@ -18,6 +20,8 @@ namespace api.Controllers
             _logger = logger;
         }
 
+        // Alle (Student/Teacher) kan se quizliste
+        [AllowAnonymous]
         [HttpGet("takequizlist")]
         public async Task<IActionResult> GetAllQuizzes()
         {
@@ -34,15 +38,13 @@ namespace api.Controllers
             return Ok(quizDtos);
         }
 
+        // Hent spesifikk quiz (uten fasit)
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetQuiz(int id)
         {
             var quiz = await _repo.GetQuizById(id);
-            if (quiz == null)
-            {
-                _logger.LogWarning("[TakeQuizApiController] Quiz {Id} not found", id);
-                return NotFound("Quiz not found");
-            }
+            if (quiz == null) return NotFound("Quiz not found");
 
             var quizDto = new QuizDto
             {
@@ -63,6 +65,8 @@ namespace api.Controllers
             return Ok(quizDto);
         }
 
+        // Kun Student kan sende inn quizbesvarelse
+        [Authorize(Roles = "Student")]
         [HttpPost("submit")]
         public async Task<IActionResult> Submit([FromBody] QuizSubmissionDto submission)
         {
@@ -83,16 +87,24 @@ namespace api.Controllers
             return Ok(new { score });
         }
 
+        // Kun Student kan lagre egne forsøk – hent username fra token
+        [Authorize(Roles = "Student")]
         [HttpPost("saveattempt")]
         public async Task<IActionResult> SaveAttempt([FromBody] QuizResultDto dto)
         {
             var quiz = await _repo.GetQuizById(dto.QuizId);
             if (quiz == null) return NotFound("Quiz not found");
 
+            // Hent bruker fra token (sub-claim)
+            var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
+
+            if (string.IsNullOrEmpty(userName))
+                return Unauthorized("User not found in token.");
+
             var result = new QuizResult
             {
                 QuizId = dto.QuizId,
-                UserName = dto.UserName,
+                UserName = userName,
                 Score = dto.Score
             };
 
@@ -108,6 +120,8 @@ namespace api.Controllers
             }
         }
 
+        // Hent forsøk – Teacher ser alle, Student kun egne
+        [Authorize(Roles = "Teacher,Student")]
         [HttpGet("attempts/{quizId}")]
         public async Task<IActionResult> GetAttempts(int quizId)
         {
@@ -117,6 +131,15 @@ namespace api.Controllers
 
                 if (results == null || !results.Any())
                     return Ok(new List<QuizResultDto>());
+
+                var isTeacher = User.IsInRole("Teacher");
+                var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
+
+                // Filtrer for student
+                if (!isTeacher && !string.IsNullOrEmpty(userName))
+                {
+                    results = results.Where(r => r.UserName == userName).ToList();
+                }
 
                 var attemptsDto = results.Select(r => new QuizResultDto
                 {
@@ -137,7 +160,8 @@ namespace api.Controllers
             }
         }
 
-        // 🔹 Ny DELETE-endpoint for å slette et forsøk
+        // Kun Teacher kan slette forsøk
+        [Authorize(Roles = "Teacher")]
         [HttpDelete("attempt/{attemptId}")]
         public async Task<IActionResult> DeleteAttempt(int attemptId)
         {

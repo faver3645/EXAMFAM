@@ -1,10 +1,10 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-const headers = {
+const getHeaders = (token) => ({
   "Content-Type": "application/json",
-};
+  ...(token ? { Authorization: `Bearer ${token}` } : {}),
+});
 
-// Felles funksjon for håndtering av fetch-respons
 const handleResponse = async (response) => {
   if (!response.ok) {
     const text = await response.text();
@@ -13,50 +13,53 @@ const handleResponse = async (response) => {
   return response.status === 204 ? null : response.json();
 };
 
-// --- API-funksjoner ---
-
-// Hent liste over tilgjengelige quizer
-export const fetchAvailableQuizzes = async () => {
-  const response = await fetch(`${API_URL}/api/takequizapi/takequizlist`);
+// --- API funksjoner ---
+export const fetchAvailableQuizzes = async (token) => {
+  const response = await fetch(`${API_URL}/api/takequizapi/takequizlist`, {
+    headers: getHeaders(token),
+  });
   return handleResponse(response);
 };
 
-// Hent quiz etter ID
-export const fetchQuizById = async (quizId) => {
-  const response = await fetch(`${API_URL}/api/takequizapi/${quizId}`);
+export const fetchQuizById = async (quizId, token) => {
+  const response = await fetch(`${API_URL}/api/takequizapi/${quizId}`, {
+    headers: getHeaders(token),
+  });
   return handleResponse(response);
 };
 
-// Send inn besvarelse for en quiz
-export const submitQuiz = async (payload) => {
+export const submitQuiz = async (payload, token) => {
   const response = await fetch(`${API_URL}/api/takequizapi/submit`, {
     method: "POST",
-    headers,
+    headers: getHeaders(token),
     body: JSON.stringify(payload),
   });
   return handleResponse(response);
 };
 
-// Lagre resultat av en quiz (forsøk)
-export const saveAttempt = async (payload) => {
+export const saveAttempt = async (payload, token) => {
   const response = await fetch(`${API_URL}/api/takequizapi/saveattempt`, {
     method: "POST",
-    headers,
-    body: JSON.stringify(payload),
+    headers: getHeaders(token),
+    body: JSON.stringify({
+      QuizId: payload.QuizId,
+      Score: payload.Score
+    }),
   });
   return handleResponse(response);
 };
 
-// Hent alle forsøk for en quiz
-export const fetchAttempts = async (quizId) => {
-  const response = await fetch(`${API_URL}/api/takequizapi/attempts/${quizId}`);
+export const fetchAttempts = async (quizId, token) => {
+  const response = await fetch(`${API_URL}/api/takequizapi/attempts/${quizId}`, {
+    headers: getHeaders(token),
+  });
   return handleResponse(response);
 };
 
-// Slett et spesifikt forsøk
-export const deleteAttempt = async (attemptId) => {
+export const deleteAttempt = async (attemptId, token) => {
   const response = await fetch(`${API_URL}/api/takequizapi/attempt/${attemptId}`, {
     method: "DELETE",
+    headers: getHeaders(token),
   });
   return handleResponse(response);
 };

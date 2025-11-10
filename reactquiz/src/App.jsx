@@ -14,6 +14,7 @@ import ListQuizPage from "./takequiz/ListQuizPage";
 import TakeQuizPage from "./takequiz/TakeQuizPage";
 import ResultPage from "./takequiz/ResultPage";
 import AttemptsPage from "./takequiz/AttemptsPage";
+import TeacherDashboard from "./takequiz/TeacherDashboard";
 
 import AboutPage from "./shared/AboutPage";
 import ContactPage from "./shared/ContactPage";
@@ -22,7 +23,7 @@ import NavMenu from "./shared/NavMenu";
 import Footer from "./shared/Footer";
 
 // Auth
-import { AuthProvider } from "./auth/AuthContext";
+import { AuthProvider } from "./auth/AuthProvider";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import LoginPage from "./auth/LoginPage";
 import RegisterPage from "./auth/RegisterPage";
@@ -47,14 +48,23 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
 
-              {/* Protected routes */}
-              <Route element={<ProtectedRoute />}>
+              {/* Protected routes for Teacher */}
+              <Route element={<ProtectedRoute allowedRoles={["Teacher"]} />}>
                 <Route path="/quizcreate" element={<QuizCreatePage />} />
                 <Route path="/quizdetails/:quizId" element={<QuizDetailPage />} />
                 <Route path="/quizupdate/:quizId" element={<QuizUpdatePage />} />
+                 <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+              </Route>
+
+              {/* Protected routes for Student */}
+              <Route element={<ProtectedRoute allowedRoles={["Student"]} />}>
                 <Route path="/takequiz" element={<ListQuizPage />} />
                 <Route path="/takequiz/take/:quizId" element={<TakeQuizPage />} />
                 <Route path="/takequiz/result/:quizId" element={<ResultPage />} />
+              </Route>
+
+              {/* Protected route for both Teacher and Student */}
+              <Route element={<ProtectedRoute allowedRoles={["Teacher", "Student"]} />}>
                 <Route path="/takequiz/:quizId/attempts" element={<AttemptsPage />} />
               </Route>
 
