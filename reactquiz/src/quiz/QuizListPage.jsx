@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { fetchQuizzes, deleteQuiz } from "./QuizService";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../auth/useAuth";
+
 
 const QuizListPage = () => {
   const [quizzes, setQuizzes] = useState([]);

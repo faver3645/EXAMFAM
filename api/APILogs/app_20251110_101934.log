@@ -1,0 +1,9 @@
+2025-11-10 10:19:40.378 +01:00 [INF] User profile is available. Using 'C:\Users\Aliza Mudassar\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-10 10:19:40.878 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-10 10:19:40.887 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-10 10:19:40.888 +01:00 [INF] Hosting environment: Development
+2025-11-10 10:19:40.888 +01:00 [INF] Content root path: C:\Users\Aliza Mudassar\OneDrive - OsloMet\webapplikasjoner\EXAMFAM\api
+2025-11-10 10:19:51.211 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/ - null null
+2025-11-10 10:19:51.455 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/ - 404 0 null 248.2307ms
+2025-11-10 10:19:51.468 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5082/, Response status code: 404
+2025-11-10 10:19:57.778 +01:00 [INF] Application is shutting down...

@@ -1,9 +1,15 @@
-import React from 'react';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import AuthSection from '../auth/AuthSection'; // Legg til AuthSection
+import React from "react";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import { useAuth } from "../auth/useAuth"; // Henter brukerinfo
+import AuthSection from "../auth/AuthSection";
 
 export default function NavMenu() {
+  const { user } = useAuth();
+
+  const isTeacher = user?.role?.toLowerCase() === "teacher";
+  const isStudent = user?.role?.toLowerCase() === "student";
+
   return (
     <Navbar bg="light" expand="lg" sticky="top" className="shadow-sm mb-4">
       <Container>
@@ -20,19 +26,29 @@ export default function NavMenu() {
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
 
-            <LinkContainer to="/quizcreate">
-              <Nav.Link>Create Quiz</Nav.Link>
-            </LinkContainer>
+            {/* Kun lærer */}
+            {isTeacher && (
+              <>
+                <LinkContainer to="/quizcreate">
+                  <Nav.Link>Create Quiz</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/quiz">
+                  <Nav.Link>Manage Quizzes</Nav.Link>
+                </LinkContainer>
+                 <LinkContainer to="/teacher-dashboard">
+                  <Nav.Link>View Attempts</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
 
-            <LinkContainer to="/quiz">
-              <Nav.Link>Manage Quizzes</Nav.Link>
-            </LinkContainer>
+            {/* Kun student */}
+            {isStudent && (
+              <LinkContainer to="/takequiz">
+                <Nav.Link>Take Quiz</Nav.Link>
+              </LinkContainer>
+            )}
 
-            <LinkContainer to="/takequiz">
-              <Nav.Link>Take Quiz</Nav.Link>
-            </LinkContainer>
-
-            {/* Dropdown */}
+            {/* Felles “More”-meny */}
             <NavDropdown title="More" id="nav-dropdown">
               <LinkContainer to="/about">
                 <NavDropdown.Item>About</NavDropdown.Item>
@@ -54,4 +70,3 @@ export default function NavMenu() {
     </Navbar>
   );
 }
- 
