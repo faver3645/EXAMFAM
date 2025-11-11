@@ -10,7 +10,7 @@ export const login = async (credentials) => {
   if (!response.ok) throw new Error("Login failed");
 
   const result = await response.json();
-  return result.Token; // <-- return bare token-strengen
+  return result.Token;
 };
 
 export const register = async (data) => {
@@ -26,11 +26,11 @@ export const register = async (data) => {
       const err = await response.json();
       if (Array.isArray(err)) message = err.map(e => e.Description).join(", ");
       else if (err.message) message = err.message;
-    } catch {}
+    } catch (error) {
+      console.error("Failed to parse error response", error);
+    }
     throw new Error(message);
   }
 
   return await response.json();
 };
-
-export default { login, register };

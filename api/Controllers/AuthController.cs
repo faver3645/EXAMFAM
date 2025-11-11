@@ -12,14 +12,18 @@ namespace api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase // ControllerBase is sufficient for API controllers
+    public class AuthController : ControllerBase
     {
         private readonly UserManager<AuthUser> _userManager;
         private readonly SignInManager<AuthUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController(UserManager<AuthUser> userManager, SignInManager<AuthUser> signInManager, IConfiguration configuration, ILogger<AuthController> logger)
+        public AuthController(
+            UserManager<AuthUser> userManager,
+            SignInManager<AuthUser> signInManager,
+            IConfiguration configuration,
+            ILogger<AuthController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -33,36 +37,40 @@ namespace api.Controllers
             var user = new AuthUser
             {
                 UserName = registerDto.Username,
-                Email = registerDto.Email,
-                // FirstName = registerDto.FirstName,
-                // LastName = registerDto.LastName
+                Email = registerDto.Email
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
-            
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                _logger.LogInformation("[AuthAPIController] user registered for {@username}", registerDto.Username);
-                return Ok(new { Message = "User registered successfully" });
+                _logger.LogWarning("[AuthController] registration failed for {@username}", registerDto.Username);
+                return BadRequest(result.Errors);
             }
 
-            _logger.LogWarning("[AuthAPIController] user registration failed for {@username}", registerDto.Username);
-            return BadRequest(result.Errors);
+            // Legg bruker til rolle
+            var roleResult = await _userManager.AddToRoleAsync(user, registerDto.Role);
+            if (!roleResult.Succeeded)
+            {
+                _logger.LogWarning("[AuthController] failed to assign role {@role} to user {@username}", registerDto.Role, registerDto.Username);
+                return BadRequest("Failed to assign role to user.");
+            }
+
+            _logger.LogInformation("[AuthController] user {@username} registered with role {@role}", registerDto.Username, registerDto.Role);
+            return Ok(new { Message = $"User registered successfully as {registerDto.Role}" });
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var user = await _userManager.FindByNameAsync(loginDto.Username);
-
             if (user != null && await _userManager.CheckPasswordAsync(user, loginDto.Password))
             {
-                _logger.LogInformation("[AuthAPIController] user authorised for {@username}", loginDto.Username);
-                var token = GenerateJwtToken(user);
+                var token = await GenerateJwtToken(user);
+                _logger.LogInformation("[AuthController] user authorised for {@username}", loginDto.Username);
                 return Ok(new { Token = token });
             }
-            
-            _logger.LogWarning("[AuthAPIController] user not authorised for {@username}", loginDto.Username);
+
+            _logger.LogWarning("[AuthController] user not authorised for {@username}", loginDto.Username);
             return Unauthorized();
         }
 
@@ -70,40 +78,49 @@ namespace api.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            // For token-based authentication, logout is typically handled on the client-side by clearing the token. This endpoint can be used for things like token invalidation if implemented.
-            await _signInManager.SignOutAsync(); // This is more for cookie-based auth, but doesn't hurt.
-            _logger.LogInformation("[AuthAPIController] user logged out");
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("[AuthController] user logged out");
             return Ok(new { Message = "Logout successful" });
         }
 
-        private string GenerateJwtToken(AuthUser user)
+        private async Task<string> GenerateJwtToken(AuthUser user)
         {
-            var jwtKey = _configuration["Jwt:Key"]; // The secret key used for the signature
-            if (string.IsNullOrEmpty(jwtKey)) // Ensure the key is not null or empty
-            {   
-                _logger.LogError("[AuthAPIController] JWT key is missing from configuration.");
+            var jwtKey = _configuration["Jwt:Key"];
+            if (string.IsNullOrEmpty(jwtKey))
+            {
+                _logger.LogError("[AuthController] JWT key missing from configuration.");
                 throw new InvalidOperationException("JWT key is missing from configuration.");
             }
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)); // Reading the key from the configuration
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256); // Using HMAC SHA256 algorithm for signing the token
 
-            var claims = new[]
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName!), // Subject of the token
-                new Claim(JwtRegisteredClaimNames.Email, user.Email!), // User's email
-                new Claim(ClaimTypes.NameIdentifier, user.Id), // Unique identifier for the user
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // Unique identifier for the token
-                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()) // Issued at timestamp
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName!),   // eksisterende
+                new Claim(ClaimTypes.Name, user.UserName!),               // 🔥 legg til denne
+                new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
+
+            // 🔥 Legg til rolle som både standard-claim og eget "role"-claim
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("role", role));
+            }
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(120), // Token expiration time set to 120 minutes
-                signingCredentials: credentials); // Signing the token with the specified credentials
+                expires: DateTime.Now.AddMinutes(120),
+                signingCredentials: credentials);
 
-            _logger.LogInformation("[AuthAPIController] JWT token created for {@username}", user.UserName);
+            _logger.LogInformation("[AuthController] JWT token created for {@username} with roles {@roles}", user.UserName, string.Join(",", roles));
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
