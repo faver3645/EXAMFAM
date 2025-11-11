@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import jwtDecode from "jwt-decode"; // <-- Riktig
+import jwtDecode from "jwt-decode";
 import { AuthContext } from "./AuthContext";
 import * as AuthService from "./AuthService";
 
@@ -12,16 +12,18 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
+
         const role =
           decoded.role ||
           decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-        if (decoded.exp * 1000 > Date.now()) {
-          setUser({ ...decoded, role });
-        } else {
-          localStorage.removeItem("token");
-          setUser(null);
-          setToken(null);
-        }
+
+        // Hent navn riktig fra claim
+        const name =
+          decoded.name ||
+          decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
+          decoded.sub; // fallback
+
+        setUser({ ...decoded, role, name });
       } catch (err) {
         console.error("Invalid token", err);
         localStorage.removeItem("token");
@@ -41,7 +43,13 @@ export const AuthProvider = ({ children }) => {
     const role =
       decoded.role ||
       decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-    setUser({ ...decoded, role });
+
+    const name =
+      decoded.name ||
+      decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
+      decoded.sub;
+
+    setUser({ ...decoded, role, name });
   };
 
   const logout = () => {
