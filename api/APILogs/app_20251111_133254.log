@@ -1,0 +1,173 @@
+2025-11-11 13:32:56.633 +01:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-11 13:32:56.800 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-11 13:32:56.805 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-11 13:32:56.805 +01:00 [INF] Hosting environment: Development
+2025-11-11 13:32:56.805 +01:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
+2025-11-11 13:33:03.211 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-11 13:33:03.211 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-11 13:33:03.255 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:03.255 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:03.263 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 56.1626ms
+2025-11-11 13:33:03.263 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 56.1307ms
+2025-11-11 13:33:03.266 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-11 13:33:03.275 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:03.483 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:03.504 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:03.736 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-11-11 13:33:03.838 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:03.929 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 420.7539ms
+2025-11-11 13:33:03.930 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:03.933 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 200 284 application/json; charset=utf-8 667.5391ms
+2025-11-11 13:33:03.935 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-11 13:33:03.935 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:03.938 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:03.939 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:03.962 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:03.963 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 24.183ms
+2025-11-11 13:33:03.964 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:03.964 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 200 284 application/json; charset=utf-8 29.3802ms
+2025-11-11 13:33:04.677 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/2 - null null
+2025-11-11 13:33:04.677 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/2 - null null
+2025-11-11 13:33:04.678 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:04.678 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:04.679 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/2 - 204 null null 1.3349ms
+2025-11-11 13:33:04.679 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/2 - 204 null null 1.278ms
+2025-11-11 13:33:04.683 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/2 - application/json null
+2025-11-11 13:33:04.683 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:04.687 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetQuiz (api)'
+2025-11-11 13:33:04.703 +01:00 [INF] Route matched with {action = "GetQuiz", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetQuiz(Int32) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:04.752 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-11-11 13:33:04.764 +01:00 [INF] Executing OkObjectResult, writing value of type 'api.DTOs.QuizDto'.
+2025-11-11 13:33:04.774 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetQuiz (api) in 70.5425ms
+2025-11-11 13:33:04.774 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetQuiz (api)'
+2025-11-11 13:33:04.774 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/2 - 200 870 application/json; charset=utf-8 91.1906ms
+2025-11-11 13:33:04.777 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/2 - application/json null
+2025-11-11 13:33:04.777 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:04.779 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetQuiz (api)'
+2025-11-11 13:33:04.780 +01:00 [INF] Route matched with {action = "GetQuiz", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetQuiz(Int32) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:04.786 +01:00 [INF] Executing OkObjectResult, writing value of type 'api.DTOs.QuizDto'.
+2025-11-11 13:33:04.787 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetQuiz (api) in 7.4132ms
+2025-11-11 13:33:04.788 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetQuiz (api)'
+2025-11-11 13:33:04.788 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/2 - 200 870 application/json; charset=utf-8 11.4159ms
+2025-11-11 13:33:13.439 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/submit - null null
+2025-11-11 13:33:13.440 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:13.440 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/submit - 204 null null 0.986ms
+2025-11-11 13:33:13.443 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/api/takequizapi/submit - application/json 51
+2025-11-11 13:33:13.443 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:13.456 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.Submit (api)'
+2025-11-11 13:33:13.464 +01:00 [INF] Route matched with {action = "Submit", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Submit(api.DTOs.QuizSubmissionDto) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:13.542 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-11 13:33:13.546 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.Submit (api) in 81.1531ms
+2025-11-11 13:33:13.546 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.Submit (api)'
+2025-11-11 13:33:13.546 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/api/takequizapi/submit - 200 11 application/json; charset=utf-8 103.5251ms
+2025-11-11 13:33:14.686 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/saveattempt - null null
+2025-11-11 13:33:14.687 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:14.687 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/saveattempt - 204 null null 0.8362ms
+2025-11-11 13:33:14.688 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5082/api/takequizapi/saveattempt - application/json 22
+2025-11-11 13:33:14.689 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:14.691 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.SaveAttempt (api)'
+2025-11-11 13:33:14.698 +01:00 [INF] Route matched with {action = "SaveAttempt", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SaveAttempt(api.DTOs.QuizResultDto) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:14.707 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-11-11 13:33:14.736 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.SaveAttempt (api) in 37.1836ms
+2025-11-11 13:33:14.736 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.SaveAttempt (api)'
+2025-11-11 13:33:14.736 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5082/api/takequizapi/saveattempt - 400 289 application/problem+json; charset=utf-8 47.4542ms
+2025-11-11 13:33:18.694 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-11 13:33:18.695 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-11 13:33:18.697 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:18.697 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:18.698 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 3.6708ms
+2025-11-11 13:33:18.698 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 3.2006ms
+2025-11-11 13:33:18.705 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-11 13:33:18.705 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:18.707 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:18.708 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:18.724 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:18.724 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 15.9598ms
+2025-11-11 13:33:18.725 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:18.725 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 200 284 application/json; charset=utf-8 20.1887ms
+2025-11-11 13:33:18.730 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-11 13:33:18.730 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:18.732 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:18.732 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:18.741 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:18.742 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 9.7816ms
+2025-11-11 13:33:18.743 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:18.743 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 200 284 application/json; charset=utf-8 13.798ms
+2025-11-11 13:33:19.838 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/attempts/2 - null null
+2025-11-11 13:33:19.838 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/attempts/2 - null null
+2025-11-11 13:33:19.838 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:19.839 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:19.839 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/attempts/2 - 204 null null 0.6656ms
+2025-11-11 13:33:19.839 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/attempts/2 - 204 null null 0.4155ms
+2025-11-11 13:33:19.842 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/attempts/2 - application/json null
+2025-11-11 13:33:19.842 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:19.845 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAttempts (api)'
+2025-11-11 13:33:19.852 +01:00 [INF] Route matched with {action = "GetAttempts", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAttempts(Int32) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:19.911 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-11-11 13:33:19.968 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizResultDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:19.970 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAttempts (api) in 118.1069ms
+2025-11-11 13:33:19.971 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAttempts (api)'
+2025-11-11 13:33:19.971 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/attempts/2 - 200 2 application/json; charset=utf-8 128.9608ms
+2025-11-11 13:33:19.974 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/attempts/2 - application/json null
+2025-11-11 13:33:19.974 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:19.975 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAttempts (api)'
+2025-11-11 13:33:19.975 +01:00 [INF] Route matched with {action = "GetAttempts", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAttempts(Int32) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:19.983 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizResultDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:19.984 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAttempts (api) in 8.2138ms
+2025-11-11 13:33:19.984 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAttempts (api)'
+2025-11-11 13:33:19.984 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/attempts/2 - 200 2 application/json; charset=utf-8 10.6937ms
+2025-11-11 13:33:20.885 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-11 13:33:20.886 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:20.887 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:20.887 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:20.892 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:20.893 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 5.2837ms
+2025-11-11 13:33:20.893 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:20.893 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 200 284 application/json; charset=utf-8 7.6812ms
+2025-11-11 13:33:20.896 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-11 13:33:20.898 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:20.899 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:20.899 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:20.904 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:20.904 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 5.0081ms
+2025-11-11 13:33:20.904 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:20.905 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 200 284 application/json; charset=utf-8 8.1397ms
+2025-11-11 13:33:24.424 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/attempts/2 - application/json null
+2025-11-11 13:33:24.425 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:24.425 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAttempts (api)'
+2025-11-11 13:33:24.425 +01:00 [INF] Route matched with {action = "GetAttempts", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAttempts(Int32) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:24.431 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizResultDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:24.431 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAttempts (api) in 5.8218ms
+2025-11-11 13:33:24.431 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAttempts (api)'
+2025-11-11 13:33:24.432 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/attempts/2 - 200 2 application/json; charset=utf-8 7.0708ms
+2025-11-11 13:33:24.433 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/attempts/2 - application/json null
+2025-11-11 13:33:24.434 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:24.434 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAttempts (api)'
+2025-11-11 13:33:24.434 +01:00 [INF] Route matched with {action = "GetAttempts", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAttempts(Int32) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:24.439 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizResultDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:24.440 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAttempts (api) in 5.013ms
+2025-11-11 13:33:24.440 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAttempts (api)'
+2025-11-11 13:33:24.440 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/attempts/2 - 200 2 application/json; charset=utf-8 6.4527ms
+2025-11-11 13:33:25.253 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-11 13:33:25.253 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:25.254 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 0.3786ms
+2025-11-11 13:33:25.256 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-11 13:33:25.256 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:25.257 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 0.5204ms
+2025-11-11 13:33:25.257 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-11 13:33:25.257 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:25.257 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:25.258 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:25.264 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:25.264 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 6.423ms
+2025-11-11 13:33:25.264 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:25.265 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 200 284 application/json; charset=utf-8 8.1544ms
+2025-11-11 13:33:25.267 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-11 13:33:25.267 +01:00 [INF] CORS policy execution successful.
+2025-11-11 13:33:25.268 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:25.268 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-11 13:33:25.271 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-11 13:33:25.271 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 3.4632ms
+2025-11-11 13:33:25.272 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-11 13:33:25.272 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 200 284 application/json; charset=utf-8 4.7482ms
+2025-11-11 13:33:40.339 +01:00 [INF] Application is shutting down...
