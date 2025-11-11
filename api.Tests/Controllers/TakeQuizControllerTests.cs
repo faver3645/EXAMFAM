@@ -5,6 +5,8 @@ using api.Controllers;
 using api.DAL;
 using api.DTOs;
 using api.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -165,7 +167,7 @@ namespace api.Tests.Controllers
             var dto = new QuizResultDto
             {
                 QuizId = 1,
-                UserName = "Test",
+                UserName = "Test", // Denne brukes i testen
                 Score = 5
             };
 
@@ -177,13 +179,26 @@ namespace api.Tests.Controllers
 
             var controller = new TakeQuizApiController(mockRepo.Object, Mock.Of<ILogger<TakeQuizApiController>>());
 
+            // Mock user claims slik at controller finner brukeren
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Name, "Test")
+            }, "mock"));
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = user }
+            };
+
             var result = await controller.SaveAttempt(dto);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
+            var message = okResult.Value.GetType().GetProperty("message")!.GetValue(okResult.Value)?.ToString();
+            Assert.Equal("Attempt saved successfully", message);
         }
 
         // ===== Negative test: SaveAttempt returns 500 on exception =====
-        [Fact]
+       [Fact]
         public async Task SaveAttempt_ReturnsServerError_WhenException()
         {
             var dto = new QuizResultDto { QuizId = 1, UserName = "Test", Score = 5 };
@@ -195,10 +210,22 @@ namespace api.Tests.Controllers
 
             var controller = new TakeQuizApiController(mockRepo.Object, Mock.Of<ILogger<TakeQuizApiController>>());
 
+            // Mock user claims slik at controller finner brukeren
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Name, "Test")
+            }, "mock"));
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = user }
+            };
+
             var result = await controller.SaveAttempt(dto);
 
             var statusResult = Assert.IsType<ObjectResult>(result);
             Assert.Equal(500, statusResult.StatusCode);
+            Assert.Equal("Failed to save attempt", statusResult.Value);
         }
 
         // ===== Positive test: DeleteAttempt returns Ok =====
