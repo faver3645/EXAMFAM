@@ -18,39 +18,34 @@ const QuizForm = ({ onSubmit, initialData }) => {
           text: q.text || '',
           imageUrl: q.imageUrl || '',
           answerOptions:
-            q.answerOptions?.map((a) => ({
+            q.answerOptions?.map(a => ({
               text: a.text || '',
-              isCorrect: a.isCorrect || false,
-            })) || [],
+              isCorrect: a.isCorrect || false
+            })) || []
         })) || []
       );
     } else {
-      setQuestions([
-        {
-          text: '',
-          imageUrl: '',
-          answerOptions: [
-            { text: '', isCorrect: false },
-            { text: '', isCorrect: false },
-          ],
-        },
-      ]);
-    }
-  }, [initialData]);
-
-  // --- Spørsmål ---
-  const handleAddQuestion = () => {
-    setQuestions([
-      ...questions,
-      {
+      setQuestions([{
         text: '',
         imageUrl: '',
         answerOptions: [
           { text: '', isCorrect: false },
-          { text: '', isCorrect: false },
-        ],
-      },
-    ]);
+          { text: '', isCorrect: false }
+        ]
+      }]);
+    }
+  }, [initialData]);
+
+  // questions
+  const handleAddQuestion = () => {
+    setQuestions([...questions, {
+      text: '',
+      imageUrl: '',
+      answerOptions: [
+        { text: '', isCorrect: false },
+        { text: '', isCorrect: false }
+      ]
+    }]);
   };
 
   const handleQuestionChange = (index, value) => {
@@ -71,7 +66,7 @@ const QuizForm = ({ onSubmit, initialData }) => {
     setQuestions(newQuestions);
   };
 
-  // --- Svaralternativer ---
+  // answer options
   const handleAddAnswer = (qIndex) => {
     const newQuestions = [...questions];
     newQuestions[qIndex].answerOptions.push({ text: '', isCorrect: false });
@@ -82,10 +77,7 @@ const QuizForm = ({ onSubmit, initialData }) => {
     const newQuestions = [...questions];
     if (field === 'isCorrect' && value) {
       newQuestions[qIndex].answerOptions = newQuestions[qIndex].answerOptions.map(
-        (a, i) => ({
-          ...a,
-          isCorrect: i === aIndex,
-        })
+        (a, i) => ({ ...a, isCorrect: i === aIndex })
       );
     } else {
       newQuestions[qIndex].answerOptions[aIndex][field] = value;
@@ -99,13 +91,20 @@ const QuizForm = ({ onSubmit, initialData }) => {
     setQuestions(newQuestions);
   };
 
-  // --- Validering ---
+  // Image URL Validator 
+  const validateImageUrl = (url) => {
+    if (!url) return true; // tom URL er tillatt
+    const regex = /^(\/images\/[\w\-.]+|https?:\/\/[\w\-.]+(\.[\w\-.]+)+.*\.(jpg|jpeg|png|gif))$/i;
+    return regex.test(url);
+  };
+
+  // Validation
   const validate = () => {
     let valid = true;
     let qErrors = [];
 
-    if (!/^[0-9a-zA-ZæøåÆØÅ. \-]{2,20}$/.test(title)) {
-      setTitleError('Title must be 2–20 characters, letters or numbers.');
+    if (!/^[0-9a-zA-ZæøåÆØÅ. -]{2,20}$/.test(title)) {
+      setTitleError('Title must be 2 - 20 characters, letters or numbers.');
       valid = false;
     } else {
       setTitleError('');
@@ -113,13 +112,21 @@ const QuizForm = ({ onSubmit, initialData }) => {
 
     questions.forEach((q, i) => {
       let err = '';
+
       if (!q.text.trim()) err += 'Question text is required. ';
-      const correctCount = q.answerOptions.filter((a) => a.isCorrect).length;
+
+      const correctCount = q.answerOptions.filter(a => a.isCorrect).length;
       if (correctCount === 0) err += 'One correct answer required. ';
       if (correctCount > 1) err += 'Only one correct answer allowed. ';
+
       q.answerOptions.forEach((a, j) => {
         if (!a.text.trim()) err += `Answer ${j + 1} text is required. `;
       });
+
+      if (q.imageUrl && !validateImageUrl(q.imageUrl)) {
+        err += 'Invalid image URL. ';
+      }
+
       qErrors[i] = err;
       if (err) valid = false;
     });
@@ -128,7 +135,7 @@ const QuizForm = ({ onSubmit, initialData }) => {
     return valid;
   };
 
-  // --- Submit ---
+  // subit 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -144,6 +151,7 @@ const QuizForm = ({ onSubmit, initialData }) => {
     }
   };
 
+  
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3">
@@ -188,8 +196,12 @@ const QuizForm = ({ onSubmit, initialData }) => {
               onChange={(e) => handleQuestionImageChange(i, e.target.value)}
               className="mt-2"
             />
-
-            {questionErrors[i] && (
+            {questionErrors[i] && questionErrors[i].includes('Invalid image URL') && (
+              <div className="text-danger mt-1">
+                Invalid image URL. Must end with .jpg, .jpeg, .png, or .gif
+              </div>
+            )}
+            {questionErrors[i] && !questionErrors[i].includes('Invalid image URL') && (
               <div className="text-danger mt-1">{questionErrors[i]}</div>
             )}
 
@@ -236,19 +248,10 @@ const QuizForm = ({ onSubmit, initialData }) => {
         </Card>
       ))}
 
-      <Button
-        variant="secondary"
-        onClick={handleAddQuestion}
-        className="me-2 mt-2"
-      >
+      <Button variant="secondary" onClick={handleAddQuestion} className="me-2 mt-2">
         Add Question
       </Button>
-      <Button
-        variant="primary"
-        type="submit"
-        className="me-2 mt-2"
-        disabled={saving}
-      >
+      <Button variant="primary" type="submit" className="me-2 mt-2" disabled={saving}>
         {saving ? 'Saving...' : 'Save Quiz'}
       </Button>
 
