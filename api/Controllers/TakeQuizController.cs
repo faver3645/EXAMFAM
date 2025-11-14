@@ -85,7 +85,7 @@ namespace api.Controllers
                 }
             }
 
-            // Endret til Dictionary
+            // Returner score som Dictionary (key-value)
             return Ok(new Dictionary<string, int> { { "score", score } });
         }
 
@@ -107,7 +107,9 @@ namespace api.Controllers
             {
                 QuizId = dto.QuizId,
                 UserName = userName,
-                Score = dto.Score
+                Score = dto.Score,
+                TimeUsedSeconds = dto.TimeUsedSeconds,
+                SubmittedAt = DateTime.UtcNow
             };
 
             try
@@ -143,6 +145,8 @@ namespace api.Controllers
                     results = results.Where(r => r.UserName == userName).ToList();
                 }
 
+                TimeZoneInfo norwegianTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+
                 var attemptsDto = results.Select(r => new QuizResultDto
                 {
                     QuizResultId = r.QuizResultId,
@@ -150,7 +154,9 @@ namespace api.Controllers
                     QuizId = r.QuizId,
                     QuizTitle = r.Quiz.Title,
                     Score = r.Score,
-                    TotalQuestions = r.Quiz.Questions.Count
+                    TotalQuestions = r.Quiz.Questions.Count,
+                    TimeUsedSeconds = r.TimeUsedSeconds,
+                    SubmittedAt = TimeZoneInfo.ConvertTimeFromUtc(r.SubmittedAt, norwegianTimeZone)
                 }).ToList();
 
                 return Ok(attemptsDto);

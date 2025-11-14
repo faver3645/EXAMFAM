@@ -11,5 +11,9 @@ namespace api.DTOs
         public int Score { get; set; }
         public int TotalQuestions { get; set; }
 
+        public int TimeUsedSeconds { get; set; }
+        public DateTime SubmittedAt { get; set; }
+
+
     }
 }

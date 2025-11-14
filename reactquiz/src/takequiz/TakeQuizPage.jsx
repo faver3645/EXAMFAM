@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
 import { fetchQuizById, submitQuiz } from "./TakeQuizService";
@@ -10,57 +10,108 @@ const TakeQuizPage = () => {
   const [answers, setAnswers] = useState({});
   const [unanswered, setUnanswered] = useState([]);
   const [error, setError] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [timeUsed, setTimeUsed] = useState(0); // sekunder brukt
   const navigate = useNavigate();
+
+  const startTimeRef = useRef(null);
+  const timerRef = useRef(null);
 
   useEffect(() => {
     const getQuiz = async () => {
       try {
         const data = await fetchQuizById(quizId, token);
         setQuiz(data);
+
+        // Start tidtaking
+        startTimeRef.current = Date.now();
+
+        // Start interval for å oppdatere tid brukt
+        timerRef.current = setInterval(() => {
+          const elapsedSeconds = Math.floor((Date.now() - startTimeRef.current) / 1000);
+          setTimeUsed(elapsedSeconds);
+        }, 1000);
       } catch (err) {
         console.error(err);
         setError("Failed to load quiz.");
       }
     };
     getQuiz();
+
+    // Cleanup ved unmount
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [quizId, token]);
 
   const handleAnswerChange = (questionId, answerOptionId) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answerOptionId }));
+    if (unanswered.includes(questionId)) {
+      setUnanswered((prev) => prev.filter((id) => id !== questionId));
+    }
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins} min ${secs} sec`;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!quiz) return;
 
-    // Sjekk om noen spørsmål ikke er besvart
     const missing = quiz.Questions
       .filter((q) => !(q.QuestionId in answers))
       .map((q) => q.QuestionId);
-    setUnanswered(missing);
-    if (missing.length > 0) return;
 
-    const payload = { QuizId: quiz.QuizId, Answers: answers };
+    if (missing.length > 0) {
+      setUnanswered(missing);
+      setError("Please answer all questions before submitting.");
+      return;
+    }
+
+    setError(null);
+    setSubmitting(true);
+
+    const payload = { 
+      QuizId: quiz.QuizId, 
+      Answers: answers,
+      TimeUsedSeconds: timeUsed,  // sender tid brukt til backend (om den støtter det)
+    };
+
     try {
       const result = await submitQuiz(payload, token);
+
+      // Stopp timer når ferdig
+      if (timerRef.current) clearInterval(timerRef.current);
+
+      // Send tid brukt med i navigate state med riktig navn
       navigate(`/takequiz/result/${quiz.QuizId}`, {
-        state: { quiz, score: result.score ?? 0 },
+        state: { quiz, score: result.score ?? 0, timeUsedSeconds: timeUsed },
       });
     } catch (err) {
       console.error(err);
       setError("Failed to submit quiz.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  if (error)
-    return (
-      <p style={{ color: "red", textAlign: "center" }}>{error}</p>
-    );
-  if (!quiz) return <p style={{ textAlign: "center" }}>Loading quiz...</p>;
+  if (error && !quiz) {
+    return <p className="text-center text-danger">{error}</p>;
+  }
+
+  if (!quiz) return <p className="text-center">Loading quiz...</p>;
 
   return (
     <div className="container mt-4" style={{ maxWidth: "800px" }}>
       <h2 className="mb-4 text-center">{quiz.Title}</h2>
+
+      <p className="text-center mb-3"><strong>Time Used:</strong> {formatTime(timeUsed)}</p>
+
+      {error && <p className="text-danger text-center">{error}</p>}
+
       <form onSubmit={handleSubmit}>
         {quiz.Questions.map((q, index) => (
           <div
@@ -74,7 +125,7 @@ const TakeQuizPage = () => {
                 Question {index + 1}: {q.Text}
               </h5>
 
-             {q.ImageUrl && (
+              {q.ImageUrl && (
                 <div className="mb-3 text-center">
                   <img
                     src={`http://localhost:5082${q.ImageUrl}`}
@@ -84,7 +135,7 @@ const TakeQuizPage = () => {
                   />
                 </div>
               )}
-              
+
               {q.AnswerOptions.map((option) => (
                 <div className="form-check mb-2" key={option.AnswerOptionId}>
                   <input
@@ -97,6 +148,7 @@ const TakeQuizPage = () => {
                     onChange={() =>
                       handleAnswerChange(q.QuestionId, option.AnswerOptionId)
                     }
+                    disabled={submitting}
                   />
                   <label
                     className="form-check-label"
@@ -116,16 +168,23 @@ const TakeQuizPage = () => {
           </div>
         ))}
 
-        <button type="submit" className="btn btn-success btn-md">
-          Submit Quiz
-        </button>
-        <button
-          type="button"
-          className="btn btn-secondary btn-md ms-2"
-          onClick={() => navigate("/takequiz")}
-        >
-          Cancel
-        </button>
+        <div className="d-flex justify-content-center">
+          <button
+            type="submit"
+            className="btn btn-success btn-md"
+            disabled={submitting}
+          >
+            {submitting ? "Submitting..." : "Submit Quiz"}
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary btn-md ms-2"
+            onClick={() => navigate("/takequiz")}
+            disabled={submitting}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
