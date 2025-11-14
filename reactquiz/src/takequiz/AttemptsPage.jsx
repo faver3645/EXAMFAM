@@ -25,15 +25,21 @@ const AttemptsPage = () => {
     }
   }, [quizId, token]);
 
-  useEffect(() => { loadAttempts(); }, [loadAttempts]);
+  useEffect(() => {
+    loadAttempts();
+  }, [loadAttempts]);
 
-  const confirmDeleteAttempt = (attempt) => { setSelectedAttempt(attempt); setShowModal(true); };
+  const confirmDeleteAttempt = (attempt) => {
+    setSelectedAttempt(attempt);
+    setShowModal(true);
+  };
+
   const handleDeleteAttempt = async () => {
     if (!selectedAttempt) return;
     try {
       await deleteAttempt(selectedAttempt.QuizResultId, token);
       setStatusMessage("Attempt deleted successfully!");
-      setAttempts(prev => prev.filter(a => a.QuizResultId !== selectedAttempt.QuizResultId));
+      setAttempts((prev) => prev.filter((a) => a.QuizResultId !== selectedAttempt.QuizResultId));
     } catch (err) {
       console.error(err);
       setStatusMessage("Failed to delete attempt.");
@@ -55,18 +61,52 @@ const AttemptsPage = () => {
         <p className="text-center">No attempts yet.</p>
       ) : (
         <div className="row g-4">
-          {attempts.map(a => {
+          {attempts.map((a) => {
             const percentage = Math.round((a.Score / a.TotalQuestions) * 100);
-            let bgColor = percentage >= 80 ? "bg-success text-white" : percentage >= 50 ? "bg-warning text-dark" : "bg-danger text-white";
+            let bgColor =
+              percentage >= 80
+                ? "bg-success text-white"
+                : percentage >= 50
+                ? "bg-warning text-dark"
+                : "bg-danger text-white";
+
+            // Formatert innsendingstidspunkt (dato + klokkeslett)
+            const submittedDate = a.SubmittedAt
+              ? new Date(a.SubmittedAt).toLocaleString("no-NO", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })
+              : "Ukjent tid";
+
+            // Regn om tid brukt
+            const totalSeconds = a.TimeUsedSeconds ?? 0;
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+
             return (
               <div className="col-md-4" key={a.QuizResultId}>
                 <div className={`card shadow-sm h-100 ${bgColor}`}>
                   <div className="card-body d-flex flex-column justify-content-center align-items-center text-center">
                     <h5 className="card-title">{a.UserName}</h5>
-                    <p className="card-text mb-1">Score: {a.Score} / {a.TotalQuestions}</p>
+                    <p className="card-text mb-1">
+                      Score: {a.Score} / {a.TotalQuestions}
+                    </p>
                     <p className="card-text mb-2">Prosent: {percentage}%</p>
+                    <p className="card-text mb-1">
+                      Tid brukt: {minutes} min {seconds} sek
+                    </p>
+                    <p className="card-text mb-2">Innsendt: {submittedDate}</p>
                     {user.role === "Teacher" && (
-                      <button className="btn btn-outline-light btn-sm mt-auto" onClick={() => confirmDeleteAttempt(a)}>Delete Attempt</button>
+                      <button
+                        className="btn btn-outline-light btn-sm mt-auto"
+                        onClick={() => confirmDeleteAttempt(a)}
+                      >
+                        Slett forsøk
+                      </button>
                     )}
                   </div>
                 </div>
@@ -77,23 +117,38 @@ const AttemptsPage = () => {
       )}
 
       <div className="text-center mt-4">
-        <button className="btn btn-primary" onClick={() => navigate(user.role === "Student" ? "/takequiz" : "/teacher-dashboard")}>Back</button>
+        <button
+          className="btn btn-primary"
+          onClick={() => navigate(user.role === "Student" ? "/takequiz" : "/teacher-dashboard")}
+        >
+          Tilbake
+        </button>
       </div>
 
       {showModal && (
-        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+        <div
+          className="modal fade show d-block"
+          tabIndex="-1"
+          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Confirm Delete</h5>
+                <h5 className="modal-title">Bekreft sletting</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
               <div className="modal-body">
-                <p>Are you sure you want to delete the attempt of <strong>{selectedAttempt?.UserName}</strong>?</p>
+                <p>
+                  Er du sikker på at du vil slette forsøket til <strong>{selectedAttempt?.UserName}</strong>?
+                </p>
               </div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancel</button>
-                <button className="btn btn-danger" onClick={handleDeleteAttempt}>Delete</button>
+                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                  Avbryt
+                </button>
+                <button className="btn btn-danger" onClick={handleDeleteAttempt}>
+                  Slett
+                </button>
               </div>
             </div>
           </div>

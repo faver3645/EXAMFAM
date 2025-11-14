@@ -43,11 +43,13 @@ export const saveAttempt = async (payload, token) => {
     headers: getHeaders(token),
     body: JSON.stringify({
       QuizId: payload.QuizId,
-      Score: payload.Score
+      Score: payload.Score,
+      TimeUsedSeconds: payload.TimeUsedSeconds,  // <-- legg til denne
     }),
   });
   return handleResponse(response);
 };
+
 
 export const fetchAttempts = async (quizId, token) => {
   const response = await fetch(`${API_URL}/api/takequizapi/attempts/${quizId}`, {

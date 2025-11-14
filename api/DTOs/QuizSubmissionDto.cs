@@ -5,5 +5,7 @@ namespace api.DTOs
         public int QuizId { get; set; }
         public string UserName { get; set; } = "";
         public Dictionary<int,int> Answers { get; set; } = new();
+        public int TimeUsedSeconds { get; set; }
+
     }
 }
