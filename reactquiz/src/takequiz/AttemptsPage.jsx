@@ -9,6 +9,7 @@ const AttemptsPage = () => {
   const { quizId } = useParams();
   const { token, user } = useAuth();
   const [attempts, setAttempts] = useState([]);
+  const [filteredAttempts, setFilteredAttempts] = useState([]);
   const [quizTitle, setQuizTitle] = useState("");
   const [error, setError] = useState(null);
   const [statusMessage, setStatusMessage] = useState(null);
@@ -17,6 +18,7 @@ const AttemptsPage = () => {
   const [sortOption, setSortOption] = useState("date_desc");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   const loadAttempts = useCallback(async (page = 1) => {
@@ -36,6 +38,20 @@ const AttemptsPage = () => {
   useEffect(() => {
     loadAttempts(1);
   }, [loadAttempts]);
+
+  // Filtrering basert på søk
+  useEffect(() => {
+    let filtered = attempts;
+    if (searchTerm.trim() !== "") {
+      const lowerTerm = searchTerm.toLowerCase();
+      filtered = attempts.filter(a => a.UserName.toLowerCase().includes(lowerTerm));
+    }
+    // For studenter, vis kun deres egne forsøk
+    if (user.role === "Student") {
+      filtered = filtered.filter(a => a.UserName === user.name);
+    }
+    setFilteredAttempts(filtered);
+  }, [attempts, searchTerm, user]);
 
   const confirmDeleteAttempt = (attempt) => {
     setSelectedAttempt(attempt);
@@ -73,28 +89,42 @@ const AttemptsPage = () => {
       {error && <p className="text-center text-danger">{error}</p>}
 
       {attempts.length > 0 && (
-        <div className="mb-3 d-flex justify-content-end">
-          <label className="me-2" htmlFor="sortSelect">Sort by:</label>
-          <select
-            id="sortSelect"
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="form-select w-auto"
-          >
-            <option value="date_desc">Date: Newest → Oldest</option>
-            <option value="date_asc">Date: Oldest → Newest</option>
-            <option value="score_desc">Score: High → Low</option>
-            <option value="score_asc">Score: Low → High</option>
-          </select>
+        <div className="mb-3 d-flex justify-content-between flex-wrap">
+          <div className="d-flex align-items-center mb-2">
+            <label className="me-2" htmlFor="sortSelect">Sort by:</label>
+            <select
+              id="sortSelect"
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="form-select w-auto"
+            >
+              <option value="date_desc">Date: Newest → Oldest</option>
+              <option value="date_asc">Date: Oldest → Newest</option>
+              <option value="score_desc">Score: High → Low</option>
+              <option value="score_asc">Score: Low → High</option>
+            </select>
+          </div>
+
+          {user.role === "Teacher" && (
+            <div className="d-flex align-items-center mb-2">
+              <input
+                type="text"
+                className="form-control w-auto"
+                placeholder="Search student..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          )}
         </div>
       )}
 
-      {attempts.length === 0 ? (
-        <p className="text-center">No attempts yet.</p>
+      {filteredAttempts.length === 0 ? (
+        <p className="text-center">No attempts found.</p>
       ) : (
         <>
           <div className="row g-4">
-            {attempts.map((a) => {
+            {filteredAttempts.map((a) => {
               const percentage = Math.round((a.Score / a.TotalQuestions) * 100);
               const bgColor =
                 percentage >= 80 ? "bg-success text-white" :
