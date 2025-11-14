@@ -13,7 +13,8 @@ const handleResponse = async (response) => {
   return response.status === 204 ? null : response.json();
 };
 
-// --- API funksjoner ---
+// --- API FUNCTIONS ---
+
 export const fetchAvailableQuizzes = async (token) => {
   const response = await fetch(`${API_URL}/api/takequizapi/takequizlist`, {
     headers: getHeaders(token),
@@ -38,18 +39,18 @@ export const submitQuiz = async (payload, token) => {
 };
 
 export const saveAttempt = async (payload, token) => {
+  // payload: { QuizId, Score, TimeUsedSeconds }
   const response = await fetch(`${API_URL}/api/takequizapi/saveattempt`, {
     method: "POST",
     headers: getHeaders(token),
     body: JSON.stringify({
       QuizId: payload.QuizId,
       Score: payload.Score,
-      TimeUsedSeconds: payload.TimeUsedSeconds,  // <-- legg til denne
+      TimeUsedSeconds: payload.TimeUsedSeconds,
     }),
   });
   return handleResponse(response);
 };
-
 
 export const fetchAttempts = async (quizId, token) => {
   const response = await fetch(`${API_URL}/api/takequizapi/attempts/${quizId}`, {

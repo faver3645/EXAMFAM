@@ -13,7 +13,7 @@ namespace api.DTOs
 
         public int TimeUsedSeconds { get; set; }
         public DateTime SubmittedAt { get; set; }
-
+     
 
     }
 }

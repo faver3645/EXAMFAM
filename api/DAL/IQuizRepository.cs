@@ -11,7 +11,10 @@ public interface IQuizRepository
     Task<bool> Delete(int id);
 
     Task AddResultAsync(QuizResult result);
-    Task<IEnumerable<QuizResult>> GetResultsForQuizAsync(int quizId);
-   
+
+    // NEW: supports filter + sort + paging
+    Task<(IEnumerable<QuizResult> Results, int TotalCount)> 
+        GetResultsForQuizAsync(int quizId, AttemptsQueryParams query);
+
     Task DeleteAttemptAsync(int attemptId);
 }

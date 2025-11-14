@@ -7,18 +7,22 @@ const AttemptsPage = () => {
   const { quizId } = useParams();
   const { token, user } = useAuth();
   const [attempts, setAttempts] = useState([]);
+  const [filteredAttempts, setFilteredAttempts] = useState([]);
   const [quizTitle, setQuizTitle] = useState("");
   const [error, setError] = useState(null);
   const [statusMessage, setStatusMessage] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedAttempt, setSelectedAttempt] = useState(null);
+  const [sortOption, setSortOption] = useState("date_desc");
   const navigate = useNavigate();
 
   const loadAttempts = useCallback(async () => {
     try {
       const data = await fetchAttempts(quizId, token);
-      setAttempts(data);
-      if (data.length > 0) setQuizTitle(data[0].QuizTitle);
+      const attemptsArray = Array.isArray(data?.data) ? data.data : [];
+      setAttempts(attemptsArray);
+      setFilteredAttempts(attemptsArray);
+      if (attemptsArray.length > 0) setQuizTitle(attemptsArray[0].QuizTitle);
     } catch (err) {
       console.error(err);
       setError("Failed to load attempts.");
@@ -28,6 +32,21 @@ const AttemptsPage = () => {
   useEffect(() => {
     loadAttempts();
   }, [loadAttempts]);
+
+  // Sortering
+  useEffect(() => {
+    let sorted = [...attempts];
+    if (sortOption === "score_desc") {
+      sorted.sort((a, b) => b.Score - a.Score);
+    } else if (sortOption === "score_asc") {
+      sorted.sort((a, b) => a.Score - b.Score);
+    } else if (sortOption === "date_asc") {
+      sorted.sort((a, b) => new Date(a.SubmittedAt) - new Date(b.SubmittedAt));
+    } else if (sortOption === "date_desc") {
+      sorted.sort((a, b) => new Date(b.SubmittedAt) - new Date(a.SubmittedAt));
+    }
+    setFilteredAttempts(sorted);
+  }, [sortOption, attempts]);
 
   const confirmDeleteAttempt = (attempt) => {
     setSelectedAttempt(attempt);
@@ -39,7 +58,9 @@ const AttemptsPage = () => {
     try {
       await deleteAttempt(selectedAttempt.QuizResultId, token);
       setStatusMessage("Attempt deleted successfully!");
-      setAttempts((prev) => prev.filter((a) => a.QuizResultId !== selectedAttempt.QuizResultId));
+      setAttempts((prev) =>
+        prev.filter((a) => a.QuizResultId !== selectedAttempt.QuizResultId)
+      );
     } catch (err) {
       console.error(err);
       setStatusMessage("Failed to delete attempt.");
@@ -52,25 +73,46 @@ const AttemptsPage = () => {
 
   return (
     <div className="container mt-5" style={{ maxWidth: "1000px" }}>
-      <h2 className="mb-4 text-center">{quizTitle ? `Attempts for: ${quizTitle}` : "Attempts"}</h2>
+      <h2 className="mb-4 text-center">
+        {quizTitle ? `Attempts for: ${quizTitle}` : "Attempts"}
+      </h2>
 
-      {statusMessage && <div className="alert alert-info text-center">{statusMessage}</div>}
+      {statusMessage && (
+        <div className="alert alert-info text-center">{statusMessage}</div>
+      )}
       {error && <p className="text-center text-danger">{error}</p>}
 
-      {attempts.length === 0 ? (
+      {attempts.length > 0 && (
+        <div className="mb-3 d-flex justify-content-end">
+          <label className="me-2" htmlFor="sortSelect">
+            Sort by:
+          </label>
+          <select
+            id="sortSelect"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            className="form-select w-auto"
+          >
+            <option value="date_desc">Date: Newest → Oldest</option>
+            <option value="date_asc">Date: Oldest → Newest</option>
+            <option value="score_desc">Score: High → Low</option>
+            <option value="score_asc">Score: Low → High</option>
+          </select>
+        </div>
+      )}
+
+      {filteredAttempts.length === 0 ? (
         <p className="text-center">No attempts yet.</p>
       ) : (
         <div className="row g-4">
-          {attempts.map((a) => {
+          {filteredAttempts.map((a) => {
             const percentage = Math.round((a.Score / a.TotalQuestions) * 100);
-            let bgColor =
+            const bgColor =
               percentage >= 80
                 ? "bg-success text-white"
                 : percentage >= 50
                 ? "bg-warning text-dark"
                 : "bg-danger text-white";
-
-            // Formatert innsendingstidspunkt (dato + klokkeslett)
             const submittedDate = a.SubmittedAt
               ? new Date(a.SubmittedAt).toLocaleString("no-NO", {
                   year: "numeric",
@@ -80,9 +122,7 @@ const AttemptsPage = () => {
                   minute: "2-digit",
                   second: "2-digit",
                 })
-              : "Ukjent tid";
-
-            // Regn om tid brukt
+              : "Unknown";
             const totalSeconds = a.TimeUsedSeconds ?? 0;
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = totalSeconds % 60;
@@ -119,7 +159,11 @@ const AttemptsPage = () => {
       <div className="text-center mt-4">
         <button
           className="btn btn-primary"
-          onClick={() => navigate(user.role === "Student" ? "/takequiz" : "/teacher-dashboard")}
+          onClick={() =>
+            navigate(
+              user.role === "Student" ? "/takequiz" : "/teacher-dashboard"
+            )
+          }
         >
           Back
         </button>
@@ -135,15 +179,23 @@ const AttemptsPage = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Confirm Deletion</h5>
-                <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowModal(false)}
+                ></button>
               </div>
               <div className="modal-body">
                 <p>
-                  Are you sure you want to delete the attempt of <strong>{selectedAttempt?.UserName}</strong>?
+                  Are you sure you want to delete the attempt of{" "}
+                  <strong>{selectedAttempt?.UserName}</strong>?
                 </p>
               </div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setShowModal(false)}
+                >
                   Cancel
                 </button>
                 <button className="btn btn-danger" onClick={handleDeleteAttempt}>
