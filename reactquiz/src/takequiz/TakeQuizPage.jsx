@@ -5,7 +5,7 @@ import { fetchQuizById, submitQuiz } from "./TakeQuizService";
 
 const TakeQuizPage = () => {
   const { quizId } = useParams();
-  const {token } = useAuth();
+  const { token } = useAuth();
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
   const [unanswered, setUnanswered] = useState([]);
@@ -33,21 +33,29 @@ const TakeQuizPage = () => {
     e.preventDefault();
     if (!quiz) return;
 
-    const missing = quiz.Questions.filter(q => !(q.QuestionId in answers)).map(q => q.QuestionId);
+    // Sjekk om noen spørsmål ikke er besvart
+    const missing = quiz.Questions
+      .filter((q) => !(q.QuestionId in answers))
+      .map((q) => q.QuestionId);
     setUnanswered(missing);
     if (missing.length > 0) return;
 
     const payload = { QuizId: quiz.QuizId, Answers: answers };
     try {
       const result = await submitQuiz(payload, token);
-      navigate(`/takequiz/result/${quiz.QuizId}`, { state: { quiz, score: result.score ?? 0 } });
+      navigate(`/takequiz/result/${quiz.QuizId}`, {
+        state: { quiz, score: result.score ?? 0 },
+      });
     } catch (err) {
       console.error(err);
       setError("Failed to submit quiz.");
     }
   };
 
-  if (error) return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
+  if (error)
+    return (
+      <p style={{ color: "red", textAlign: "center" }}>{error}</p>
+    );
   if (!quiz) return <p style={{ textAlign: "center" }}>Loading quiz...</p>;
 
   return (
@@ -55,10 +63,29 @@ const TakeQuizPage = () => {
       <h2 className="mb-4 text-center">{quiz.Title}</h2>
       <form onSubmit={handleSubmit}>
         {quiz.Questions.map((q, index) => (
-          <div key={q.QuestionId} className={`card mb-4 shadow-sm ${unanswered.includes(q.QuestionId) ? "border-danger" : ""}`}>
+          <div
+            key={q.QuestionId}
+            className={`card mb-4 shadow-sm ${
+              unanswered.includes(q.QuestionId) ? "border-danger" : ""
+            }`}
+          >
             <div className="card-body">
-              <h5 className="card-title">Question {index + 1}: {q.Text}</h5>
-              {q.AnswerOptions.map(option => (
+              <h5 className="card-title">
+                Question {index + 1}: {q.Text}
+              </h5>
+
+             {q.ImageUrl && (
+                <div className="mb-3 text-center">
+                  <img
+                    src={`http://localhost:5082${q.ImageUrl}`}
+                    alt={`Question ${index + 1}`}
+                    className="img-fluid"
+                    style={{ maxHeight: "300px", objectFit: "contain" }}
+                  />
+                </div>
+              )}
+              
+              {q.AnswerOptions.map((option) => (
                 <div className="form-check mb-2" key={option.AnswerOptionId}>
                   <input
                     className="form-check-input"
@@ -67,17 +94,38 @@ const TakeQuizPage = () => {
                     id={`q${q.QuestionId}_a${option.AnswerOptionId}`}
                     value={option.AnswerOptionId}
                     checked={answers[q.QuestionId] === option.AnswerOptionId}
-                    onChange={() => handleAnswerChange(q.QuestionId, option.AnswerOptionId)}
+                    onChange={() =>
+                      handleAnswerChange(q.QuestionId, option.AnswerOptionId)
+                    }
                   />
-                  <label className="form-check-label" htmlFor={`q${q.QuestionId}_a${option.AnswerOptionId}`}>{option.Text}</label>
+                  <label
+                    className="form-check-label"
+                    htmlFor={`q${q.QuestionId}_a${option.AnswerOptionId}`}
+                  >
+                    {option.Text}
+                  </label>
                 </div>
               ))}
-              {unanswered.includes(q.QuestionId) && <span className="text-danger d-block mt-2">Please select an answer for this question.</span>}
+
+              {unanswered.includes(q.QuestionId) && (
+                <span className="text-danger d-block mt-2">
+                  Please select an answer for this question.
+                </span>
+              )}
             </div>
           </div>
         ))}
-        <button type="submit" className="btn btn-success btn-md">Submit Quiz</button>
-        <button type="button" className="btn btn-secondary btn-md ms-2" onClick={() => navigate("/takequiz")}>Cancel</button>
+
+        <button type="submit" className="btn btn-success btn-md">
+          Submit Quiz
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary btn-md ms-2"
+          onClick={() => navigate("/takequiz")}
+        >
+          Cancel
+        </button>
       </form>
     </div>
   );

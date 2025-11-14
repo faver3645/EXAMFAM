@@ -77,7 +77,7 @@ const AttemptsPage = () => {
       )}
 
       <div className="text-center mt-4">
-        <button className="btn btn-primary" onClick={() => navigate(user.role === "Student" ? "/takequiz" : "/quiz")}>Back</button>
+        <button className="btn btn-primary" onClick={() => navigate(user.role === "Student" ? "/takequiz" : "/teacher-dashboard")}>Back</button>
       </div>
 
       {showModal && (

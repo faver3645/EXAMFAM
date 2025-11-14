@@ -20,6 +20,7 @@ const QuizUpdatePage = () => {
           title: data.Title,
           questions: data.Questions?.map(q => ({
             text: q.Text,
+            imageUrl: q.ImageUrl || '',
             answerOptions: q.AnswerOptions?.map(a => ({
               text: a.Text,
               isCorrect: a.IsCorrect

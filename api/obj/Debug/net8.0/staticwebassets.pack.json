@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\wwwroot\\images\\Brasil.png",
+      "PackagePath": "staticwebassets\\images\\Brasil.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\wwwroot\\images\\China.png",
+      "PackagePath": "staticwebassets\\images\\China.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\wwwroot\\images\\Island.png",
+      "PackagePath": "staticwebassets\\images\\Island.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\wwwroot\\images\\Japan.png",
+      "PackagePath": "staticwebassets\\images\\Japan.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\wwwroot\\images\\SouthAfrica.png",
+      "PackagePath": "staticwebassets\\images\\SouthAfrica.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\wwwroot\\images\\Spain.png",
+      "PackagePath": "staticwebassets\\images\\Spain.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.api.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.api.props",
+      "PackagePath": "build\\api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.api.props",
+      "PackagePath": "buildMultiTargeting\\api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.api.props",
+      "PackagePath": "buildTransitive\\api.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

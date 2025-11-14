@@ -54,6 +54,7 @@ namespace api.Controllers
                 {
                     QuestionId = q.QuestionId,
                     Text = q.Text,
+                    ImageUrl = q.ImageUrl,
                     AnswerOptions = q.AnswerOptions.Select(a => new AnswerOptionDto
                     {
                         AnswerOptionId = a.AnswerOptionId,

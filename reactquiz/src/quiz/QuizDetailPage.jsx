@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchQuizById } from "./QuizService"; 
+import { fetchQuizById } from "./QuizService";
 
 const QuizDetailPage = () => {
   const { quizId } = useParams();
@@ -11,9 +11,9 @@ const QuizDetailPage = () => {
   useEffect(() => {
     const loadQuiz = async () => {
       try {
-        const data = await fetchQuizById(quizId); 
+        const data = await fetchQuizById(quizId);
         setQuiz(data);
-        console.log(data);
+        console.log("Loaded quiz:", data);
       } catch (err) {
         console.error(err);
         setError("Failed to fetch quiz.");
@@ -23,7 +23,8 @@ const QuizDetailPage = () => {
     loadQuiz();
   }, [quizId]);
 
-  if (error) return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
+  if (error)
+    return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
   if (!quiz) return <p style={{ textAlign: "center" }}>Loading...</p>;
 
   return (
@@ -34,15 +35,30 @@ const QuizDetailPage = () => {
       {quiz.Questions && quiz.Questions.length > 0 ? (
         <ul
           style={{
-            listStyleType: "disc",
+            listStyleType: "none",
             paddingLeft: "0",
             display: "inline-block",
             textAlign: "left",
           }}
         >
-          {quiz.Questions.map((question) => (
-            <li key={question.Id} style={{ marginBottom: "15px" }}>
-              <strong>{question.Text}</strong>
+          {quiz.Questions.map((question, index) => (
+            <li key={question.QuestionId} style={{ marginBottom: "25px" }}>
+              <strong>
+                Question {index + 1}: {question.Text}
+              </strong>
+
+              {/* 🖼️ Vis bilde om det finnes */}
+              {question.ImageUrl && (
+                <div className="text-center mt-2 mb-3">
+                  <img
+                    src={`http://localhost:5082${question.ImageUrl}`}
+                    alt={`Question ${index + 1}`}
+                    style={{ maxHeight: "250px", objectFit: "contain", borderRadius: "8px" }}
+                  />
+                </div>
+              )}
+
+              {/* 🔹 Vis svaralternativer */}
               {question.AnswerOptions && question.AnswerOptions.length > 0 && (
                 <ul
                   style={{
@@ -52,8 +68,13 @@ const QuizDetailPage = () => {
                   }}
                 >
                   {question.AnswerOptions.map((option) => (
-                    <li key={option.Id}>
-                      {option.Text} {option.IsCorrect ? "(Correct)" : ""}
+                    <li key={option.AnswerOptionId}>
+                      {option.Text}{" "}
+                      {option.IsCorrect ? (
+                        <span style={{ color: "green" }}>(Correct)</span>
+                      ) : (
+                        ""
+                      )}
                     </li>
                   ))}
                 </ul>

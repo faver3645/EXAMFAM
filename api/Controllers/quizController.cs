@@ -55,6 +55,7 @@ public class QuizAPIController : ControllerBase
             Questions = quizDto.Questions.Select(q => new Question
             {
                 Text = q.Text,
+                ImageUrl = q.ImageUrl,
                 AnswerOptions = q.AnswerOptions.Select(a => new AnswerOption
                 {
                     Text = a.Text,
@@ -106,6 +107,7 @@ public class QuizAPIController : ControllerBase
         existingQuiz.Questions = quizDto.Questions?.Select(q => new Question
         {
             Text = q.Text,
+            ImageUrl = q.ImageUrl,
             AnswerOptions = q.AnswerOptions?.Select(a => new AnswerOption
             {
                 Text = a.Text,
