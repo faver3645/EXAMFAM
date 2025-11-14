@@ -12,7 +12,7 @@ public interface IQuizRepository
 
     Task AddResultAsync(QuizResult result);
 
-    // NEW: supports filter + sort + paging
+    // filter + sort + paging
     Task<(IEnumerable<QuizResult> Results, int TotalCount)> 
         GetResultsForQuizAsync(int quizId, AttemptsQueryParams query);
 
