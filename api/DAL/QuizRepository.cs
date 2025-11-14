@@ -108,31 +108,71 @@ namespace api.DAL
             }
             catch (Exception e)
             {
-                _logger.LogError("[QuizRepository] AddResultAsync failed for result {@Result}: {Message}", result, e.Message);
+                _logger.LogError("[QuizRepository] AddResultAsync failed: {Message}", e.Message);
                 throw;
             }
         }
 
-        public async Task<IEnumerable<QuizResult>> GetResultsForQuizAsync(int quizId)
+        // NEW: Filtering + Sorting + Paging
+        public async Task<(IEnumerable<QuizResult> Results, int TotalCount)>
+            GetResultsForQuizAsync(int quizId, AttemptsQueryParams query)
         {
             try
             {
-                return await _db.UserQuizResults
+                var q = _db.UserQuizResults
                     .Include(r => r.Quiz)
                         .ThenInclude(q => q.Questions)
                             .ThenInclude(qt => qt.AnswerOptions)
                     .Where(r => r.QuizId == quizId)
-                    .OrderByDescending(r => r.QuizResultId)
-                    .ToListAsync();
+                    .AsQueryable();
+
+                // FILTERS
+                if (query.FromDate.HasValue)
+                    q = q.Where(r => r.SubmittedAt >= query.FromDate.Value);
+
+                if (query.ToDate.HasValue)
+                    q = q.Where(r => r.SubmittedAt <= query.ToDate.Value);
+
+                if (query.MinScore.HasValue)
+                    q = q.Where(r => r.Score >= query.MinScore.Value);
+
+                if (query.MaxScore.HasValue)
+                    q = q.Where(r => r.Score <= query.MaxScore.Value);
+
+                // COUNT BEFORE PAGING
+                var totalCount = await q.CountAsync();
+
+                // SORTING
+                bool asc = query.SortOrder.ToLower() == "asc";
+
+                q = (query.SortBy.ToLower()) switch
+                {
+                    "score" =>
+                        asc ? q.OrderBy(r => r.Score).ThenBy(r => r.SubmittedAt)
+                            : q.OrderByDescending(r => r.Score).ThenByDescending(r => r.SubmittedAt),
+
+                    "submittedat" or _ =>
+                        asc ? q.OrderBy(r => r.SubmittedAt)
+                            : q.OrderByDescending(r => r.SubmittedAt),
+                };
+
+                // PAGING
+                int page = query.Page <= 0 ? 1 : query.Page;
+                int pageSize = query.PageSize <= 0 ? 50 : query.PageSize;
+
+                q = q.Skip((page - 1) * pageSize).Take(pageSize);
+
+                var results = await q.ToListAsync();
+
+                return (results, totalCount);
             }
             catch (Exception e)
             {
                 _logger.LogError("[QuizRepository] GetResultsForQuizAsync({QuizId}) failed: {Message}", quizId, e.Message);
-                return new List<QuizResult>();
+                return (new List<QuizResult>(), 0);
             }
         }
 
-        
         public async Task DeleteAttemptAsync(int attemptId)
         {
             try
@@ -146,6 +186,7 @@ namespace api.DAL
 
                 _db.UserQuizResults.Remove(attempt);
                 await _db.SaveChangesAsync();
+
                 _logger.LogInformation("[QuizRepository] Attempt {AttemptId} deleted successfully", attemptId);
             }
             catch (Exception e)
