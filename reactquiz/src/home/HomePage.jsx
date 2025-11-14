@@ -145,26 +145,60 @@ export default function HomePage() {
           )}
         </Row>
 
-        {/* Rollespesifikke seksjoner */}
-        {user.role === "Student" && (
-          <section className="bg-white py-5">
-            <h2 className="fw-semibold mb-4">Stay Motivated</h2>
-            <p className="text-muted mb-4">
-              Keep learning, set goals, and track your progress over time. MyQuiz makes learning fun!
-            </p>
-            <FaTrophy size={60} className="text-warning" />
-          </section>
-        )}
+        {/* Oppdatert design på sekjoner */}
+        <Row className="g-4 justify-content-center mt-5">
+          {user.role === "Student" && (
+            <Col md={6}>
+              <Card
+                className="text-white shadow-lg p-4 h-100"
+                style={{
+                  borderRadius: "20px",
+                  background: "linear-gradient(135deg, #6A11CB, #2575FC)"
+                }}
+              >
+                <Card.Body className="d-flex flex-column align-items-center">
+                  <FaTrophy size={60} className="mb-3" />
+                  <Card.Title className="fw-bold">Stay Motivated</Card.Title>
+                  <Card.Text>
+                    Keep learning, set goals, and track your progress over time. MyQuiz makes learning fun!
+                  </Card.Text>
+                  <Button
+                    variant="light"
+                    onClick={() => navigate("/takequiz")}
+                  >
+                    Start Learning
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
 
-        {user.role === "Teacher" && (
-          <section className="bg-white py-5">
-            <h2 className="fw-semibold mb-4">Enhance Your Classroom</h2>
-            <p className="text-muted mb-4">
-              Organize quizzes, monitor student performance, and provide feedback efficiently. MyQuiz helps you teach smarter.
-            </p>
-            <FaChalkboardTeacher size={60} className="text-primary" />
-          </section>
-        )}
+          {user.role === "Teacher" && (
+            <Col md={6}>
+              <Card
+                className="text-white shadow-lg p-4 h-100"
+                style={{
+                  borderRadius: "20px",
+                  background: "linear-gradient(135deg, #6A11CB, #2575FC)",
+                }}
+              >
+                <Card.Body className="d-flex flex-column align-items-center">
+                  <FaChalkboardTeacher size={60} className="mb-3" />
+                  <Card.Title className="fw-bold">Enhance Your Classroom</Card.Title>
+                  <Card.Text>
+                    Organize quizzes and monitor student performance. MyQuiz helps you teach smarter.
+                  </Card.Text>
+                  <Button
+                    variant="light"
+                    onClick={() => navigate("/quizcreate")}
+                  >
+                    Get Started
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
+        </Row>
       </Container>
     </div>
   );

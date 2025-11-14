@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\Muniira\\OneDrive - OsloMet\\Skrivebord\\EksamenFAM\\EXAMFAM\\api\\api.csproj": {}
   },
   "projects": {
@@ -15,6 +16,22 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Muniira\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+    "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\api.csproj",
+        "projectName": "api",
+        "projectPath": "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\Aliza Mudassar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Aliza Mudassar\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> db0aed29ed437bf2b023773d907150b423242c08
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -127,7 +144,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.415/PortableRuntimeIdentifierGraph.json"
+>>>>>>> db0aed29ed437bf2b023773d907150b423242c08
         }
       }
     }
