@@ -51,7 +51,7 @@ const ResultPage = () => {
         <p><strong>Score:</strong> {score} / {totalQuestions} ({percentage}%)</p>
 
         {/* Viser faktisk tid brukt */}
-        <p><strong>Tid brukt:</strong> {minutes} min {seconds} sek</p>
+        <p><strong>Time Used:</strong> {minutes} min {seconds} sec</p>
 
         <div className="progress mb-3" style={{ height: "25px" }}>
           <div

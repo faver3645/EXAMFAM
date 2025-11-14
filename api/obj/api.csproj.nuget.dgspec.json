@@ -1,27 +1,7 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\api.csproj": {}
-=======
-<<<<<<< HEAD
-    "C:\\Users\\Muniira\\OneDrive - OsloMet\\Skrivebord\\EksamenFAM\\EXAMFAM\\api\\api.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\Muniira\\OneDrive - OsloMet\\Skrivebord\\EksamenFAM\\EXAMFAM\\api\\api.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Muniira\\OneDrive - OsloMet\\Skrivebord\\EksamenFAM\\EXAMFAM\\api\\api.csproj",
-        "projectName": "api",
-        "projectPath": "C:\\Users\\Muniira\\OneDrive - OsloMet\\Skrivebord\\EksamenFAM\\EXAMFAM\\api\\api.csproj",
-        "packagesPath": "C:\\Users\\Muniira\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Muniira\\OneDrive - OsloMet\\Skrivebord\\EksamenFAM\\EXAMFAM\\api\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\Muniira\\AppData\\Roaming\\NuGet\\NuGet.Config"
-=======
-    "C:\\Users\\Aliza Mudassar\\OneDrive - OsloMet\\webapplikasjoner\\EXAMFAM\\api\\api.csproj": {}
->>>>>>> 0f7ff591e997fb2f7f2e4829f0b294394f437015
   },
   "projects": {
     "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\api.csproj": {
@@ -34,12 +14,7 @@
         "outputPath": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-<<<<<<< HEAD
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
-=======
-          "C:\\Users\\Aliza Mudassar\\AppData\\Roaming\\NuGet\\NuGet.Config"
->>>>>>> db0aed29ed437bf2b023773d907150b423242c08
->>>>>>> 0f7ff591e997fb2f7f2e4829f0b294394f437015
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -152,15 +127,7 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
-=======
-<<<<<<< HEAD
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.415/PortableRuntimeIdentifierGraph.json"
->>>>>>> db0aed29ed437bf2b023773d907150b423242c08
->>>>>>> 0f7ff591e997fb2f7f2e4829f0b294394f437015
         }
       }
     }

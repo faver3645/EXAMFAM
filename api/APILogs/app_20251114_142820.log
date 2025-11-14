@@ -1,0 +1,2 @@
+2025-11-14 14:28:21.631 +01:00 [INF] Applying migration '20251114104455_AddTimeUsedAndSubmittedAtToQuizResult'.
+2025-11-14 14:28:21.690 +01:00 [INF] Applying migration '20251114132808_UpdateQuizResultRequired'.

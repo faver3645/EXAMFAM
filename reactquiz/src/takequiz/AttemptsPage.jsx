@@ -97,15 +97,15 @@ const AttemptsPage = () => {
                     </p>
                     <p className="card-text mb-2">Prosent: {percentage}%</p>
                     <p className="card-text mb-1">
-                      Tid brukt: {minutes} min {seconds} sek
+                      Time Used: {minutes} min {seconds} sec
                     </p>
-                    <p className="card-text mb-2">Innsendt: {submittedDate}</p>
+                    <p className="card-text mb-2">Submitted: {submittedDate}</p>
                     {user.role === "Teacher" && (
                       <button
                         className="btn btn-outline-light btn-sm mt-auto"
                         onClick={() => confirmDeleteAttempt(a)}
                       >
-                        Slett forsøk
+                        Delete Attempt
                       </button>
                     )}
                   </div>
@@ -121,7 +121,7 @@ const AttemptsPage = () => {
           className="btn btn-primary"
           onClick={() => navigate(user.role === "Student" ? "/takequiz" : "/teacher-dashboard")}
         >
-          Tilbake
+          Back
         </button>
       </div>
 
@@ -134,20 +134,20 @@ const AttemptsPage = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Bekreft sletting</h5>
+                <h5 className="modal-title">Confirm Deletion</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
               <div className="modal-body">
                 <p>
-                  Er du sikker på at du vil slette forsøket til <strong>{selectedAttempt?.UserName}</strong>?
+                  Are you sure you want to delete the attempt of <strong>{selectedAttempt?.UserName}</strong>?
                 </p>
               </div>
               <div className="modal-footer">
                 <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
-                  Avbryt
+                  Cancel
                 </button>
                 <button className="btn btn-danger" onClick={handleDeleteAttempt}>
-                  Slett
+                  Delete
                 </button>
               </div>
             </div>
