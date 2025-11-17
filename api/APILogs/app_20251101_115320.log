@@ -1,7 +1,0 @@
-2025-11-01 11:53:20.490 +01:00 [INF] Now listening on: http://localhost:5082
-2025-11-01 11:53:20.502 +01:00 [INF] Application started. Press Ctrl+C to shut down.
-2025-11-01 11:53:20.503 +01:00 [INF] Hosting environment: Development
-2025-11-01 11:53:20.503 +01:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
-2025-11-01 11:53:32.444 +01:00 [WRN] As of ""2025-11-01T10:53:32.2145777+00:00"", the heartbeat has been running for ""00:00:03.6308199"" which is longer than ""00:00:01"". This could be caused by thread pool starvation.
-2025-11-01 11:53:46.148 +01:00 [WRN] As of ""2025-11-01T10:53:46.1050944+00:00"", the heartbeat has been running for ""00:00:02.2980159"" which is longer than ""00:00:01"". This could be caused by thread pool starvation.
-2025-11-01 11:54:59.243 +01:00 [INF] Application is shutting down...

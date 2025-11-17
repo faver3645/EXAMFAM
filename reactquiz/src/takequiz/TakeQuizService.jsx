@@ -13,17 +13,23 @@ const handleResponse = async (response) => {
   return response.status === 204 ? null : response.json();
 };
 
-// Fetch attempts med paging
-export const fetchAttempts = async (quizId, token, page = 1, pageSize = 6, sort = "date_desc") => {
+// Fetch attempts med paging + søk + sort
+export const fetchAttempts = async (quizId, token, page = 1, pageSize = 6, sort = "date_desc", search = "") => {
   const params = new URLSearchParams({
     page,
     pageSize,
     sortBy: sort.includes("score") ? "score" : "submittedAt",
-    sortOrder: sort.endsWith("_asc") ? "asc" : "desc"
+    sortOrder: sort.endsWith("_asc") ? "asc" : "desc",
   });
-  const response = await fetch(`${API_URL}/api/takequizapi/attempts/${quizId}?${params.toString()}`, {
-    headers: getHeaders(token),
-  });
+
+  if (search && search.trim() !== "") {
+    params.append("search", search.trim());
+  }
+
+  const finalUrl = `${API_URL}/api/takequizapi/attempts/${quizId}?${params.toString()}`;
+  console.log("🌐 FINAL REQUEST URL:", finalUrl);
+
+  const response = await fetch(finalUrl, { headers: getHeaders(token) });
   return handleResponse(response);
 };
 
