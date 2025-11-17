@@ -14,9 +14,10 @@ const ResultPage = () => {
 
   const totalQuestions = quiz.Questions.length;
   const percentage = Math.round((score / totalQuestions) * 100);
-  let progressColor = percentage >= 80 ? "bg-success" : percentage >= 50 ? "bg-warning" : "bg-danger";
 
-  // Konverter tid brukt til minutter og sekunder, håndter null/undefined
+  let progressColor =
+    percentage >= 80 ? "bg-success" : percentage >= 50 ? "bg-warning" : "bg-danger";
+
   const totalSeconds = timeUsedSeconds ?? 0;
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
@@ -24,10 +25,9 @@ const ResultPage = () => {
   const handleSaveAttempt = async () => {
     try {
       await saveAttempt(
-        { QuizId: quiz.QuizId, Score: score, TimeUsedSeconds: totalSeconds },
+        { QuizId: quiz.QuizId, Score: score, TimeUsedSeconds: totalSeconds, Answers: location.state.answers },
         token
       );
-
       setStatus({ message: "✅ Attempt saved successfully!", type: "success" });
       setTimeout(() => setStatus({ message: "", type: "" }), 3000);
     } catch (error) {
@@ -40,17 +40,12 @@ const ResultPage = () => {
   return (
     <div className="container mt-5">
       <h2 className="mb-4 text-center">Quiz Result: {quiz.Title}</h2>
-
       <div className="card shadow-sm p-4 mb-4 mx-auto" style={{ maxWidth: "600px" }}>
         {status.message && (
           <div className={`alert alert-${status.type} text-center`}>{status.message}</div>
         )}
-
         <p><strong>User:</strong> {user.sub}</p>
-
         <p><strong>Score:</strong> {score} / {totalQuestions} ({percentage}%)</p>
-
-        {/* Viser faktisk tid brukt */}
         <p><strong>Time Used:</strong> {minutes} min {seconds} sec</p>
 
         <div className="progress mb-3" style={{ height: "25px" }}>
@@ -64,8 +59,10 @@ const ResultPage = () => {
         </div>
 
         <p className="fw-bold text-center">
-          {percentage >= 80 ? "Excellent! 🎉"
-            : percentage >= 50 ? "Good job! Keep practicing."
+          {percentage >= 80
+            ? "Excellent! 🎉"
+            : percentage >= 50
+            ? "Good job! Keep practicing."
             : "You can do better! Try again."}
         </p>
 
@@ -73,11 +70,12 @@ const ResultPage = () => {
           <button onClick={handleSaveAttempt} className="btn btn-success me-2">
             Save Attempt
           </button>
-
-          <button onClick={() => navigate(`/takequiz/take/${quiz.QuizId}`)} className="btn btn-warning me-2">
+          <button
+            onClick={() => navigate(`/takequiz/take/${quiz.QuizId}`)}
+            className="btn btn-warning me-2"
+          >
             Try Again 🔁
           </button>
-
           <button onClick={() => navigate("/takequiz")} className="btn btn-primary">
             Back to Quizzes
           </button>

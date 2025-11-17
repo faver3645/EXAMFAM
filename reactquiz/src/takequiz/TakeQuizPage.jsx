@@ -88,8 +88,8 @@ const TakeQuizPage = () => {
 
       // Send tid brukt med i navigate state med riktig navn
       navigate(`/takequiz/result/${quiz.QuizId}`, {
-        state: { quiz, score: result.score ?? 0, timeUsedSeconds: timeUsed },
-      });
+      state: { quiz, score: result.score ?? 0, timeUsedSeconds: timeUsed, answers }
+    });
     } catch (err) {
       console.error(err);
       setError("Failed to submit quiz.");

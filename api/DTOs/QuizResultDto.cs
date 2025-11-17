@@ -12,8 +12,8 @@ namespace api.DTOs
         public int TotalQuestions { get; set; }
 
         public int TimeUsedSeconds { get; set; }
-        public DateTime SubmittedAt { get; set; }
-     
+        public DateTime SubmittedAt { get; set; }    
 
+         public Dictionary<int, int> Answers { get; set; } = new();
     }
 }

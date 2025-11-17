@@ -63,7 +63,15 @@ export const saveAttempt = async (payload, token) => {
       QuizId: payload.QuizId,
       Score: payload.Score,
       TimeUsedSeconds: payload.TimeUsedSeconds,
+      Answers: payload.Answers,
     }),
+  });
+  return handleResponse(response);
+};
+
+export const fetchAttemptDetails = async (attemptId, token) => {
+  const response = await fetch(`${API_URL}/api/takequizapi/attempt/${attemptId}`, {
+    headers: getHeaders(token),
   });
   return handleResponse(response);
 };

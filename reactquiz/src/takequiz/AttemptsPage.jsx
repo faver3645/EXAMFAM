@@ -148,6 +148,14 @@ const AttemptsPage = () => {
                       <p className="card-text mb-2">Prosent: {percentage}%</p>
                       <p className="card-text mb-1">Time Used: {minutes} min {seconds} sec</p>
                       <p className="card-text mb-2">Submitted: {submittedDate}</p>
+                      
+                      <button
+                        className="btn btn-outline-light btn-sm mt-2"
+                        onClick={() => navigate(`/takequiz/attempt/${a.QuizResultId}`)}
+                      >
+                        View Attempt
+                      </button>
+                      
                       {user.role === "Teacher" && (
                         <button
                           className="btn btn-outline-light btn-sm mt-auto"

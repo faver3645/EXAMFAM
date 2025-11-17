@@ -110,6 +110,28 @@ namespace api.Migrations
                     b.ToTable("UserQuizResults");
                 });
 
+            modelBuilder.Entity("api.Models.QuizResultAnswer", b =>
+                {
+                    b.Property<int>("QuizResultAnswerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AnswerOptionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("QuizResultId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("QuizResultAnswerId");
+
+                    b.HasIndex("QuizResultId");
+
+                    b.ToTable("QuizResultAnswers");
+                });
+
             modelBuilder.Entity("api.Models.AnswerOption", b =>
                 {
                     b.HasOne("api.Models.Question", null)
@@ -139,6 +161,17 @@ namespace api.Migrations
                     b.Navigation("Quiz");
                 });
 
+            modelBuilder.Entity("api.Models.QuizResultAnswer", b =>
+                {
+                    b.HasOne("api.Models.QuizResult", "QuizResult")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuizResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuizResult");
+                });
+
             modelBuilder.Entity("api.Models.Question", b =>
                 {
                     b.Navigation("AnswerOptions");
@@ -147,6 +180,11 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.Quiz", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("api.Models.QuizResult", b =>
+                {
+                    b.Navigation("Answers");
                 });
 #pragma warning restore 612, 618
         }

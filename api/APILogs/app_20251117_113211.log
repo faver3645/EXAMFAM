@@ -1,0 +1,30 @@
+2025-11-17 11:32:12.803 +01:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-17 11:32:12.917 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-17 11:32:12.919 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-17 11:32:12.919 +01:00 [INF] Hosting environment: Development
+2025-11-17 11:32:12.920 +01:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
+2025-11-17 11:32:20.536 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-17 11:32:20.536 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-17 11:32:20.577 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:32:20.577 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:32:20.585 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 51.151ms
+2025-11-17 11:32:20.585 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 51.1823ms
+2025-11-17 11:32:20.588 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-17 11:32:20.597 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:32:20.748 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-17 11:32:20.771 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:32:20.901 +01:00 [ERR] [QuizRepository] GetAll() failed: Unable to determine the relationship represented by navigation 'QuizResult.Answers' of type 'Dictionary<int, int>'. Either manually configure the relationship, or ignore this property using the '[NotMapped]' attribute or by using 'EntityTypeBuilder.Ignore' in 'OnModelCreating'.
+2025-11-17 11:32:20.910 +01:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String'.
+2025-11-17 11:32:20.915 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - application/json null
+2025-11-17 11:32:20.916 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:32:20.916 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 140.5962ms
+2025-11-17 11:32:20.916 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-17 11:32:20.919 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 404 null text/plain; charset=utf-8 330.8997ms
+2025-11-17 11:32:20.920 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-17 11:32:20.921 +01:00 [INF] Route matched with {action = "GetAllQuizzes", controller = "TakeQuizApi"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuizzes() on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:32:20.956 +01:00 [ERR] [QuizRepository] GetAll() failed: Unable to determine the relationship represented by navigation 'QuizResult.Answers' of type 'Dictionary<int, int>'. Either manually configure the relationship, or ignore this property using the '[NotMapped]' attribute or by using 'EntityTypeBuilder.Ignore' in 'OnModelCreating'.
+2025-11-17 11:32:20.957 +01:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String'.
+2025-11-17 11:32:20.957 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.GetAllQuizzes (api) in 36.2785ms
+2025-11-17 11:32:20.957 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.GetAllQuizzes (api)'
+2025-11-17 11:32:20.958 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/takequizlist - 404 null text/plain; charset=utf-8 42.872ms
+2025-11-17 11:33:19.958 +01:00 [INF] Application is shutting down...

@@ -195,5 +195,15 @@ namespace api.DAL
                 throw;
             }
         }
+
+        public async Task<QuizResult?> GetResultByIdAsync(int attemptId)
+        {
+            return await _db.UserQuizResults
+                .Include(q => q.Quiz)
+                    .ThenInclude(quiz => quiz.Questions)
+                        .ThenInclude(q => q.AnswerOptions)
+                .Include(q => q.Answers)
+                .FirstOrDefaultAsync(q => q.QuizResultId == attemptId);
+        }
     }
 }

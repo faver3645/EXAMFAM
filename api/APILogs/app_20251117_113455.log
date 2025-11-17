@@ -1,0 +1,12 @@
+2025-11-17 11:34:56.615 +01:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-17 11:34:56.694 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-17 11:34:56.696 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-17 11:34:56.697 +01:00 [INF] Hosting environment: Development
+2025-11-17 11:34:56.697 +01:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
+2025-11-17 11:35:04.104 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-17 11:35:04.104 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - null null
+2025-11-17 11:35:04.164 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:35:04.164 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:35:04.196 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 96.3336ms
+2025-11-17 11:35:04.196 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/takequizapi/takequizlist - 204 null null 96.3363ms
+2025-11-17 11:35:06.746 +01:00 [INF] Application is shutting down...

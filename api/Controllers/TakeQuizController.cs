@@ -106,7 +106,12 @@ namespace api.Controllers
                 UserName = userName,
                 Score = dto.Score,
                 TimeUsedSeconds = dto.TimeUsedSeconds,
-                SubmittedAt = DateTime.UtcNow
+                SubmittedAt = DateTime.UtcNow,
+                Answers = dto.Answers.Select(a => new QuizResultAnswer
+                {
+                    QuestionId = a.Key,
+                    AnswerOptionId = a.Value
+                }).ToList()
             };
 
             try
@@ -155,7 +160,8 @@ namespace api.Controllers
                     Score = r.Score,
                     TotalQuestions = r.Quiz.Questions.Count,
                     TimeUsedSeconds = r.TimeUsedSeconds,
-                    SubmittedAt = TimeZoneInfo.ConvertTimeFromUtc(r.SubmittedAt, tz)
+                    SubmittedAt = TimeZoneInfo.ConvertTimeFromUtc(r.SubmittedAt, tz),
+                    Answers = r.Answers.ToDictionary(a => a.QuestionId, a => a.AnswerOptionId)
                 }).ToList();
 
                 return Ok(new
@@ -188,6 +194,47 @@ namespace api.Controllers
                 _logger.LogError("[TakeQuizApiController] DeleteAttempt({AttemptId}) failed: {Message}", attemptId, ex.Message);
                 return StatusCode(500, "Failed to delete attempt");
             }
+        }
+
+        [Authorize(Roles = "Teacher,Student")]
+        [HttpGet("attempt-details/{attemptId}")]
+        public async Task<IActionResult> GetAttemptDetails(int attemptId)
+        {
+            var attempt = await _repo.GetResultByIdAsync(attemptId);
+            if (attempt == null) return NotFound("Attempt not found");
+
+            var isTeacher = User.IsInRole("Teacher");
+            var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
+
+            // Student kan kun se sitt eget forsøk
+            if (!isTeacher && attempt.UserName != userName)
+                return Forbid();
+
+            var quiz = attempt.Quiz;
+
+            var dto = new
+            {
+                attempt.QuizResultId,
+                attempt.UserName,
+                attempt.Score,
+                attempt.TimeUsedSeconds,
+                attempt.SubmittedAt,
+                Questions = quiz.Questions.Select(q => new
+                {
+                    q.QuestionId,
+                    q.Text,
+                    q.ImageUrl,
+                    AnswerOptions = q.AnswerOptions.Select(a => new
+                    {
+                        a.AnswerOptionId,
+                        a.Text,
+                        a.IsCorrect,
+                        Selected = attempt.Answers.Any(x => x.QuestionId == q.QuestionId && x.AnswerOptionId == a.AnswerOptionId)
+                    }).ToList()
+                }).ToList()
+            };
+
+            return Ok(dto);
         }
     }
 }

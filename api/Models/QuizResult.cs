@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Models
 {
@@ -11,6 +13,8 @@ namespace api.Models
         public int Score { get; set; }
         public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
         public int TimeUsedSeconds { get; set; }
+
+        public List<QuizResultAnswer> Answers { get; set; } = new();
         
     }
 }

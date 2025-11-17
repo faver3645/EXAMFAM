@@ -14,6 +14,7 @@ import ListQuizPage from "./takequiz/ListQuizPage";
 import TakeQuizPage from "./takequiz/TakeQuizPage";
 import ResultPage from "./takequiz/ResultPage";
 import AttemptsPage from "./takequiz/AttemptsPage";
+import ViewAttemptsPage from "./takequiz/ViewAttemptsPage";
 import TeacherDashboard from "./takequiz/TeacherDashboard";
 
 import AboutPage from "./shared/AboutPage";
@@ -66,6 +67,7 @@ function App() {
               {/* Protected route for both Teacher and Student */}
               <Route element={<ProtectedRoute allowedRoles={["Teacher", "Student"]} />}>
                 <Route path="/takequiz/:quizId/attempts" element={<AttemptsPage />} />
+                <Route path="/takequiz/attempt/:attemptId" element={<ViewAttemptsPage />} />
               </Route>
 
               {/* Fallback */}
