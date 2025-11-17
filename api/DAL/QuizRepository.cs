@@ -1,20 +1,18 @@
+
 using Microsoft.EntityFrameworkCore;
 using api.Models;
 using Microsoft.Extensions.Logging;
-
 namespace api.DAL
 {
     public class QuizRepository : IQuizRepository
     {
         private readonly QuizDbContext _db;
         private readonly ILogger<QuizRepository> _logger;
-
         public QuizRepository(QuizDbContext db, ILogger<QuizRepository> logger)
         {
             _db = db;
             _logger = logger;
         }
-
         public async Task<IEnumerable<Quiz>?> GetAll()
         {
             try
@@ -30,7 +28,6 @@ namespace api.DAL
                 return null;
             }
         }
-
         public async Task<Quiz?> GetQuizById(int id)
         {
             try
@@ -46,7 +43,6 @@ namespace api.DAL
                 return null;
             }
         }
-
         public async Task<bool> Create(Quiz quiz)
         {
             try
@@ -61,7 +57,6 @@ namespace api.DAL
                 return false;
             }
         }
-
         public async Task<bool> Update(Quiz quiz)
         {
             try
@@ -76,7 +71,6 @@ namespace api.DAL
                 return false;
             }
         }
-
         public async Task<bool> Delete(int id)
         {
             try
@@ -87,7 +81,6 @@ namespace api.DAL
                     _logger.LogWarning("[QuizRepository] Delete failed, quiz not found: {Id}", id);
                     return false;
                 }
-
                 _db.Quizzes.Remove(quiz);
                 await _db.SaveChangesAsync();
                 return true;
@@ -98,7 +91,6 @@ namespace api.DAL
                 return false;
             }
         }
-
         public async Task AddResultAsync(QuizResult result)
         {
             try
@@ -112,8 +104,7 @@ namespace api.DAL
                 throw;
             }
         }
-
-        // NEW: Filtering + Sorting + Paging
+        // Filtering + Sorting + Paging + Search
         public async Task<(IEnumerable<QuizResult> Results, int TotalCount)>
             GetResultsForQuizAsync(int quizId, AttemptsQueryParams query)
         {
@@ -125,45 +116,36 @@ namespace api.DAL
                             .ThenInclude(qt => qt.AnswerOptions)
                     .Where(r => r.QuizId == quizId)
                     .AsQueryable();
-
+                // SEARCH
+                if (!string.IsNullOrWhiteSpace(query.Search))
+                {
+                    var term = query.Search.Trim().ToLower();
+                    q = q.Where(r => r.UserName != null && r.UserName.ToLower().Contains(term));
+                }
                 // FILTERS
                 if (query.FromDate.HasValue)
                     q = q.Where(r => r.SubmittedAt >= query.FromDate.Value);
-
                 if (query.ToDate.HasValue)
                     q = q.Where(r => r.SubmittedAt <= query.ToDate.Value);
-
                 if (query.MinScore.HasValue)
                     q = q.Where(r => r.Score >= query.MinScore.Value);
-
                 if (query.MaxScore.HasValue)
                     q = q.Where(r => r.Score <= query.MaxScore.Value);
-
-                // COUNT BEFORE PAGING
                 var totalCount = await q.CountAsync();
-
                 // SORTING
                 bool asc = query.SortOrder.ToLower() == "asc";
-
-                q = (query.SortBy.ToLower()) switch
+                q = query.SortBy.ToLower() switch
                 {
-                    "score" =>
-                        asc ? q.OrderBy(r => r.Score).ThenBy(r => r.SubmittedAt)
-                            : q.OrderByDescending(r => r.Score).ThenByDescending(r => r.SubmittedAt),
-
-                    "submittedat" or _ =>
-                        asc ? q.OrderBy(r => r.SubmittedAt)
-                            : q.OrderByDescending(r => r.SubmittedAt),
+                    "score" => asc ? q.OrderBy(r => r.Score).ThenBy(r => r.SubmittedAt)
+                                   : q.OrderByDescending(r => r.Score).ThenByDescending(r => r.SubmittedAt),
+                    "submittedat" or _ => asc ? q.OrderBy(r => r.SubmittedAt)
+                                             : q.OrderByDescending(r => r.SubmittedAt),
                 };
-
                 // PAGING
                 int page = query.Page <= 0 ? 1 : query.Page;
                 int pageSize = query.PageSize <= 0 ? 50 : query.PageSize;
-
                 q = q.Skip((page - 1) * pageSize).Take(pageSize);
-
                 var results = await q.ToListAsync();
-
                 return (results, totalCount);
             }
             catch (Exception e)
@@ -172,7 +154,6 @@ namespace api.DAL
                 return (new List<QuizResult>(), 0);
             }
         }
-
         public async Task DeleteAttemptAsync(int attemptId)
         {
             try
@@ -183,10 +164,8 @@ namespace api.DAL
                     _logger.LogWarning("[QuizRepository] DeleteAttemptAsync failed, attempt not found: {AttemptId}", attemptId);
                     return;
                 }
-
                 _db.UserQuizResults.Remove(attempt);
                 await _db.SaveChangesAsync();
-
                 _logger.LogInformation("[QuizRepository] Attempt {AttemptId} deleted successfully", attemptId);
             }
             catch (Exception e)

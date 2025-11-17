@@ -4,6 +4,7 @@ using api.DAL;
 using api.DTOs;
 using api.Models;
 using System.Security.Claims;
+using System.IO;
 
 namespace api.Controllers
 {
@@ -64,6 +65,25 @@ namespace api.Controllers
             };
 
             return Ok(quizDto);
+        }
+
+        // Endpoint for å validere bilde-URL (lokal fil)
+        [AllowAnonymous]
+        [HttpGet("validateimage")]
+        public IActionResult ValidateImage([FromQuery] string imageUrl)
+        {
+            if (string.IsNullOrWhiteSpace(imageUrl))
+                return Ok(new { valid = true });
+
+            if (!imageUrl.StartsWith("/images/"))
+                return Ok(new { valid = true }); // kun lokale bilder sjekkes
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imageUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+
+            if (!System.IO.File.Exists(filePath))
+                return Ok(new { valid = false, message = $"Image '{imageUrl}' does not exist on server." });
+
+            return Ok(new { valid = true });
         }
 
         // Student sender inn svar for poengberegning

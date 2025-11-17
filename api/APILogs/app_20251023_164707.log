@@ -1,9 +1,0 @@
-2025-10-23 16:47:09.020 +02:00 [INF] Now listening on: https://localhost:7262
-2025-10-23 16:47:09.034 +02:00 [INF] Now listening on: http://localhost:5082
-2025-10-23 16:47:09.042 +02:00 [INF] Application started. Press Ctrl+C to shut down.
-2025-10-23 16:47:09.046 +02:00 [INF] Hosting environment: Development
-2025-10-23 16:47:09.049 +02:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
-2025-10-23 16:47:14.022 +02:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/swagger/index.html - null null
-2025-10-23 16:47:14.177 +02:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/swagger/index.html - 200 null text/html;charset=utf-8 156.3965ms
-2025-10-23 16:47:14.670 +02:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/swagger/v1/swagger.json - null null
-2025-10-23 16:47:14.755 +02:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 84.4579ms

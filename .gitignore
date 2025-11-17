@@ -1,0 +1,11 @@
+# Build
+bin/
+obj/
+
+# Local DB
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log

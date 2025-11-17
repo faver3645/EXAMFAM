@@ -17,5 +17,9 @@ public interface IQuizRepository
         GetResultsForQuizAsync(int quizId, AttemptsQueryParams query);
 
     Task DeleteAttemptAsync(int attemptId);
+<<<<<<< HEAD
     Task<QuizResult?> GetResultByIdAsync(int attemptId);
 }
+=======
+}
+>>>>>>> dd24401fd1f940a736dfdcb7900ca606616afc09
