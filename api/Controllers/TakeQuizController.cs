@@ -66,7 +66,7 @@ namespace api.Controllers
             return Ok(quizDto);
         }
 
-        // Kun Student kan sende inn quizbesvarelse
+        // Student sender inn svar for poengberegning
         [Authorize(Roles = "Student")]
         [HttpPost("submit")]
         public async Task<IActionResult> Submit([FromBody] QuizSubmissionDto submission)
@@ -85,11 +85,10 @@ namespace api.Controllers
                 }
             }
 
-            // Returner score som Dictionary (key-value)
             return Ok(new Dictionary<string, int> { { "score", score } });
         }
 
-        // Kun Student kan lagre egne forsøk – hent username fra token
+        // Student lagrer eget forsøk
         [Authorize(Roles = "Student")]
         [HttpPost("saveattempt")]
         public async Task<IActionResult> SaveAttempt([FromBody] QuizResultDto dto)
@@ -97,9 +96,7 @@ namespace api.Controllers
             var quiz = await _repo.GetQuizById(dto.QuizId);
             if (quiz == null) return NotFound("Quiz not found");
 
-            // Hent bruker fra token (sub-claim)
             var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
-
             if (string.IsNullOrEmpty(userName))
                 return Unauthorized("User not found in token.");
 
@@ -124,30 +121,32 @@ namespace api.Controllers
             }
         }
 
-        // Hent forsøk – Teacher ser alle, Student kun egne
+        // Teacher kan se alle – Student kun egne. Nå med filter/sort/paging.
         [Authorize(Roles = "Teacher,Student")]
         [HttpGet("attempts/{quizId}")]
-        public async Task<IActionResult> GetAttempts(int quizId)
+        public async Task<IActionResult> GetAttempts(int quizId, [FromQuery] AttemptsQueryParams query)
         {
             try
             {
-                var results = await _repo.GetResultsForQuizAsync(quizId);
+                var (results, totalCount) = await _repo.GetResultsForQuizAsync(quizId, query);
 
-                if (results == null || !results.Any())
-                    return Ok(new List<QuizResultDto>());
+                if (results == null)
+                    return Ok(new { data = new List<QuizResultDto>(), total = 0 });
 
                 var isTeacher = User.IsInRole("Teacher");
                 var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
 
-                // Filtrer for student
+                // Student får kun egne
                 if (!isTeacher && !string.IsNullOrEmpty(userName))
                 {
-                    results = results.Where(r => r.UserName == userName).ToList();
+                    results = results.Where(r => r.UserName == userName);
+                    totalCount = results.Count();
                 }
 
-                TimeZoneInfo norwegianTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+                // Norsk tidssone
+                var tz = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
 
-                var attemptsDto = results.Select(r => new QuizResultDto
+                var dtoList = results.Select(r => new QuizResultDto
                 {
                     QuizResultId = r.QuizResultId,
                     UserName = r.UserName,
@@ -156,10 +155,16 @@ namespace api.Controllers
                     Score = r.Score,
                     TotalQuestions = r.Quiz.Questions.Count,
                     TimeUsedSeconds = r.TimeUsedSeconds,
-                    SubmittedAt = TimeZoneInfo.ConvertTimeFromUtc(r.SubmittedAt, norwegianTimeZone)
+                    SubmittedAt = TimeZoneInfo.ConvertTimeFromUtc(r.SubmittedAt, tz)
                 }).ToList();
 
-                return Ok(attemptsDto);
+                return Ok(new
+                {
+                    data = dtoList,
+                    total = totalCount,
+                    page = query.Page,
+                    pageSize = query.PageSize
+                });
             }
             catch (Exception ex)
             {
@@ -168,7 +173,7 @@ namespace api.Controllers
             }
         }
 
-        // Kun Teacher kan slette forsøk
+        // Teacher kan slette forsøk
         [Authorize(Roles = "Teacher")]
         [HttpDelete("attempt/{attemptId}")]
         public async Task<IActionResult> DeleteAttempt(int attemptId)

@@ -13,18 +13,36 @@ const handleResponse = async (response) => {
   return response.status === 204 ? null : response.json();
 };
 
-// --- API funksjoner ---
-export const fetchAvailableQuizzes = async (token) => {
-  const response = await fetch(`${API_URL}/api/takequizapi/takequizlist`, {
+// Fetch attempts med paging
+export const fetchAttempts = async (quizId, token, page = 1, pageSize = 6, sort = "date_desc") => {
+  const params = new URLSearchParams({
+    page,
+    pageSize,
+    sortBy: sort.includes("score") ? "score" : "submittedAt",
+    sortOrder: sort.endsWith("_asc") ? "asc" : "desc"
+  });
+  const response = await fetch(`${API_URL}/api/takequizapi/attempts/${quizId}?${params.toString()}`, {
     headers: getHeaders(token),
   });
   return handleResponse(response);
 };
 
-export const fetchQuizById = async (quizId, token) => {
-  const response = await fetch(`${API_URL}/api/takequizapi/${quizId}`, {
+export const deleteAttempt = async (attemptId, token) => {
+  const response = await fetch(`${API_URL}/api/takequizapi/attempt/${attemptId}`, {
+    method: "DELETE",
     headers: getHeaders(token),
   });
+  return handleResponse(response);
+};
+
+// --- Andre API-funksjoner ---
+export const fetchAvailableQuizzes = async (token) => {
+  const response = await fetch(`${API_URL}/api/takequizapi/takequizlist`, { headers: getHeaders(token) });
+  return handleResponse(response);
+};
+
+export const fetchQuizById = async (quizId, token) => {
+  const response = await fetch(`${API_URL}/api/takequizapi/${quizId}`, { headers: getHeaders(token) });
   return handleResponse(response);
 };
 
@@ -44,24 +62,8 @@ export const saveAttempt = async (payload, token) => {
     body: JSON.stringify({
       QuizId: payload.QuizId,
       Score: payload.Score,
-      TimeUsedSeconds: payload.TimeUsedSeconds,  // <-- legg til denne
+      TimeUsedSeconds: payload.TimeUsedSeconds,
     }),
-  });
-  return handleResponse(response);
-};
-
-
-export const fetchAttempts = async (quizId, token) => {
-  const response = await fetch(`${API_URL}/api/takequizapi/attempts/${quizId}`, {
-    headers: getHeaders(token),
-  });
-  return handleResponse(response);
-};
-
-export const deleteAttempt = async (attemptId, token) => {
-  const response = await fetch(`${API_URL}/api/takequizapi/attempt/${attemptId}`, {
-    method: "DELETE",
-    headers: getHeaders(token),
   });
   return handleResponse(response);
 };
