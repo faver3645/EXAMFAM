@@ -102,3 +102,4 @@
 2025-11-17 11:40:02.457 +01:00 [INF] Executed action api.Controllers.QuizAPIController.QuizList (api) in 13.193ms
 2025-11-17 11:40:02.457 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
 2025-11-17 11:40:02.457 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - 200 377 application/json; charset=utf-8 14.3292ms
+2025-11-17 11:48:50.558 +01:00 [INF] Application is shutting down...

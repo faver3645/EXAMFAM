@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Form, Button, Card } from 'react-bootstrap';
+import { Form, Button, Card, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const QuizForm = ({ onSubmit, initialData }) => {
   const [title, setTitle] = useState('');
@@ -9,6 +11,7 @@ const QuizForm = ({ onSubmit, initialData }) => {
   const [titleError, setTitleError] = useState('');
   const [questionErrors, setQuestionErrors] = useState([]);
   const [serverErrorMessage, setServerErrorMessage] = useState('');
+  const [imageValidationLoading, setImageValidationLoading] = useState({});
   const navigate = useNavigate();
   const questionRefs = useRef([]);
 
@@ -60,12 +63,16 @@ const QuizForm = ({ onSubmit, initialData }) => {
     const newQuestions = [...questions];
     newQuestions[index].imageUrl = value;
     setQuestions(newQuestions);
+    validateImageUrlServer(index, value);
   };
 
   const handleDeleteQuestion = (index) => {
     const newQuestions = [...questions];
     newQuestions.splice(index, 1);
     setQuestions(newQuestions);
+    const newErrors = [...questionErrors];
+    newErrors.splice(index, 1);
+    setQuestionErrors(newErrors);
   };
 
   // Answer handlers
@@ -93,11 +100,38 @@ const QuizForm = ({ onSubmit, initialData }) => {
     setQuestions(newQuestions);
   };
 
-  // Image URL validator (kun format, ikke fil-eksistens)
-  const validateImageUrl = (url) => {
+  // Image URL client-side format validator
+  const validateImageFormat = (url) => {
     if (!url) return true;
     const regex = /\.(jpg|jpeg|png|gif)$/i;
     return regex.test(url);
+  };
+
+  // Image validation via server API
+  const validateImageUrlServer = async (qIndex, url) => {
+    if (!url || !url.startsWith('/images/')) return;
+
+    setImageValidationLoading(prev => ({ ...prev, [qIndex]: true }));
+
+    try {
+      const res = await fetch(`${API_URL}/api/takequizapi/validateimage?imageUrl=${encodeURIComponent(url)}`);
+      const data = await res.json();
+
+      const newErrors = [...questionErrors];
+      if (!newErrors[qIndex]) newErrors[qIndex] = { text: '', imageUrl: '', answers: [] };
+
+      if (!data.valid) {
+        newErrors[qIndex].imageUrl = data.message || 'Image not found on server.';
+      } else {
+        if (newErrors[qIndex].imageUrl?.includes('ikke')) newErrors[qIndex].imageUrl = '';
+      }
+
+      setQuestionErrors(newErrors);
+    } catch (err) {
+      console.error('Image validation failed', err);
+    } finally {
+      setImageValidationLoading(prev => ({ ...prev, [qIndex]: false }));
+    }
   };
 
   // Form validation
@@ -123,7 +157,7 @@ const QuizForm = ({ onSubmit, initialData }) => {
 
       errs.answers = q.answerOptions.map(a => (!a.text.trim() ? 'Answer text required.' : ''));
 
-      if (q.imageUrl && !validateImageUrl(q.imageUrl)) errs.imageUrl = 'Invalid image URL. Must end with .jpg, .jpeg, .png, or .gif';
+      if (q.imageUrl && !validateImageFormat(q.imageUrl)) errs.imageUrl = 'Invalid image URL. Must end with .jpg, .jpeg, .png, or .gif';
 
       qErrors[i] = errs;
       if (errs.text || errs.imageUrl || errs.answers.some(a => a) || errs.answersGeneral) valid = false;
@@ -154,7 +188,22 @@ const QuizForm = ({ onSubmit, initialData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setServerErrorMessage('');
+
     if (!validate()) {
+      scrollToFirstError();
+      return;
+    }
+
+    // Check if any image validation is still in progress
+    const loadingKeys = Object.keys(imageValidationLoading).filter(k => imageValidationLoading[k]);
+    if (loadingKeys.length > 0) {
+      alert('Please wait for image validation to complete.');
+      return;
+    }
+
+    // Check if any image validation errors exist
+    const hasImageErrors = questionErrors.some(q => q.imageUrl);
+    if (hasImageErrors) {
       scrollToFirstError();
       return;
     }
@@ -241,6 +290,7 @@ const QuizForm = ({ onSubmit, initialData }) => {
               className="mt-2"
               isInvalid={!!questionErrors[i]?.imageUrl}
             />
+            {imageValidationLoading[i] && <Spinner animation="border" size="sm" className="ms-2" />}
             {questionErrors[i]?.imageUrl && <div className="text-danger mt-1">{questionErrors[i].imageUrl}</div>}
 
             <div className="ms-3 mt-2">

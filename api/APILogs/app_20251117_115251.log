@@ -1,0 +1,301 @@
+2025-11-17 11:52:53.455 +01:00 [INF] User profile is available. Using 'C:\Users\Aliza Mudassar\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-17 11:52:53.526 +01:00 [INF] Now listening on: http://localhost:5082
+2025-11-17 11:52:53.534 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-17 11:52:53.535 +01:00 [INF] Hosting environment: Development
+2025-11-17 11:52:53.535 +01:00 [INF] Content root path: C:\Users\Aliza Mudassar\OneDrive - OsloMet\webapplikasjoner\EXAMFAM\api
+2025-11-17 11:53:00.346 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - null null
+2025-11-17 11:53:00.390 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:00.428 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:00.446 +01:00 [INF] Route matched with {action = "QuizList", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] QuizList() on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:00.770 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-11-17 11:53:00.869 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[api.Models.Quiz, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-17 11:53:00.959 +01:00 [INF] Executed action api.Controllers.QuizAPIController.QuizList (api) in 508.8545ms
+2025-11-17 11:53:00.962 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:00.972 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - 200 377 application/json; charset=utf-8 626.273ms
+2025-11-17 11:53:00.980 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - null null
+2025-11-17 11:53:00.987 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:00.996 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:00.996 +01:00 [INF] Route matched with {action = "QuizList", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] QuizList() on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:01.038 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[api.Models.Quiz, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-17 11:53:01.040 +01:00 [INF] Executed action api.Controllers.QuizAPIController.QuizList (api) in 42.9619ms
+2025-11-17 11:53:01.040 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:01.043 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - 200 377 application/json; charset=utf-8 63.589ms
+2025-11-17 11:53:02.662 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/12 - null null
+2025-11-17 11:53:02.663 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:02.670 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.GetQuiz (api)'
+2025-11-17 11:53:02.683 +01:00 [INF] Route matched with {action = "GetQuiz", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetQuiz(Int32) on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:02.720 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-11-17 11:53:02.728 +01:00 [INF] Executing OkObjectResult, writing value of type 'api.Models.Quiz'.
+2025-11-17 11:53:02.750 +01:00 [INF] Executed action api.Controllers.QuizAPIController.GetQuiz (api) in 66.7798ms
+2025-11-17 11:53:02.751 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.GetQuiz (api)'
+2025-11-17 11:53:02.752 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/12 - 200 928 application/json; charset=utf-8 89.5474ms
+2025-11-17 11:53:02.753 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/12 - null null
+2025-11-17 11:53:02.754 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:02.755 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.GetQuiz (api)'
+2025-11-17 11:53:02.755 +01:00 [INF] Route matched with {action = "GetQuiz", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetQuiz(Int32) on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:02.799 +01:00 [INF] Executing OkObjectResult, writing value of type 'api.Models.Quiz'.
+2025-11-17 11:53:02.800 +01:00 [INF] Executed action api.Controllers.QuizAPIController.GetQuiz (api) in 44.7565ms
+2025-11-17 11:53:02.800 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.GetQuiz (api)'
+2025-11-17 11:53:02.800 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/12 - 200 928 application/json; charset=utf-8 46.7167ms
+2025-11-17 11:53:05.880 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/quizapi/update/12 - null null
+2025-11-17 11:53:05.881 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:05.883 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/quizapi/update/12 - 204 null null 2.6618ms
+2025-11-17 11:53:05.886 +01:00 [INF] Request starting HTTP/1.1 PUT http://localhost:5082/api/quizapi/update/12 - application/json 496
+2025-11-17 11:53:05.886 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:05.982 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.Update (api)'
+2025-11-17 11:53:05.987 +01:00 [INF] Route matched with {action = "Update", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(Int32, api.DTOs.QuizDto) on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:06.287 +01:00 [INF] Executing OkObjectResult, writing value of type 'api.Models.Quiz'.
+2025-11-17 11:53:06.287 +01:00 [INF] Executed action api.Controllers.QuizAPIController.Update (api) in 300.0665ms
+2025-11-17 11:53:06.287 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.Update (api)'
+2025-11-17 11:53:06.288 +01:00 [INF] Request finished HTTP/1.1 PUT http://localhost:5082/api/quizapi/update/12 - 200 928 application/json; charset=utf-8 402.101ms
+2025-11-17 11:53:06.324 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - null null
+2025-11-17 11:53:06.324 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:06.324 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:06.324 +01:00 [INF] Route matched with {action = "QuizList", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] QuizList() on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:06.335 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[api.Models.Quiz, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-17 11:53:06.335 +01:00 [INF] Executed action api.Controllers.QuizAPIController.QuizList (api) in 10.4626ms
+2025-11-17 11:53:06.336 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:06.336 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - 200 377 application/json; charset=utf-8 12.6533ms
+2025-11-17 11:53:06.338 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - null null
+2025-11-17 11:53:06.338 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:06.338 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:06.339 +01:00 [INF] Route matched with {action = "QuizList", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] QuizList() on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:06.358 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[api.Models.Quiz, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-17 11:53:06.358 +01:00 [INF] Executed action api.Controllers.QuizAPIController.QuizList (api) in 19.2542ms
+2025-11-17 11:53:06.358 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:06.359 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - 200 377 application/json; charset=utf-8 20.5944ms
+2025-11-17 11:53:07.571 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/12 - null null
+2025-11-17 11:53:07.572 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:07.574 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.GetQuiz (api)'
+2025-11-17 11:53:07.574 +01:00 [INF] Route matched with {action = "GetQuiz", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetQuiz(Int32) on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:07.578 +01:00 [INF] Executing OkObjectResult, writing value of type 'api.Models.Quiz'.
+2025-11-17 11:53:07.578 +01:00 [INF] Executed action api.Controllers.QuizAPIController.GetQuiz (api) in 4.5923ms
+2025-11-17 11:53:07.579 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.GetQuiz (api)'
+2025-11-17 11:53:07.579 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/12 - 200 928 application/json; charset=utf-8 7.4486ms
+2025-11-17 11:53:07.584 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/12 - null null
+2025-11-17 11:53:07.600 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:07.600 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.GetQuiz (api)'
+2025-11-17 11:53:07.600 +01:00 [INF] Route matched with {action = "GetQuiz", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetQuiz(Int32) on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:07.605 +01:00 [INF] Executing OkObjectResult, writing value of type 'api.Models.Quiz'.
+2025-11-17 11:53:07.606 +01:00 [INF] Executed action api.Controllers.QuizAPIController.GetQuiz (api) in 5.6176ms
+2025-11-17 11:53:07.606 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.GetQuiz (api)'
+2025-11-17 11:53:07.606 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/12 - 200 928 application/json; charset=utf-8 22.5305ms
+2025-11-17 11:53:28.398 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2F - null null
+2025-11-17 11:53:28.399 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:28.399 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:28.401 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:28.406 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:28.412 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 11.4095ms
+2025-11-17 11:53:28.412 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:28.413 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2F - 200 70 application/json; charset=utf-8 14.1668ms
+2025-11-17 11:53:32.833 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2F - null null
+2025-11-17 11:53:32.834 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:32.835 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:32.835 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:32.836 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:32.836 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.9615ms
+2025-11-17 11:53:32.836 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:32.836 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2F - 200 70 application/json; charset=utf-8 2.9968ms
+2025-11-17 11:53:33.703 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FB - null null
+2025-11-17 11:53:33.703 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:33.703 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:33.703 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:33.704 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:33.704 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.8067ms
+2025-11-17 11:53:33.704 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:33.705 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FB - 200 71 application/json; charset=utf-8 1.8497ms
+2025-11-17 11:53:34.147 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBr - null null
+2025-11-17 11:53:34.147 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:34.147 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:34.148 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:34.148 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:34.148 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.9212ms
+2025-11-17 11:53:34.149 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:34.149 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBr - 200 72 application/json; charset=utf-8 1.6278ms
+2025-11-17 11:53:35.020 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBra - null null
+2025-11-17 11:53:35.020 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:35.020 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:35.020 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:35.021 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:35.021 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 1.0746ms
+2025-11-17 11:53:35.023 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:35.023 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBra - 200 73 application/json; charset=utf-8 3.372ms
+2025-11-17 11:53:35.282 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBras - null null
+2025-11-17 11:53:35.282 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:35.283 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:35.283 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:35.283 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:35.283 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.7429ms
+2025-11-17 11:53:35.284 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:35.284 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBras - 200 74 application/json; charset=utf-8 1.4647ms
+2025-11-17 11:53:35.425 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasi - null null
+2025-11-17 11:53:35.425 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:35.426 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:35.426 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:35.428 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:35.428 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 2.517ms
+2025-11-17 11:53:35.428 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:35.428 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasi - 200 75 application/json; charset=utf-8 3.3455ms
+2025-11-17 11:53:35.633 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil - null null
+2025-11-17 11:53:35.634 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:35.634 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:35.634 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:35.635 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:35.635 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.7083ms
+2025-11-17 11:53:35.635 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:35.635 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil - 200 76 application/json; charset=utf-8 1.4859ms
+2025-11-17 11:53:36.630 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil. - null null
+2025-11-17 11:53:36.630 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:36.630 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:36.630 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:36.631 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:36.632 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 1.3436ms
+2025-11-17 11:53:36.632 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:36.632 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil. - 200 77 application/json; charset=utf-8 2.2635ms
+2025-11-17 11:53:37.609 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.j - null null
+2025-11-17 11:53:37.610 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:37.610 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:37.610 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:37.610 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:37.611 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.8537ms
+2025-11-17 11:53:37.611 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:37.611 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.j - 200 78 application/json; charset=utf-8 1.4835ms
+2025-11-17 11:53:38.654 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil. - null null
+2025-11-17 11:53:38.654 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:38.654 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:38.655 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:38.655 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:38.656 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 1.0261ms
+2025-11-17 11:53:38.656 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:38.656 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil. - 200 77 application/json; charset=utf-8 1.8716ms
+2025-11-17 11:53:38.937 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.p - null null
+2025-11-17 11:53:38.937 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:38.937 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:38.937 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:38.938 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:38.938 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.6934ms
+2025-11-17 11:53:38.938 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:38.938 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.p - 200 78 application/json; charset=utf-8 1.3603ms
+2025-11-17 11:53:39.275 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.pn - null null
+2025-11-17 11:53:39.275 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:39.276 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:39.277 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:39.277 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:39.278 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.8935ms
+2025-11-17 11:53:39.278 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:39.278 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.pn - 200 79 application/json; charset=utf-8 3.2893ms
+2025-11-17 11:53:39.506 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.png - null null
+2025-11-17 11:53:39.506 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:39.506 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:39.506 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:39.507 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType3`1[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:39.508 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 1.8111ms
+2025-11-17 11:53:39.508 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:39.508 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.png - 200 14 application/json; charset=utf-8 2.4527ms
+2025-11-17 11:53:42.680 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.pn - null null
+2025-11-17 11:53:42.681 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:42.681 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:42.681 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:42.681 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:42.682 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.7527ms
+2025-11-17 11:53:42.682 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:42.682 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.pn - 200 79 application/json; charset=utf-8 1.377ms
+2025-11-17 11:53:43.449 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.png - null null
+2025-11-17 11:53:43.450 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:43.454 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:43.456 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:43.463 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType3`1[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:43.464 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 7.8653ms
+2025-11-17 11:53:43.464 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:43.465 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.png - 200 14 application/json; charset=utf-8 21.3058ms
+2025-11-17 11:53:47.594 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.pn - null null
+2025-11-17 11:53:47.595 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:47.595 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:47.595 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:47.608 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:47.609 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 13.6538ms
+2025-11-17 11:53:47.609 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:47.609 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.pn - 200 79 application/json; charset=utf-8 15.0123ms
+2025-11-17 11:53:47.926 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.p - null null
+2025-11-17 11:53:47.927 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:47.927 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:47.927 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:47.927 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:47.928 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.7607ms
+2025-11-17 11:53:47.928 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:47.928 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.p - 200 78 application/json; charset=utf-8 1.459ms
+2025-11-17 11:53:48.051 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil. - null null
+2025-11-17 11:53:48.051 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:48.051 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:48.051 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:48.052 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:48.052 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.7373ms
+2025-11-17 11:53:48.052 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:48.052 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil. - 200 77 application/json; charset=utf-8 1.5836ms
+2025-11-17 11:53:48.158 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil - null null
+2025-11-17 11:53:48.158 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:48.158 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:48.158 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:48.159 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:48.159 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.7721ms
+2025-11-17 11:53:48.159 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:48.159 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil - 200 76 application/json; charset=utf-8 1.4046ms
+2025-11-17 11:53:50.545 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil. - null null
+2025-11-17 11:53:50.545 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:50.545 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:50.545 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:50.546 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:50.546 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 1.3293ms
+2025-11-17 11:53:50.546 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:50.547 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil. - 200 77 application/json; charset=utf-8 1.9535ms
+2025-11-17 11:53:50.778 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.p - null null
+2025-11-17 11:53:50.778 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:50.778 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:50.778 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:50.779 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:50.780 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 1.5197ms
+2025-11-17 11:53:50.780 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:50.780 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.p - 200 78 application/json; charset=utf-8 2.1875ms
+2025-11-17 11:53:51.075 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.pn - null null
+2025-11-17 11:53:51.076 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:51.076 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:51.076 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:51.077 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType4`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:51.077 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.8732ms
+2025-11-17 11:53:51.077 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:51.077 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.pn - 200 79 application/json; charset=utf-8 2.0181ms
+2025-11-17 11:53:51.324 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.png - null null
+2025-11-17 11:53:51.324 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:51.324 +01:00 [INF] Executing endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:51.324 +01:00 [INF] Route matched with {action = "ValidateImage", controller = "TakeQuizApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ValidateImage(System.String) on controller api.Controllers.TakeQuizApiController (api).
+2025-11-17 11:53:51.325 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType3`1[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-17 11:53:51.325 +01:00 [INF] Executed action api.Controllers.TakeQuizApiController.ValidateImage (api) in 0.6963ms
+2025-11-17 11:53:51.325 +01:00 [INF] Executed endpoint 'api.Controllers.TakeQuizApiController.ValidateImage (api)'
+2025-11-17 11:53:51.325 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/takequizapi/validateimage?imageUrl=%2Fimages%2FBrasil.png - 200 14 application/json; charset=utf-8 1.3652ms
+2025-11-17 11:53:56.593 +01:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5082/api/quizapi/update/12 - null null
+2025-11-17 11:53:56.593 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:56.593 +01:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5082/api/quizapi/update/12 - 204 null null 0.3268ms
+2025-11-17 11:53:56.594 +01:00 [INF] Request starting HTTP/1.1 PUT http://localhost:5082/api/quizapi/update/12 - application/json 514
+2025-11-17 11:53:56.594 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:56.598 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.Update (api)'
+2025-11-17 11:53:56.598 +01:00 [INF] Route matched with {action = "Update", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(Int32, api.DTOs.QuizDto) on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:56.658 +01:00 [INF] Executing OkObjectResult, writing value of type 'api.Models.Quiz'.
+2025-11-17 11:53:56.658 +01:00 [INF] Executed action api.Controllers.QuizAPIController.Update (api) in 59.5469ms
+2025-11-17 11:53:56.658 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.Update (api)'
+2025-11-17 11:53:56.658 +01:00 [INF] Request finished HTTP/1.1 PUT http://localhost:5082/api/quizapi/update/12 - 200 946 application/json; charset=utf-8 64.2401ms
+2025-11-17 11:53:56.703 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - null null
+2025-11-17 11:53:56.703 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:56.703 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:56.703 +01:00 [INF] Route matched with {action = "QuizList", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] QuizList() on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:56.707 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[api.Models.Quiz, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-17 11:53:56.707 +01:00 [INF] Executed action api.Controllers.QuizAPIController.QuizList (api) in 3.8499ms
+2025-11-17 11:53:56.707 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:56.707 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - 200 377 application/json; charset=utf-8 4.5374ms
+2025-11-17 11:53:56.708 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - null null
+2025-11-17 11:53:56.709 +01:00 [INF] CORS policy execution successful.
+2025-11-17 11:53:56.709 +01:00 [INF] Executing endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:56.709 +01:00 [INF] Route matched with {action = "QuizList", controller = "QuizAPI"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] QuizList() on controller api.Controllers.QuizAPIController (api).
+2025-11-17 11:53:56.730 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[api.Models.Quiz, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[api.DTOs.QuizDto, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-17 11:53:56.731 +01:00 [INF] Executed action api.Controllers.QuizAPIController.QuizList (api) in 22.5942ms
+2025-11-17 11:53:56.732 +01:00 [INF] Executed endpoint 'api.Controllers.QuizAPIController.QuizList (api)'
+2025-11-17 11:53:56.732 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5082/api/quizapi/quizlist - 200 377 application/json; charset=utf-8 23.3476ms
