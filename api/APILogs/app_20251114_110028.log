@@ -1,5 +1,0 @@
-2025-11-14 11:00:33.542 +01:00 [INF] User profile is available. Using 'C:\Users\Muniira\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2025-11-14 11:00:33.854 +01:00 [INF] Now listening on: http://localhost:5082
-2025-11-14 11:00:33.864 +01:00 [INF] Application started. Press Ctrl+C to shut down.
-2025-11-14 11:00:33.865 +01:00 [INF] Hosting environment: Development
-2025-11-14 11:00:33.865 +01:00 [INF] Content root path: C:\Users\Muniira\OneDrive - OsloMet\Skrivebord\EksamenFAM\EXAMFAM\api

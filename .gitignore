@@ -2,10 +2,15 @@
 bin/
 obj/
 
-# Local database
+# Local databases
 *.db
+*.db-shm
+*.db-wal
 
-# VS/IDE filer
+# Logs
+*.log
+
+# VS/IDE
+.vscode/
 *.user
 *.suo
-.vscode/

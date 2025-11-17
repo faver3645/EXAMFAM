@@ -1,7 +1,0 @@
-2025-11-10 21:38:13.036 +01:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2025-11-10 21:38:13.159 +01:00 [INF] Now listening on: http://localhost:5082
-2025-11-10 21:38:13.164 +01:00 [INF] Application started. Press Ctrl+C to shut down.
-2025-11-10 21:38:13.165 +01:00 [INF] Hosting environment: Development
-2025-11-10 21:38:13.165 +01:00 [INF] Content root path: C:\Users\Admin\OneDrive - OsloMet\FinalExamITPE3200\EXAMFAM\api
-2025-11-10 21:38:43.227 +01:00 [WRN] As of ""2025-11-10T20:38:42.9769760+00:00"", the heartbeat has been running for ""00:00:02.3512510"" which is longer than ""00:00:01"". This could be caused by thread pool starvation.
-2025-11-10 21:39:07.141 +01:00 [INF] Application is shutting down...
