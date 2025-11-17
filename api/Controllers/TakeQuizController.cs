@@ -1,10 +1,10 @@
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using api.DAL;
 using api.DTOs;
 using api.Models;
 using System.Security.Claims;
+
 namespace api.Controllers
 {
     [ApiController]
@@ -13,11 +13,13 @@ namespace api.Controllers
     {
         private readonly IQuizRepository _repo;
         private readonly ILogger<TakeQuizApiController> _logger;
+
         public TakeQuizApiController(IQuizRepository repo, ILogger<TakeQuizApiController> logger)
         {
             _repo = repo;
             _logger = logger;
         }
+
         // Alle (Student/Teacher) kan se quizliste
         [AllowAnonymous]
         [HttpGet("takequizlist")]
@@ -26,13 +28,16 @@ namespace api.Controllers
             var quizzes = await _repo.GetAll();
             if (quizzes == null || !quizzes.Any())
                 return NotFound("Quiz list not found");
+
             var quizDtos = quizzes.Select(q => new QuizDto
             {
                 QuizId = q.QuizId,
                 Title = q.Title
             }).ToList();
+
             return Ok(quizDtos);
         }
+
         // Hent spesifikk quiz (uten fasit)
         [AllowAnonymous]
         [HttpGet("{id}")]
@@ -40,6 +45,7 @@ namespace api.Controllers
         {
             var quiz = await _repo.GetQuizById(id);
             if (quiz == null) return NotFound("Quiz not found");
+
             var quizDto = new QuizDto
             {
                 QuizId = quiz.QuizId,
@@ -56,8 +62,10 @@ namespace api.Controllers
                     }).ToList()
                 }).ToList()
             };
+
             return Ok(quizDto);
         }
+
         // Student sender inn svar for poengberegning
         [Authorize(Roles = "Student")]
         [HttpPost("submit")]
@@ -65,6 +73,7 @@ namespace api.Controllers
         {
             var quiz = await _repo.GetQuizById(submission.QuizId);
             if (quiz == null) return NotFound("Quiz not found");
+
             int score = 0;
             foreach (var question in quiz.Questions)
             {
@@ -75,8 +84,10 @@ namespace api.Controllers
                         score++;
                 }
             }
+
             return Ok(new Dictionary<string, int> { { "score", score } });
         }
+
         // Student lagrer eget forsøk
         [Authorize(Roles = "Student")]
         [HttpPost("saveattempt")]
@@ -84,9 +95,11 @@ namespace api.Controllers
         {
             var quiz = await _repo.GetQuizById(dto.QuizId);
             if (quiz == null) return NotFound("Quiz not found");
+
             var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
             if (string.IsNullOrEmpty(userName))
                 return Unauthorized("User not found in token.");
+
             var result = new QuizResult
             {
                 QuizId = dto.QuizId,
@@ -95,6 +108,7 @@ namespace api.Controllers
                 TimeUsedSeconds = dto.TimeUsedSeconds,
                 SubmittedAt = DateTime.UtcNow
             };
+
             try
             {
                 await _repo.AddResultAsync(result);
@@ -106,30 +120,32 @@ namespace api.Controllers
                 return StatusCode(500, "Failed to save attempt");
             }
         }
-        // Teacher kan se alle – Student kun egne. Nå med filter/sort/paging og søk (search).
+
+        // Teacher kan se alle – Student kun egne. Nå med filter/sort/paging.
         [Authorize(Roles = "Teacher,Student")]
         [HttpGet("attempts/{quizId}")]
         public async Task<IActionResult> GetAttempts(int quizId, [FromQuery] AttemptsQueryParams query)
         {
             try
             {
-                // Hvis ikke Teacher: fjern search-param (kun lærere får globalt søk)
-                var isTeacher = User.IsInRole("Teacher");
-                if (!isTeacher)
-                {
-                    query.Search = null;
-                }
                 var (results, totalCount) = await _repo.GetResultsForQuizAsync(quizId, query);
+
+                if (results == null)
+                    return Ok(new { data = new List<QuizResultDto>(), total = 0 });
+
+                var isTeacher = User.IsInRole("Teacher");
                 var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
-                // Student får kun egne (hvis repo returnerte globalt for teachers, repo allerede håndterte search)
+
+                // Student får kun egne
                 if (!isTeacher && !string.IsNullOrEmpty(userName))
                 {
                     results = results.Where(r => r.UserName == userName);
                     totalCount = results.Count();
                 }
-                
+
                 // Norsk tidssone
                 var tz = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+
                 var dtoList = results.Select(r => new QuizResultDto
                 {
                     QuizResultId = r.QuizResultId,
@@ -141,6 +157,7 @@ namespace api.Controllers
                     TimeUsedSeconds = r.TimeUsedSeconds,
                     SubmittedAt = TimeZoneInfo.ConvertTimeFromUtc(r.SubmittedAt, tz)
                 }).ToList();
+
                 return Ok(new
                 {
                     data = dtoList,
@@ -155,6 +172,7 @@ namespace api.Controllers
                 return StatusCode(500, "Failed to load attempts");
             }
         }
+
         // Teacher kan slette forsøk
         [Authorize(Roles = "Teacher")]
         [HttpDelete("attempt/{attemptId}")]
