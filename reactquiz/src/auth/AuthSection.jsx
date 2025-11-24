@@ -2,9 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./useAuth";
 import { Nav, Dropdown } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const AuthSection = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+  logout();              // fjern token, nullstill user
+  navigate("/", { replace: true });  // naviger hjem
+};
+
 
   return (
     <Nav>
@@ -14,7 +22,7 @@ const AuthSection = () => {
             Welcome, {user.sub} ({user.role})
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       ) : (

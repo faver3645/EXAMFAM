@@ -1,4 +1,5 @@
 using api.Models;
+using api.DTOs;
 
 namespace api.DAL;
 
