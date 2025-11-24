@@ -90,7 +90,13 @@ const QuizListPage = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredQuizzes.length === 0 ? (
+            {loading ? (
+              <tr>
+                <td colSpan="3" className="text-center py-3">
+                  <Spinner animation="border" size="sm" /> Loading quizzes...
+                </td>
+              </tr>
+            ) : filteredQuizzes.length === 0 ? (
               <tr>
                 <td colSpan="3" className="text-center py-3">No quizzes found.</td>
               </tr>

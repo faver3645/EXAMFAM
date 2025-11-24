@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 import { fetchQuizById } from "./QuizService";
 
 const QuizDetailPage = () => {
@@ -25,7 +26,8 @@ const QuizDetailPage = () => {
 
   if (error)
     return <p style={{ color: "red", textAlign: "center" }}>{error}</p>;
-  if (!quiz) return <p style={{ textAlign: "center" }}>Loading...</p>;
+  if (!quiz) return <div style={{ textAlign: "center" }}>
+    <Spinner animation="border" size="sm" /> Loading...</div>;
 
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px", textAlign: "center" }}>

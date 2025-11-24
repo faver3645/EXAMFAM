@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 import { useAuth } from "../auth/useAuth";
 import { fetchQuizById, submitQuiz } from "./TakeQuizService";
 
@@ -102,7 +103,8 @@ const TakeQuizPage = () => {
     return <p className="text-center text-danger">{error}</p>;
   }
 
-  if (!quiz) return <p className="text-center">Loading quiz...</p>;
+  if (!quiz) return <div className="text-center"> 
+  <Spinner animation="border" size="sm" /> Loading quiz...</div>;
 
   return (
     <div className="container mt-4" style={{ maxWidth: "800px" }}>

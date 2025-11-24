@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 import { useAuth } from "../auth/useAuth";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -36,7 +37,8 @@ const ViewAttemptPage = () => {
     fetchAttemptDetails();
   }, [attemptId, token]);
 
-  if (loading) return <p className="text-center">Loading attempt...</p>;
+  if (loading) return <div className="text-center">
+    <Spinner animation="border" size="sm" /> Loading attempt...</div>;
   if (error) return <p className="text-center text-danger">{error}</p>;
   if (!attempt) return <p className="text-center">No attempt found.</p>;
 

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FQ0scjwJzLI=",
+  "dgSpecHash": "ZSgV9PPsiyM=",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\OneDrive - OsloMet\\FinalExamITPE3200\\EXAMFAM\\api.Tests\\api.Tests.csproj",
   "expectedPackageFiles": [
@@ -11,8 +11,8 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\8.0.8\\microsoft.aspnetcore.cryptography.keyderivation.8.0.8.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\8.0.8\\microsoft.aspnetcore.identity.entityframeworkcore.8.0.8.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\8.0.8\\microsoft.aspnetcore.identity.ui.8.0.8.nupkg.sha512",
-    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\8.0.21\\microsoft.aspnetcore.jsonpatch.8.0.21.nupkg.sha512",
-    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\8.0.21\\microsoft.aspnetcore.mvc.newtonsoftjson.8.0.21.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\8.0.22\\microsoft.aspnetcore.jsonpatch.8.0.22.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\8.0.22\\microsoft.aspnetcore.mvc.newtonsoftjson.8.0.22.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.7\\microsoft.aspnetcore.openapi.8.0.7.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 import { useAuth } from "../auth/useAuth";
 import { fetchAttempts, deleteAttempt } from "./TakeQuizService";
 
@@ -9,6 +10,7 @@ const AttemptsPage = () => {
   const { quizId } = useParams();
   const { token, user } = useAuth();
   const [attempts, setAttempts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [quizTitle, setQuizTitle] = useState("");
   const [statusMessage, setStatusMessage] = useState(null);
   const [error, setError] = useState(null);
@@ -24,6 +26,8 @@ const AttemptsPage = () => {
   // Fetch attempts with search, paging, sort
   const loadAttempts = useCallback(
     async (page = 1) => {
+      setLoading(true);
+      setError(null);
       try {
         console.log("Fetching attempts", {
           quizId,
@@ -56,6 +60,8 @@ const AttemptsPage = () => {
       } catch (err) {
         console.error(err);
         setError("Failed to load attempts.");
+      } finally {
+      setLoading(false);
       }
     },
     [quizId, token, sortOption, searchTerm]
@@ -137,12 +143,16 @@ const AttemptsPage = () => {
       ) : null}
 
       {/* RESULTS */}
-      {attempts.length === 0 ? (
-        <p className="text-center">
+      {loading ? (
+        <div className="text-center">
+          <Spinner animation="border" size="sm" /> Loading attempts...
+        </div>
+      ) : attempts.length === 0 ? (
+        <div className="text-center">
           {searchTerm
             ? `No attempts found matching "${searchTerm}".`
             : "No attempts found."}
-        </p>
+        </div>
       ) : (
         <>
           <div className="row g-4">
