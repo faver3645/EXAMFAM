@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using api.Models;
-using api.DTOs;
+using api.Query;
 using Microsoft.Extensions.Logging;
 namespace api.DAL
 {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using api.DAL;
 using api.DTOs;
 using api.Models;
+using api.Query;
 using System.Security.Claims;
 using System.IO;
 
