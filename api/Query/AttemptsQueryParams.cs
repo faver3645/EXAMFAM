@@ -1,6 +1,6 @@
 using System;
 
-namespace api.DTOs
+namespace api.Query
 {
     public class AttemptsQueryParams
     {
