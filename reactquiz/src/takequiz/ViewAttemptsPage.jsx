@@ -56,7 +56,7 @@ const ViewAttemptPage = () => {
         &nbsp;({Math.round((attempt.Score / attempt.Questions.length) * 100)}%)
       </p>
       <p className="text-center mb-4">
-        <strong>Time Used:</strong> {formatTime(attempt.TimeUsedSeconds)}
+        <strong>Time Used:</strong> {formatTime(attempt.TimeSpent)}
       </p>
 
       {attempt.Questions.map((q, index) => (
@@ -83,7 +83,7 @@ const ViewAttemptPage = () => {
                     a.IsCorrect ? "list-group-item-success" : a.Selected ? "list-group-item-danger" : ""
                   }`}
                 >
-                  {a.Text} {a.Selected ? "(Your choice)" : ""}
+                  {a.Text} {a.Selected ? "(Selected)" : ""}
                 </li>
               ))}
             </ul>

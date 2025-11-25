@@ -178,12 +178,27 @@ namespace api.DAL
 
         public async Task<QuizResult?> GetResultByIdAsync(int attemptId)
         {
-            return await _db.UserQuizResults
-                .Include(q => q.Quiz)
-                    .ThenInclude(quiz => quiz.Questions)
-                        .ThenInclude(q => q.AnswerOptions)
-                .Include(q => q.Answers)
-                .FirstOrDefaultAsync(q => q.QuizResultId == attemptId);
+            try
+            {
+                var result = await _db.UserQuizResults
+                    .Include(q => q.Quiz)
+                        .ThenInclude(quiz => quiz.Questions)
+                            .ThenInclude(q => q.AnswerOptions)
+                    .Include(q => q.Answers)
+                    .FirstOrDefaultAsync(q => q.QuizResultId == attemptId);
+
+                if (result == null)
+                {
+                    _logger.LogWarning("[QuizRepository] GetResultByIdAsync: QuizResult with Id {AttemptId} not found", attemptId);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "[QuizRepository] GetResultByIdAsync failed for AttemptId {AttemptId}", attemptId);
+                return null; // eller throw; hvis du vil at controller skal håndtere exception
+            }
         }
     }
 }

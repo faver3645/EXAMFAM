@@ -230,28 +230,41 @@ namespace api.Controllers
             if (!isTeacher && attempt.UserName != userName)
                 return Forbid();
 
-            var quiz = attempt.Quiz;
+            var totalQuestions = attempt.Quiz.Questions.Count;
+            var correctAnswers = attempt.Answers.Count(a =>
+                attempt.Quiz.Questions
+                    .First(q => q.QuestionId == a.QuestionId)
+                    .AnswerOptions
+                    .First(ao => ao.AnswerOptionId == a.AnswerOptionId)
+                    .IsCorrect
+            );
 
-            var dto = new
+            // Mapper alle spørsmål til AttemptAnswerDto med alternativer og selected-flag
+            var questionsDto = attempt.Quiz.Questions.Select(q => new AttemptAnswerDto
             {
-                attempt.QuizResultId,
-                attempt.UserName,
-                attempt.Score,
-                attempt.TimeUsedSeconds,
-                attempt.SubmittedAt,
-                Questions = quiz.Questions.Select(q => new
+                QuestionId = q.QuestionId,
+                Text = q.Text,
+                ImageUrl = q.ImageUrl,
+                AnswerOptions = q.AnswerOptions.Select(a => new AnswerOptionDtoExtended
                 {
-                    q.QuestionId,
-                    q.Text,
-                    q.ImageUrl,
-                    AnswerOptions = q.AnswerOptions.Select(a => new
-                    {
-                        a.AnswerOptionId,
-                        a.Text,
-                        a.IsCorrect,
-                        Selected = attempt.Answers.Any(x => x.QuestionId == q.QuestionId && x.AnswerOptionId == a.AnswerOptionId)
-                    }).ToList()
+                    AnswerOptionId = a.AnswerOptionId,
+                    Text = a.Text,
+                    IsCorrect = a.IsCorrect,
+                    Selected = attempt.Answers.Any(ans => ans.QuestionId == q.QuestionId && ans.AnswerOptionId == a.AnswerOptionId)
                 }).ToList()
+            }).ToList();
+
+            var dto = new AttemptDetailsDto
+            {
+                QuizResultId = attempt.QuizResultId,
+                QuizId = attempt.QuizId,
+                UserName = attempt.UserName,
+                SubmittedAt = attempt.SubmittedAt,
+                TimeSpent = attempt.TimeUsedSeconds,
+                Score = attempt.Score,
+                TotalQuestions = totalQuestions,
+                CorrectAnswers = correctAnswers,
+                Questions = questionsDto
             };
 
             return Ok(dto);
