@@ -43,6 +43,8 @@ const ListQuizPage = () => {
         <InputGroup style={{ maxWidth: "400px" }}>
           <Form.Control
             type="text"
+            id="searchQuiz"
+            name="searchQuiz"
             placeholder="Search quiz title..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

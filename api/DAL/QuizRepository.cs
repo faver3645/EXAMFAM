@@ -92,17 +92,18 @@ namespace api.DAL
                 return false;
             }
         }
-        public async Task AddResultAsync(QuizResult result)
+        public async Task<bool> AddResultAsync(QuizResult result)
         {
             try
             {
                 _db.UserQuizResults.Add(result);
                 await _db.SaveChangesAsync();
+                return true;
             }
             catch (Exception e)
             {
                 _logger.LogError("[QuizRepository] AddResultAsync failed: {Message}", e.Message);
-                throw;
+                return false;
             }
         }
         // Filtering + Sorting + Paging + Search
@@ -155,7 +156,7 @@ namespace api.DAL
                 return (new List<QuizResult>(), 0);
             }
         }
-        public async Task DeleteAttemptAsync(int attemptId)
+        public async Task<bool> DeleteAttemptAsync(int attemptId)
         {
             try
             {
@@ -163,16 +164,16 @@ namespace api.DAL
                 if (attempt == null)
                 {
                     _logger.LogWarning("[QuizRepository] DeleteAttemptAsync failed, attempt not found: {AttemptId}", attemptId);
-                    return;
+                    return false;
                 }
                 _db.UserQuizResults.Remove(attempt);
                 await _db.SaveChangesAsync();
-                _logger.LogInformation("[QuizRepository] Attempt {AttemptId} deleted successfully", attemptId);
+                return true;
             }
             catch (Exception e)
             {
                 _logger.LogError("[QuizRepository] DeleteAttemptAsync({AttemptId}) failed: {Message}", attemptId, e.Message);
-                throw;
+                return false;
             }
         }
 

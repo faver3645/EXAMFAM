@@ -29,8 +29,11 @@ namespace api.Controllers
         {
             var quizzes = await _repo.GetAll();
             if (quizzes == null || !quizzes.Any())
+            {
+                 _logger.LogError("[TakeQuizAPIController] quiz list not found while executing _repo.GetAll()");
                 return NotFound("Quiz list not found");
-
+            }
+        
             var quizDtos = quizzes.Select(q => new QuizDto
             {
                 QuizId = q.QuizId,
@@ -46,7 +49,11 @@ namespace api.Controllers
         public async Task<IActionResult> GetQuiz(int id)
         {
             var quiz = await _repo.GetQuizById(id);
-            if (quiz == null) return NotFound("Quiz not found");
+            if (quiz == null)
+            {
+                _logger.LogError("[TakeQuizAPIController] Quiz not found for QuizId {QuizId:0000}", id);
+                return NotFound("Quiz not found");  
+            } 
 
             var quizDto = new QuizDto
             {
@@ -93,7 +100,11 @@ namespace api.Controllers
         public async Task<IActionResult> Submit([FromBody] QuizSubmissionDto submission)
         {
             var quiz = await _repo.GetQuizById(submission.QuizId);
-            if (quiz == null) return NotFound("Quiz not found");
+            if (quiz == null)
+            {
+                _logger.LogError("[TakeQuizAPIController] Quiz not found for QuizId {QuizId:0000}", submission.QuizId);
+                return NotFound("Quiz not found");  
+            } 
 
             int score = 0;
             foreach (var question in quiz.Questions)
@@ -115,7 +126,11 @@ namespace api.Controllers
         public async Task<IActionResult> SaveAttempt([FromBody] QuizResultDto dto)
         {
             var quiz = await _repo.GetQuizById(dto.QuizId);
-            if (quiz == null) return NotFound("Quiz not found");
+            if (quiz == null)
+            { 
+                _logger.LogError("[TakeQuizAPIController] Quiz not found for QuizId {QuizId:0000}", dto.QuizId);
+                return NotFound("Quiz not found");
+            } 
 
             var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
             if (string.IsNullOrEmpty(userName))
@@ -135,16 +150,18 @@ namespace api.Controllers
                 }).ToList()
             };
 
-            try
+             bool saved = await _repo.AddResultAsync(result);
+
+            if (!saved)
             {
-                await _repo.AddResultAsync(result);
-                return Ok(new { message = "Attempt saved successfully" });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("[TakeQuizApiController] SaveAttempt failed: {Message}", ex.Message);
+                _logger.LogError(
+                    "[TakeQuizApiController] Failed to save attempt for User {UserName} on QuizId {QuizId:0000}", 
+                    userName, dto.QuizId
+                );
                 return StatusCode(500, "Failed to save attempt");
             }
+
+            return Ok(new { message = "Attempt saved successfully" });
         }
 
         // Teacher kan se alle – Student kun egne. Nå med filter/sort/paging.
@@ -205,16 +222,19 @@ namespace api.Controllers
         [HttpDelete("attempt/{attemptId}")]
         public async Task<IActionResult> DeleteAttempt(int attemptId)
         {
-            try
+            bool deleted = await _repo.DeleteAttemptAsync(attemptId);
+
+            if (!deleted)
             {
-                await _repo.DeleteAttemptAsync(attemptId);
-                return Ok(new { message = "Attempt deleted successfully" });
+                _logger.LogError(
+                    "[TakeQuizApiController] Attempt deletion failed for AttemptId {AttemptId:0000}",
+                    attemptId
+                );
+
+                return BadRequest("Attempt deletion failed");
             }
-            catch (Exception ex)
-            {
-                _logger.LogError("[TakeQuizApiController] DeleteAttempt({AttemptId}) failed: {Message}", attemptId, ex.Message);
-                return StatusCode(500, "Failed to delete attempt");
-            }
+
+            return NoContent();
         }
 
         [Authorize(Roles = "Teacher,Student")]
@@ -222,7 +242,11 @@ namespace api.Controllers
         public async Task<IActionResult> GetAttemptDetails(int attemptId)
         {
             var attempt = await _repo.GetResultByIdAsync(attemptId);
-            if (attempt == null) return NotFound("Attempt not found");
+            if (attempt == null)
+            {
+                _logger.LogError("[TakeQuizAPIController] Attempt not found for AttemptId {AttemptId:0000}", attemptId);
+                return NotFound("Attempt not found");
+            } 
 
             var isTeacher = User.IsInRole("Teacher");
             var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;

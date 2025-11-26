@@ -11,12 +11,12 @@ public interface IQuizRepository
     Task<bool> Update(Quiz quiz);
     Task<bool> Delete(int id);
 
-    Task AddResultAsync(QuizResult result);
+    Task<bool> AddResultAsync(QuizResult result);
 
     // filter + sort + paging
     Task<(IEnumerable<QuizResult> Results, int TotalCount)> 
         GetResultsForQuizAsync(int quizId, AttemptsQueryParams query);
 
-    Task DeleteAttemptAsync(int attemptId);
+    Task<bool> DeleteAttemptAsync(int attemptId);
     Task<QuizResult?> GetResultByIdAsync(int attemptId);
 }

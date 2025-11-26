@@ -27,13 +27,23 @@ const LoginPage = () => {
       <h2>Login</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
-          <Form.Control value={username} onChange={(e) => setUsername(e.target.value)} required />
+          <Form.Control
+              type="text"
+              placeholder="Enter username" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+              required />
         </Form.Group>
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <Form.Control 
+              type="password"
+              placeholder="Password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required />
         </Form.Group>
         <Button type="submit">Login</Button>
       </Form>

@@ -132,6 +132,8 @@ const AttemptsPage = () => {
             <div className="d-flex align-items-center mb-2">
               <input
                 type="text"
+                id="searchStudent"
+                name="searchStudent"
                 className="form-control w-auto"
                 placeholder="Search student..."
                 value={searchTerm}

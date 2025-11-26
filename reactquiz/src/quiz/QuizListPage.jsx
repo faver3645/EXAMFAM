@@ -58,6 +58,8 @@ const QuizListPage = () => {
           <InputGroup>
             <Form.Control
               type="text"
+              id="searchQuery"
+              name="searchQuery"
               placeholder="Search by title..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}

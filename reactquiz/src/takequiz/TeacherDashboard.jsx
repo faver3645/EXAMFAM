@@ -42,6 +42,8 @@ const TeacherDashboard = () => {
         <InputGroup style={{ maxWidth: "400px" }}>
           <Form.Control
             type="text"
+            id="searchQuery"
+            name="searchQuery"
             placeholder="Search quiz title..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

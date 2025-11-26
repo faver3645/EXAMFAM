@@ -39,28 +39,34 @@ const RegisterPage = () => {
       {success && <Alert variant="success">{success}</Alert>}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
+          <Form.Label htmlFor="username">Username</Form.Label>
           <Form.Control
+            type="text"
+            id="username"
             name="username"
             value={formData.username}
             onChange={handleChange}
             required
+            autoComplete="username"
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
+          <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control
             type="email"
+            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
+            autoComplete="email"
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
+          <Form.Label htmlFor="password">Password</Form.Label>
           <Form.Control
             type="password"
+            id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
@@ -70,8 +76,9 @@ const RegisterPage = () => {
 
         {/* 👇 Nytt felt for rollevalg */}
         <Form.Group className="mb-3">
-          <Form.Label>Role</Form.Label>
+          <Form.Label htmlFor="role">Role</Form.Label>
           <Form.Select
+            id="role"
             name="role"
             value={formData.role}
             onChange={handleChange}

@@ -246,9 +246,11 @@ const QuizForm = ({ onSubmit, initialData }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3">
-        <Form.Label>Quiz Title</Form.Label>
+        <Form.Label htmlFor="quizTitle">Quiz Title</Form.Label>
         <Form.Control
           type="text"
+          id="quizTitle"
+          name="quizTitle"
           placeholder="Enter quiz title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -261,7 +263,7 @@ const QuizForm = ({ onSubmit, initialData }) => {
         <Card key={i} className="mb-3" ref={el => questionRefs.current[i] = el}>
           <Card.Body>
             <div className="d-flex justify-content-between align-items-center mb-2">
-              <Form.Label>Question {i + 1}</Form.Label>
+              <Form.Label htmlFor={`questionText-${i}`}>Question {i + 1}</Form.Label>
               <Button
                 variant="link"
                 size="sm"
@@ -275,6 +277,8 @@ const QuizForm = ({ onSubmit, initialData }) => {
 
             <Form.Control
               type="text"
+              id={`questionText-${i}`}
+              name={`questionText-${i}`}
               placeholder="Enter question text"
               value={q.text}
               onChange={(e) => handleQuestionChange(i, e.target.value)}
@@ -284,6 +288,8 @@ const QuizForm = ({ onSubmit, initialData }) => {
 
             <Form.Control
               type="text"
+              id={`questionImage-${i}`}
+              name={`questionImage-${i}`}
               placeholder="Enter image URL (optional)"
               value={q.imageUrl || ''}
               onChange={(e) => handleQuestionImageChange(i, e.target.value)}
@@ -298,6 +304,8 @@ const QuizForm = ({ onSubmit, initialData }) => {
                 <div key={j} className="d-flex align-items-center mb-2">
                   <Form.Check
                     type="checkbox"
+                    id={`answerCorrect-${i}-${j}`}
+                    name={`answerCorrect-${i}-${j}`}
                     className="me-2"
                     checked={a.isCorrect}
                     onChange={(e) =>
@@ -307,6 +315,8 @@ const QuizForm = ({ onSubmit, initialData }) => {
                   />
                   <Form.Control
                     type="text"
+                    id={`answerText-${i}-${j}`}
+                    name={`answerText-${i}-${j}`}
                     placeholder="Answer text"
                     value={a.text}
                     onChange={(e) =>
