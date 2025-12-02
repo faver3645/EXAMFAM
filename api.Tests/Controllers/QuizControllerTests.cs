@@ -14,7 +14,7 @@ namespace api.Tests.Controllers
 {
     public class QuizAPIControllerTests
     {
-        // ===== Positive test: QuizList returns quizzes =====
+        // Positive test: QuizList returns quizzes 
         [Fact]
         public async Task QuizList_ReturnsOkWithQuizzes()
         {
@@ -37,7 +37,7 @@ namespace api.Tests.Controllers
             Assert.Equal(2, returnValue.Count());
         }
 
-        // ===== Negative test: QuizList returns NotFound when null =====
+        // Negative test: QuizList returns NotFound when null 
         [Fact]
         public async Task QuizList_ReturnsNotFound_WhenNull()
         {
@@ -52,7 +52,7 @@ namespace api.Tests.Controllers
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
-        // ===== Positive test: GetQuiz returns Ok =====
+        // Positive test: GetQuiz returns Ok 
         [Fact]
         public async Task GetQuiz_ReturnsOk_WhenFound()
         {
@@ -69,7 +69,7 @@ namespace api.Tests.Controllers
             Assert.Equal(1, returnValue.QuizId);
         }
 
-        // ===== Negative test: GetQuiz returns NotFound =====
+        // Negative test: GetQuiz returns NotFound 
         [Fact]
         public async Task GetQuiz_ReturnsNotFound_WhenNotFound()
         {
@@ -83,7 +83,7 @@ namespace api.Tests.Controllers
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
-        // ===== Positive test: Create returns Created =====
+        // Positive test: Create returns Created 
         [Fact]
         public async Task CreateQuiz_ReturnsCreated_WhenSuccess()
         {
@@ -99,7 +99,7 @@ namespace api.Tests.Controllers
             Assert.IsType<CreatedAtActionResult>(result);
         }
 
-        // ===== Negative test: Create returns 500 when fail =====
+        // Negative test: Create returns 500 when fail 
         [Fact]
         public async Task CreateQuiz_ReturnsServerError_WhenFail()
         {
@@ -116,7 +116,7 @@ namespace api.Tests.Controllers
             Assert.Equal(500, statusResult.StatusCode);
         }
 
-        // ===== Positive test: Update returns Ok =====
+        // Positive test: Update returns Ok 
         [Fact]
         public async Task UpdateQuiz_ReturnsOk_WhenSuccess()
         {
@@ -136,7 +136,7 @@ namespace api.Tests.Controllers
             Assert.Equal("Updated Title", returnValue.Title);
         }
 
-        // ===== Negative test: Update returns NotFound =====
+        // Negative test: Update returns NotFound 
         [Fact]
         public async Task UpdateQuiz_ReturnsNotFound_WhenQuizMissing()
         {
@@ -152,7 +152,7 @@ namespace api.Tests.Controllers
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
-        // ===== Positive test: Delete returns NoContent =====
+        // Positive test: Delete returns NoContent 
         [Fact]
         public async Task DeleteQuiz_ReturnsNoContent_WhenSuccess()
         {
@@ -166,7 +166,7 @@ namespace api.Tests.Controllers
             Assert.IsType<NoContentResult>(result);
         }
 
-        // ===== Negative test: Delete returns BadRequest =====
+        // Negative test: Delete returns BadRequest 
         [Fact]
         public async Task DeleteQuiz_ReturnsBadRequest_WhenFail()
         {

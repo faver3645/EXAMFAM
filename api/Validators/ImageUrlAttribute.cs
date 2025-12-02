@@ -14,7 +14,6 @@ namespace api.Validators
             var url = value.ToString();
             if (string.IsNullOrWhiteSpace(url)) return ValidationResult.Success;
 
-            // Regex for relative og full URL til bilder (jpg, jpeg, png, gif)
             var regex = new Regex(
                 @"^(\/images\/[\w\-.]+\.(jpg|jpeg|png|gif)|https?:\/\/[\w\-.]+(\.[\w\-.]+)+.*\.(jpg|jpeg|png|gif))$",
                 RegexOptions.IgnoreCase
@@ -23,10 +22,8 @@ namespace api.Validators
             if (!regex.IsMatch(url))
                 return new ValidationResult("Image URL must be valid and end with .jpg, .jpeg, .png, or .gif");
 
-            // Hvis URL er lokal, sjekk om filen finnes i wwwroot/images
             if (url.StartsWith("/images/"))
             {
-                // Hent webroot path fra IHostingEnvironment hvis tilgjengelig
                 var webHostEnvironment = (IWebHostEnvironment?)validationContext
                     .GetService(typeof(IWebHostEnvironment));
                 
