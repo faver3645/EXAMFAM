@@ -76,7 +76,7 @@ export const saveAttempt = async (payload, token) => {
 };
 
 export const fetchAttemptDetails = async (attemptId, token) => {
-  const response = await fetch(`${API_URL}/api/takequizapi/attempt/${attemptId}`, {
+  const response = await fetch(`${API_URL}/api/takequizapi/attempt-details/${attemptId}`, {
     headers: getHeaders(token),
   });
   return handleResponse(response);

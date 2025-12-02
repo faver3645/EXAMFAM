@@ -2,13 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import { useAuth } from "../auth/useAuth";
-
-const API_URL = import.meta.env.VITE_API_URL;
-
-const getHeaders = (token) => ({
-  "Content-Type": "application/json",
-  ...(token ? { Authorization: `Bearer ${token}` } : {}),
-});
+import { fetchAttemptDetails } from "./TakeQuizService";
 
 const ViewAttemptPage = () => {
   const { token } = useAuth();
@@ -19,13 +13,9 @@ const ViewAttemptPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchAttemptDetails = async () => {
+    const loadAttempt = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/takequizapi/attempt-details/${attemptId}`, {
-          headers: getHeaders(token),
-        });
-        if (!res.ok) throw new Error("Failed to fetch attempt details");
-        const data = await res.json();
+        const data = await fetchAttemptDetails(attemptId, token);
         setAttempt(data);
       } catch (err) {
         console.error(err);
@@ -34,7 +24,8 @@ const ViewAttemptPage = () => {
         setLoading(false);
       }
     };
-    fetchAttemptDetails();
+
+    loadAttempt();
   }, [attemptId, token]);
 
   if (loading) return <div className="text-center">
