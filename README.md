@@ -6,7 +6,7 @@ this project consists of a backend and frontend. The backend is devolped using A
 - The React frontend is located in the "reactquiz" folder.
   
 ## Running the Project 
-To run the backend, navigate to the 'api' folder and use the command:
+To run the backend, navigate to the "api" folder and use the command:
 ```
 dotnet run
 ```
