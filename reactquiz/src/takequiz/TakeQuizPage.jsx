@@ -12,7 +12,7 @@ const TakeQuizPage = () => {
   const [unanswered, setUnanswered] = useState([]);
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [timeUsed, setTimeUsed] = useState(0); // sekunder brukt
+  const [timeUsed, setTimeUsed] = useState(0); 
   const navigate = useNavigate();
 
   const startTimeRef = useRef(null);
@@ -24,10 +24,10 @@ const TakeQuizPage = () => {
         const data = await fetchQuizById(quizId, token);
         setQuiz(data);
 
-        // Start tidtaking
+        // Start timer
         startTimeRef.current = Date.now();
 
-        // Start interval for å oppdatere tid brukt
+        // Start interval to update time spent
         timerRef.current = setInterval(() => {
           const elapsedSeconds = Math.floor((Date.now() - startTimeRef.current) / 1000);
           setTimeUsed(elapsedSeconds);
@@ -39,7 +39,7 @@ const TakeQuizPage = () => {
     };
     getQuiz();
 
-    // Cleanup ved unmount
+    // Cleanup upon unmount
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
@@ -78,16 +78,16 @@ const TakeQuizPage = () => {
     const payload = { 
       QuizId: quiz.QuizId, 
       Answers: answers,
-      TimeUsedSeconds: timeUsed,  // sender tid brukt til backend (om den støtter det)
+      TimeUsedSeconds: timeUsed,  
     };
 
     try {
       const result = await submitQuiz(payload, token);
 
-      // Stopp timer når ferdig
+      // Stop timer when finished
       if (timerRef.current) clearInterval(timerRef.current);
 
-      // Send tid brukt med i navigate state med riktig navn
+      // Send time spent in navigate state with correct name
       navigate(`/takequiz/result/${quiz.QuizId}`, {
       state: { quiz, score: result.score ?? 0, timeUsedSeconds: timeUsed, answers }
     });

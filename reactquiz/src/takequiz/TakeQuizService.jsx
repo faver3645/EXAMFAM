@@ -13,7 +13,7 @@ const handleResponse = async (response) => {
   return response.status === 204 ? null : response.json();
 };
 
-// Fetch attempts med paging + søk + sort
+// Fetch attempts with paging, search and sort
 export const fetchAttempts = async (quizId, token, page = 1, pageSize = 6, sort = "date_desc", search = "") => {
   const params = new URLSearchParams({
     page,
@@ -41,7 +41,6 @@ export const deleteAttempt = async (attemptId, token) => {
   return handleResponse(response);
 };
 
-// --- Andre API-funksjoner ---
 export const fetchAvailableQuizzes = async (token) => {
   const response = await fetch(`${API_URL}/api/takequizapi/takequizlist`, { headers: getHeaders(token) });
   return handleResponse(response);

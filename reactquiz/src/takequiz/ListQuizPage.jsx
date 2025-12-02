@@ -63,7 +63,7 @@ const ListQuizPage = () => {
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title">{quiz.Title}</h5>
                   <div className="mt-auto d-flex justify-content-center">
-                    {/* Student kan starte quiz */}
+                    {/* Student can start quiz */}
                     {user?.role === "Student" && (
                       <button
                         className="btn btn-primary me-2"
@@ -74,7 +74,6 @@ const ListQuizPage = () => {
                         Start Quiz
                       </button>
                     )}
-                    {/* Alle kan se attempts */}
                     <button
                       className="btn btn-success"
                       onClick={() =>
