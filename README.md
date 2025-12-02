@@ -12,7 +12,7 @@ dotnet run
 ```
 This will start the backend on localhost: 5082
 
-To run the frontend, navigate to the 'mapyourmeal' folder and use the command:
+To run the frontend, navigate to the "reactquiz" folder and use the command:
 
 ```
 npm run dev
