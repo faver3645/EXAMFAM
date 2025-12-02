@@ -20,7 +20,6 @@ namespace api.Query
         public int PageSize { get; set; } = 6; // default
         public string? Search { get; set; }
 
-        // Map frontend felter til backend
         public static AttemptsQueryParams FromFrontend(dynamic request)
         {
             var query = new AttemptsQueryParams

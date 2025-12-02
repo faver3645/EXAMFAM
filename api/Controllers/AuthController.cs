@@ -99,14 +99,14 @@ namespace api.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName!),   // eksisterende
-                new Claim(ClaimTypes.Name, user.UserName!),               // 🔥 legg til denne
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName!),   
+                new Claim(ClaimTypes.Name, user.UserName!),               
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            // 🔥 Legg til rolle som både standard-claim og eget "role"-claim
+            
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));

@@ -20,7 +20,7 @@ namespace api.Controllers
             _logger = logger;
         }
 
-        // Alle kan se quizliste
+        
         [AllowAnonymous]
         [HttpGet("quizlist")]
         public async Task<IActionResult> QuizList()
@@ -41,7 +41,7 @@ namespace api.Controllers
             return Ok(quizDtos);
         }
 
-        // Kun lærere kan lage quiz
+        // only teachers can create quiz
         [Authorize(Roles = "Teacher")]
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] QuizDto quizDto)
@@ -76,7 +76,7 @@ namespace api.Controllers
             return StatusCode(500, "Internal server error");
         }
 
-        // Alle kan hente enkeltquiz
+        
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetQuiz(int id)
@@ -91,7 +91,7 @@ namespace api.Controllers
             return Ok(quiz);
         }
 
-        // Kun lærere kan oppdatere
+        // only teachers can update quiz
         [Authorize(Roles = "Teacher")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] QuizDto quizDto)
@@ -129,7 +129,7 @@ namespace api.Controllers
             return StatusCode(500, "Internal server error while updating quiz");
         }
 
-        // Kun lærere kan slette
+        // only teachers can delete quiz
         [Authorize(Roles = "Teacher")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)

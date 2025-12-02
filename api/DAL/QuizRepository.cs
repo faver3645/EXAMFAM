@@ -118,13 +118,13 @@ namespace api.DAL
                             .ThenInclude(qt => qt.AnswerOptions)
                     .Where(r => r.QuizId == quizId)
                     .AsQueryable();
-                // SEARCH
+                // search
                 if (!string.IsNullOrWhiteSpace(query.Search))
                 {
                     var term = query.Search.Trim().ToLower();
                     q = q.Where(r => r.UserName != null && r.UserName.ToLower().Contains(term));
                 }
-                // FILTERS
+                // filtering
                 if (query.FromDate.HasValue)
                     q = q.Where(r => r.SubmittedAt >= query.FromDate.Value);
                 if (query.ToDate.HasValue)
@@ -134,7 +134,7 @@ namespace api.DAL
                 if (query.MaxScore.HasValue)
                     q = q.Where(r => r.Score <= query.MaxScore.Value);
                 var totalCount = await q.CountAsync();
-                // SORTING
+                // sorting
                 bool asc = query.SortOrder.ToLower() == "asc";
                 q = query.SortBy.ToLower() switch
                 {
@@ -143,7 +143,7 @@ namespace api.DAL
                     "submittedat" or _ => asc ? q.OrderBy(r => r.SubmittedAt)
                                              : q.OrderByDescending(r => r.SubmittedAt),
                 };
-                // PAGING
+                // paging
                 int page = query.Page <= 0 ? 1 : query.Page;
                 int pageSize = query.PageSize <= 0 ? 50 : query.PageSize;
                 q = q.Skip((page - 1) * pageSize).Take(pageSize);
@@ -198,8 +198,8 @@ namespace api.DAL
             catch (Exception ex)
             {
                 _logger.LogError(ex, "[QuizRepository] GetResultByIdAsync failed for AttemptId {AttemptId}", attemptId);
-                return null; // eller throw; hvis du vil at controller skal håndtere exception
-            }
+                return null; 
         }
+    }
     }
 }

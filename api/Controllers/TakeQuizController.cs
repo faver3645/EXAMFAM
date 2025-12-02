@@ -22,7 +22,7 @@ namespace api.Controllers
             _logger = logger;
         }
 
-        // Alle (Student/Teacher) kan se quizliste
+        
         [AllowAnonymous]
         [HttpGet("takequizlist")]
         public async Task<IActionResult> GetAllQuizzes()
@@ -43,7 +43,7 @@ namespace api.Controllers
             return Ok(quizDtos);
         }
 
-        // Hent spesifikk quiz (uten fasit)
+        
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetQuiz(int id)
@@ -75,7 +75,7 @@ namespace api.Controllers
             return Ok(quizDto);
         }
 
-        // Endpoint for å validere bilde-URL (lokal fil)
+        // validate image URL
         [AllowAnonymous]
         [HttpGet("validateimage")]
         public IActionResult ValidateImage([FromQuery] string imageUrl)
@@ -84,7 +84,7 @@ namespace api.Controllers
                 return Ok(new { valid = true });
 
             if (!imageUrl.StartsWith("/images/"))
-                return Ok(new { valid = true }); // kun lokale bilder sjekkes
+                return Ok(new { valid = true }); 
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imageUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
 
@@ -94,7 +94,7 @@ namespace api.Controllers
             return Ok(new { valid = true });
         }
 
-        // Student sender inn svar for poengberegning
+        // students submit quiz for scoring
         [Authorize(Roles = "Student")]
         [HttpPost("submit")]
         public async Task<IActionResult> Submit([FromBody] QuizSubmissionDto submission)
@@ -120,7 +120,7 @@ namespace api.Controllers
             return Ok(new Dictionary<string, int> { { "score", score } });
         }
 
-        // Student lagrer eget forsøk
+        // Students save quiz attempt
         [Authorize(Roles = "Student")]
         [HttpPost("saveattempt")]
         public async Task<IActionResult> SaveAttempt([FromBody] QuizResultDto dto)
@@ -164,7 +164,7 @@ namespace api.Controllers
             return Ok(new { message = "Attempt saved successfully" });
         }
 
-        // Teacher kan se alle – Student kun egne. Nå med filter/sort/paging.
+        
         [Authorize(Roles = "Teacher,Student")]
         [HttpGet("attempts/{quizId}")]
         public async Task<IActionResult> GetAttempts(int quizId, [FromQuery] AttemptsQueryParams query)
@@ -179,14 +179,14 @@ namespace api.Controllers
                 var isTeacher = User.IsInRole("Teacher");
                 var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
 
-                // Student får kun egne
+                
                 if (!isTeacher && !string.IsNullOrEmpty(userName))
                 {
                     results = results.Where(r => r.UserName == userName);
                     totalCount = results.Count();
                 }
 
-                // Norsk tidssone
+                
                 var tz = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
 
                 var dtoList = results.Select(r => new QuizResultDto
@@ -217,7 +217,7 @@ namespace api.Controllers
             }
         }
 
-        // Teacher kan slette forsøk
+        
         [Authorize(Roles = "Teacher")]
         [HttpDelete("attempt/{attemptId}")]
         public async Task<IActionResult> DeleteAttempt(int attemptId)
@@ -251,7 +251,7 @@ namespace api.Controllers
             var isTeacher = User.IsInRole("Teacher");
             var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "sub")?.Value;
 
-            // Student kan kun se sitt eget forsøk
+            
             if (!isTeacher && attempt.UserName != userName)
                 return Forbid();
 
@@ -264,7 +264,6 @@ namespace api.Controllers
                     .IsCorrect
             );
 
-            // Mapper alle spørsmål til AttemptAnswerDto med alternativer og selected-flag
             var questionsDto = attempt.Quiz.Questions.Select(q => new AttemptAnswerDto
             {
                 QuestionId = q.QuestionId,

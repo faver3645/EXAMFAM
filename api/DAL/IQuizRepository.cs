@@ -13,7 +13,6 @@ public interface IQuizRepository
 
     Task<bool> AddResultAsync(QuizResult result);
 
-    // filter + sort + paging
     Task<(IEnumerable<QuizResult> Results, int TotalCount)> 
         GetResultsForQuizAsync(int quizId, AttemptsQueryParams query);
 
