@@ -1,5 +1,5 @@
 # MyQuiz
-this project consists of a backend and frontend. The backend is devolped using ASP.NET and the frontend is based on React with Vite as the framework. 
+This project consists of a backend and frontend. The backend is devolped using ASP.NET and the frontend is based on React with Vite as the framework. 
 
 ## Directory Structure 
 - The ASP.NET is located in the "api" folder.
