@@ -12,7 +12,14 @@ dotnet run
 ```
 This will start the backend on localhost: 5082
 
-To run the frontend, navigate to the "reactquiz" folder and use the command:
+Running the frontend for the first time, you must install dependencies. Navigate to the "reactquiz" folder and use the command:
+
+```
+npm install
+```
+
+After the installation is complete, start the frontend with:
+
 
 ```
 npm run dev
