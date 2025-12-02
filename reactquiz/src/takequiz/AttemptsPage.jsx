@@ -144,7 +144,7 @@ const AttemptsPage = () => {
         </div>
       ) : null}
 
-      {/* RESULTS */}
+      {/* results */}
       {loading ? (
         <div className="text-center">
           <Spinner animation="border" size="sm" /> Loading attempts...
@@ -210,7 +210,7 @@ const AttemptsPage = () => {
             })}
           </div>
 
-          {/* PAGINATION */}
+          {/* pagination */}
           <nav className="d-flex justify-content-center mt-4">
             <ul className="pagination">
               <li
@@ -259,7 +259,7 @@ const AttemptsPage = () => {
         </>
       )}
 
-      {/* BACK BUTTON (HIDDEN WHEN SEARCHING) */}
+      {/* back button (hidden when searching) */}
       {!searchTerm && (
         <div className="text-center mt-4">
           <button
@@ -277,7 +277,7 @@ const AttemptsPage = () => {
         </div>
       )}
 
-      {/* DELETE CONFIRMATION MODAL */}
+      {/* delete confirmation modal */}
       {showModal && (
         <div
           className="modal fade show d-block"
