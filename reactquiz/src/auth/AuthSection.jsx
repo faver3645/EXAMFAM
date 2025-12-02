@@ -9,8 +9,8 @@ const AuthSection = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-  logout();              // fjern token, nullstill user
-  navigate("/", { replace: true });  // naviger hjem
+  logout();   
+  navigate("/", { replace: true });
 };
 
 

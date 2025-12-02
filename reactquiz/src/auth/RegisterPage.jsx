@@ -74,7 +74,6 @@ const RegisterPage = () => {
           />
         </Form.Group>
 
-        {/* 👇 Nytt felt for rollevalg */}
         <Form.Group className="mb-3">
           <Form.Label htmlFor="role">Role</Form.Label>
           <Form.Select

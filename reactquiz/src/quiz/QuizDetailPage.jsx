@@ -34,6 +34,7 @@ const QuizDetailPage = () => {
       <h2>Quiz Details</h2>
       <h3>{quiz.Title}</h3>
 
+      {/* Show questions */}
       {quiz.Questions && quiz.Questions.length > 0 ? (
         <ul
           style={{
@@ -49,7 +50,7 @@ const QuizDetailPage = () => {
                 Question {index + 1}: {question.Text}
               </strong>
 
-              {/* 🖼️ Vis bilde om det finnes */}
+              {/* Show image if it exists */}
               {question.ImageUrl && (
                 <div className="text-center mt-2 mb-3">
                   <img
@@ -60,7 +61,7 @@ const QuizDetailPage = () => {
                 </div>
               )}
 
-              {/* 🔹 Vis svaralternativer */}
+              {/* Show answer options */}
               {question.AnswerOptions && question.AnswerOptions.length > 0 && (
                 <ul
                   style={{
