@@ -10,13 +10,13 @@ const QuizUpdatePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Hent eksisterende quiz via QuizService
+  // Fetch existing quiz via QuizService
   useEffect(() => {
     const loadQuiz = async () => {
       try {
         const data = await fetchQuizById(quizId);
 
-        // Tilpass data for QuizForm
+        // Adapt data for QuizForm
         const formattedQuiz = {
           title: data.Title,
           questions: data.Questions?.map(q => ({
@@ -41,12 +41,12 @@ const QuizUpdatePage = () => {
     loadQuiz();
   }, [quizId]);
 
-  // Oppdater quiz via QuizService
+  // Update quiz via QuizService
   const handleQuizUpdated = async (updatedQuiz) => {
     try {
       const data = await updateQuiz(quizId, updatedQuiz);
       console.log('Quiz updated successfully;', data);
-      navigate('/quiz'); // tilbake til quiz-listen
+      navigate('/quiz'); // Back to the quiz list
     } catch (err) {
       console.error('Failed to update quiz:', err);
       alert(`Failed to update quiz: ${err.message}`);

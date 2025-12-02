@@ -17,11 +17,11 @@ export const AuthProvider = ({ children }) => {
           decoded.role ||
           decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
-        // Hent navn riktig fra claim
+        // retrieve the correct name from the claim
         const name =
           decoded.name ||
           decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
-          decoded.sub; // fallback
+          decoded.sub;
 
         setUser({ ...decoded, role, name });
       } catch (err) {
