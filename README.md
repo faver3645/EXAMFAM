@@ -24,4 +24,4 @@ After the installation is complete, start the frontend with:
 ```
 npm run dev
 ```
-This will start the frontend on localhost:5173
+This will start the frontend on localhost: 5173
