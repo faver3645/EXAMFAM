@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-// Sider
+// pages
 import HomePage from "./home/HomePage";
 import QuizListPage from "./quiz/QuizListPage";
 import QuizCreatePage from "./quiz/QuizCreatePage";

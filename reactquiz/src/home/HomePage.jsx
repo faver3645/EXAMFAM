@@ -8,7 +8,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  // Ikke-innlogget bruker
+  // Not logged in user
   if (!user) {
     return (
       <div className="bg-white min-vh-100">
@@ -71,7 +71,7 @@ export default function HomePage() {
     );
   }
 
-  // Innlogget bruker
+  // logged in user
   return (
     <div className="bg-white min-vh-100 py-5">
       <Container className="text-center">
@@ -86,7 +86,7 @@ export default function HomePage() {
           </p>
         </header>
 
-        {/* Rollebaserte handlingskort */}
+        {/* Role-based action cards */}
         <Row className="g-4 justify-content-center mb-5">
           {user.role === "Teacher" && (
             <>
@@ -145,7 +145,7 @@ export default function HomePage() {
           )}
         </Row>
 
-        {/* Oppdatert design på sekjoner */}
+        {/* Updated design on sections */}
         <Row className="g-4 justify-content-center mt-5">
           {user.role === "Student" && (
             <Col md={6}>
