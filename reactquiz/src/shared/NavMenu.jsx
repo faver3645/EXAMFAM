@@ -20,7 +20,7 @@ export default function NavMenu() {
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {/* Venstre-side lenker */}
+          {/* Left-side links */}
           <Nav className="me-auto">
             <LinkContainer to="/">
               <Nav.Link className="fw-medium text-dark">Home</Nav.Link>
@@ -60,7 +60,7 @@ export default function NavMenu() {
             </NavDropdown>
           </Nav>
 
-          {/* Høyre-side: AuthSection */}
+          {/* Right-side: AuthSection */}
           <AuthSection />
         </Navbar.Collapse>
       </Container>
